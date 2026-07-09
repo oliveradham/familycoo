@@ -9,8 +9,80 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VaultRouteImport } from './routes/vault'
+import { Route as TravelRouteImport } from './routes/travel'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SchoolRouteImport } from './routes/school'
+import { Route as MedicalRouteImport } from './routes/medical'
+import { Route as MaintenanceRouteImport } from './routes/maintenance'
+import { Route as GroceriesRouteImport } from './routes/groceries'
+import { Route as FamilyRouteImport } from './routes/family'
+import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as ConciergeRouteImport } from './routes/concierge'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VaultRoute = VaultRouteImport.update({
+  id: '/vault',
+  path: '/vault',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelRoute = TravelRouteImport.update({
+  id: '/travel',
+  path: '/travel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SportsRoute = SportsRouteImport.update({
+  id: '/sports',
+  path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchoolRoute = SchoolRouteImport.update({
+  id: '/school',
+  path: '/school',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicalRoute = MedicalRouteImport.update({
+  id: '/medical',
+  path: '/medical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintenanceRoute = MaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroceriesRoute = GroceriesRouteImport.update({
+  id: '/groceries',
+  path: '/groceries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FamilyRoute = FamilyRouteImport.update({
+  id: '/family',
+  path: '/family',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConciergeRoute = ConciergeRouteImport.update({
+  id: '/concierge',
+  path: '/concierge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +91,200 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/concierge': typeof ConciergeRoute
+  '/expenses': typeof ExpensesRoute
+  '/family': typeof FamilyRoute
+  '/groceries': typeof GroceriesRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/medical': typeof MedicalRoute
+  '/school': typeof SchoolRoute
+  '/sports': typeof SportsRoute
+  '/tasks': typeof TasksRoute
+  '/travel': typeof TravelRoute
+  '/vault': typeof VaultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/concierge': typeof ConciergeRoute
+  '/expenses': typeof ExpensesRoute
+  '/family': typeof FamilyRoute
+  '/groceries': typeof GroceriesRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/medical': typeof MedicalRoute
+  '/school': typeof SchoolRoute
+  '/sports': typeof SportsRoute
+  '/tasks': typeof TasksRoute
+  '/travel': typeof TravelRoute
+  '/vault': typeof VaultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/concierge': typeof ConciergeRoute
+  '/expenses': typeof ExpensesRoute
+  '/family': typeof FamilyRoute
+  '/groceries': typeof GroceriesRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/medical': typeof MedicalRoute
+  '/school': typeof SchoolRoute
+  '/sports': typeof SportsRoute
+  '/tasks': typeof TasksRoute
+  '/travel': typeof TravelRoute
+  '/vault': typeof VaultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/calendar'
+    | '/concierge'
+    | '/expenses'
+    | '/family'
+    | '/groceries'
+    | '/maintenance'
+    | '/medical'
+    | '/school'
+    | '/sports'
+    | '/tasks'
+    | '/travel'
+    | '/vault'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/calendar'
+    | '/concierge'
+    | '/expenses'
+    | '/family'
+    | '/groceries'
+    | '/maintenance'
+    | '/medical'
+    | '/school'
+    | '/sports'
+    | '/tasks'
+    | '/travel'
+    | '/vault'
+  id:
+    | '__root__'
+    | '/'
+    | '/calendar'
+    | '/concierge'
+    | '/expenses'
+    | '/family'
+    | '/groceries'
+    | '/maintenance'
+    | '/medical'
+    | '/school'
+    | '/sports'
+    | '/tasks'
+    | '/travel'
+    | '/vault'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
+  ConciergeRoute: typeof ConciergeRoute
+  ExpensesRoute: typeof ExpensesRoute
+  FamilyRoute: typeof FamilyRoute
+  GroceriesRoute: typeof GroceriesRoute
+  MaintenanceRoute: typeof MaintenanceRoute
+  MedicalRoute: typeof MedicalRoute
+  SchoolRoute: typeof SchoolRoute
+  SportsRoute: typeof SportsRoute
+  TasksRoute: typeof TasksRoute
+  TravelRoute: typeof TravelRoute
+  VaultRoute: typeof VaultRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vault': {
+      id: '/vault'
+      path: '/vault'
+      fullPath: '/vault'
+      preLoaderRoute: typeof VaultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel': {
+      id: '/travel'
+      path: '/travel'
+      fullPath: '/travel'
+      preLoaderRoute: typeof TravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sports': {
+      id: '/sports'
+      path: '/sports'
+      fullPath: '/sports'
+      preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/school': {
+      id: '/school'
+      path: '/school'
+      fullPath: '/school'
+      preLoaderRoute: typeof SchoolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medical': {
+      id: '/medical'
+      path: '/medical'
+      fullPath: '/medical'
+      preLoaderRoute: typeof MedicalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maintenance': {
+      id: '/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groceries': {
+      id: '/groceries'
+      path: '/groceries'
+      fullPath: '/groceries'
+      preLoaderRoute: typeof GroceriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/family': {
+      id: '/family'
+      path: '/family'
+      fullPath: '/family'
+      preLoaderRoute: typeof FamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/concierge': {
+      id: '/concierge'
+      path: '/concierge'
+      fullPath: '/concierge'
+      preLoaderRoute: typeof ConciergeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +297,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
+  ConciergeRoute: ConciergeRoute,
+  ExpensesRoute: ExpensesRoute,
+  FamilyRoute: FamilyRoute,
+  GroceriesRoute: GroceriesRoute,
+  MaintenanceRoute: MaintenanceRoute,
+  MedicalRoute: MedicalRoute,
+  SchoolRoute: SchoolRoute,
+  SportsRoute: SportsRoute,
+  TasksRoute: TasksRoute,
+  TravelRoute: TravelRoute,
+  VaultRoute: VaultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
