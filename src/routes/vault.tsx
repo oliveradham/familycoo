@@ -20,7 +20,7 @@ function VaultPage() {
         back
         eyebrow="Document vault"
         title="Everything findable."
-        subtitle='Passports, contracts, records — try "Find Oliver\'s passport" or "insurance".'
+        subtitle={`Passports, contracts, records — try "Find Oliver's passport" or "insurance".`}
       />
 
       <div className="px-6 mb-6">
