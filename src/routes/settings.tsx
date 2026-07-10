@@ -64,17 +64,14 @@ function Row({
 function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (
     <button
+      type="button"
       onClick={() => onChange(!on)}
-      className={`relative h-6 w-10 rounded-full transition-colors ${
-        on ? "bg-zinc-900" : "bg-zinc-300"
+      className={`inline-flex h-6 w-11 shrink-0 items-center rounded-full p-0.5 transition-colors ${
+        on ? "bg-zinc-900 justify-end" : "bg-zinc-300 justify-start"
       }`}
       aria-pressed={on}
     >
-      <span
-        className={`absolute top-0.5 size-5 rounded-full bg-white shadow transition-transform ${
-          on ? "translate-x-[18px]" : "translate-x-0.5"
-        }`}
-      />
+      <span className="block size-5 rounded-full bg-white shadow ring-1 ring-black/5" />
     </button>
   );
 }
