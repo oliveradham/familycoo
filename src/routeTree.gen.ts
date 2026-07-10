@@ -72,6 +72,7 @@ import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as ApiPublicRevenuecatWebhookRouteImport } from './routes/api/public/revenuecat-webhook'
 import { Route as ApiPublicRevenuecatWebhookRouteImport } from './routes/api/public/revenuecat/webhook'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
@@ -392,6 +393,12 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
 } as any)
 const ApiPublicRevenuecatWebhookRoute =
   ApiPublicRevenuecatWebhookRouteImport.update({
+    id: '/api/public/revenuecat-webhook',
+    path: '/api/public/revenuecat-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicRevenuecatWebhookRoute =
+  ApiPublicRevenuecatWebhookRouteImport.update({
     id: '/api/public/revenuecat/webhook',
     path: '/api/public/revenuecat/webhook',
     getParentRoute: () => rootRouteImport,
@@ -467,6 +474,7 @@ export interface FileRoutesByFullPath {
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/revenuecat/webhook': typeof ApiPublicRevenuecatWebhookRoute
 }
@@ -534,6 +542,7 @@ export interface FileRoutesByTo {
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/revenuecat/webhook': typeof ApiPublicRevenuecatWebhookRoute
 }
@@ -602,6 +611,7 @@ export interface FileRoutesById {
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/revenuecat/webhook': typeof ApiPublicRevenuecatWebhookRoute
 }
@@ -671,6 +681,7 @@ export interface FileRouteTypes {
     | '/waiting'
     | '/workflows'
     | '/checkout/success'
+    | '/api/public/revenuecat-webhook'
     | '/api/public/payments/webhook'
     | '/api/public/revenuecat/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -738,6 +749,7 @@ export interface FileRouteTypes {
     | '/waiting'
     | '/workflows'
     | '/checkout/success'
+    | '/api/public/revenuecat-webhook'
     | '/api/public/payments/webhook'
     | '/api/public/revenuecat/webhook'
   id:
@@ -805,6 +817,7 @@ export interface FileRouteTypes {
     | '/waiting'
     | '/workflows'
     | '/checkout/success'
+    | '/api/public/revenuecat-webhook'
     | '/api/public/payments/webhook'
     | '/api/public/revenuecat/webhook'
   fileRoutesById: FileRoutesById
@@ -873,6 +886,7 @@ export interface RootRouteChildren {
   WaitingRoute: typeof WaitingRoute
   WorkflowsRoute: typeof WorkflowsRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+  ApiPublicRevenuecatWebhookRoute: typeof ApiPublicRevenuecatWebhookRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   ApiPublicRevenuecatWebhookRoute: typeof ApiPublicRevenuecatWebhookRoute
 }
@@ -1320,6 +1334,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/revenuecat-webhook': {
+      id: '/api/public/revenuecat-webhook'
+      path: '/api/public/revenuecat-webhook'
+      fullPath: '/api/public/revenuecat-webhook'
+      preLoaderRoute: typeof ApiPublicRevenuecatWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/revenuecat/webhook': {
       id: '/api/public/revenuecat/webhook'
       path: '/api/public/revenuecat/webhook'
@@ -1401,6 +1422,7 @@ const rootRouteChildren: RootRouteChildren = {
   WaitingRoute: WaitingRoute,
   WorkflowsRoute: WorkflowsRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
+  ApiPublicRevenuecatWebhookRoute: ApiPublicRevenuecatWebhookRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   ApiPublicRevenuecatWebhookRoute: ApiPublicRevenuecatWebhookRoute,
 }
