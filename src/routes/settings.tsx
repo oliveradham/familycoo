@@ -1,8 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { LANGUAGES, useLanguage } from "@/lib/i18n";
 import { family } from "@/lib/family-data";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth-context";
+import { useServerFn } from "@tanstack/react-start";
+import { deleteMyAccount } from "@/lib/account.functions";
 import {
   Bell,
   Clock,
@@ -95,6 +99,9 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 
 function SettingsPage() {
   const { lang: language, setLang: setLanguage, t } = useLanguage();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const deleteFn = useServerFn(deleteMyAccount);
   const [tz, setTz] = useState("America/Los_Angeles");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
@@ -359,12 +366,40 @@ function SettingsPage() {
       <section className="px-6 mb-10">
         <SectionLabel>Account</SectionLabel>
         <Card>
-          <button className="flex w-full items-center gap-3 py-2 text-left text-[14px] text-red-700">
-            <LogOut className="size-4" strokeWidth={1.75} />
-            Sign out of demo profile
+          {user?.email && (
+            <p className="mb-4 text-[12px] text-muted-foreground">
+              Signed in as <span className="text-foreground">{user.email}</span>
+            </p>
+          )}
+          <button
+            onClick={async () => {
+              await supabase.auth.signOut();
+              navigate({ to: "/auth", replace: true });
+            }}
+            className="flex w-full items-center gap-3 py-2 text-left text-[14px] text-foreground"
+          >
+            Sign out
           </button>
-          <p className="mt-2 text-[11px] text-muted-foreground">
-            Version 1.0.0 · Demo build · Preferences save on this device.
+          <button
+            onClick={async () => {
+              const confirmed = window.confirm(
+                "Permanently delete your account? This removes your profile, household, and all associated data. This cannot be undone.",
+              );
+              if (!confirmed) return;
+              try {
+                await deleteFn({});
+                await supabase.auth.signOut();
+                navigate({ to: "/auth", replace: true });
+              } catch (e) {
+                window.alert(e instanceof Error ? e.message : "Failed to delete account");
+              }
+            }}
+            className="mt-2 flex w-full items-center gap-3 py-2 text-left text-[14px] text-red-700"
+          >
+            Delete account permanently
+          </button>
+          <p className="mt-3 text-[11px] text-muted-foreground">
+            Version 1.0.0 · Deleting removes all your data from our servers.
           </p>
         </Card>
       </section>
