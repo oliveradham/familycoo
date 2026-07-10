@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { redactObjectForAI } from "./ai-redact";
 
 /**
  * Generates a fresh morning briefing for the user's household using
