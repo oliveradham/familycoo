@@ -32,6 +32,7 @@ import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as InboxRouteImport } from './routes/inbox'
@@ -174,6 +175,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
 const MedicalRoute = MedicalRouteImport.update({
   id: '/medical',
   path: '/medical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MaintenanceRoute = MaintenanceRouteImport.update({
@@ -346,6 +352,7 @@ export interface FileRoutesByFullPath {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
@@ -399,6 +406,7 @@ export interface FileRoutesByTo {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
@@ -453,6 +461,7 @@ export interface FileRoutesById {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
@@ -508,6 +517,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
     | '/plans'
@@ -561,6 +571,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
     | '/plans'
@@ -614,6 +625,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
     | '/plans'
@@ -668,6 +680,7 @@ export interface RootRouteChildren {
   InboxRoute: typeof InboxRoute
   IntegrationsRoute: typeof IntegrationsRoute
   MaintenanceRoute: typeof MaintenanceRoute
+  MarketplaceRoute: typeof MarketplaceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
   PlansRoute: typeof PlansRoute
@@ -854,6 +867,13 @@ declare module '@tanstack/react-router' {
       path: '/medical'
       fullPath: '/medical'
       preLoaderRoute: typeof MedicalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/maintenance': {
@@ -1084,6 +1104,7 @@ const rootRouteChildren: RootRouteChildren = {
   InboxRoute: InboxRoute,
   IntegrationsRoute: IntegrationsRoute,
   MaintenanceRoute: MaintenanceRoute,
+  MarketplaceRoute: MarketplaceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
   PlansRoute: PlansRoute,
