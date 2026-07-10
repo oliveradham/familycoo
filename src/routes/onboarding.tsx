@@ -3,6 +3,8 @@ import { AppShell } from "@/components/app-shell";
 import { useEffect, useState } from "react";
 import { Mail, Calendar, Check, Sparkles, ShieldCheck } from "lucide-react";
 import { detectedProfile, detectedActions } from "@/lib/family-data";
+import { useServerFn } from "@tanstack/react-start";
+import { loadSampleFamily } from "@/lib/sample-data.functions";
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
@@ -23,7 +25,22 @@ type Step = 0 | 1 | 2 | 3 | 4;
 function OnboardingPage() {
   const [step, setStep] = useState<Step>(0);
   const [connected, setConnected] = useState(false);
+  const [sampleState, setSampleState] = useState<"idle" | "loading" | "done">("idle");
   const navigate = useNavigate();
+  const seed = useServerFn(loadSampleFamily);
+
+  async function handleSample() {
+    if (sampleState !== "idle") return;
+    setSampleState("loading");
+    try {
+      await seed();
+      setSampleState("done");
+      setTimeout(() => navigate({ to: "/" }), 600);
+    } catch (e) {
+      console.error(e);
+      setSampleState("idle");
+    }
+  }
 
   return (
     <AppShell>
