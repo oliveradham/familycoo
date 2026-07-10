@@ -254,7 +254,7 @@ function SettingsPage() {
               icon={Bell}
               label="Daily briefings"
               hint="Morning, afternoon, evening"
-              right={<Toggle on={pushBriefings} onChange={setPushBriefings} />}
+              right={<Toggle label="Daily briefings" on={pushBriefings} onChange={setPushBriefings} />}
             />
             <Row
               icon={Sparkles}
