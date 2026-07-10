@@ -17,6 +17,51 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
+// Security headers applied to every response. Defense-in-depth against
+// clickjacking, MIME-sniffing, referrer leakage, mixed content, and
+// cross-origin data exfiltration. CSP is intentionally permissive enough
+// to allow Google Fonts and inline styles used by the app shell.
+const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => {
+  const response = await next();
+  const res = response instanceof Response ? response : new Response(response as any);
+  const h = res.headers;
+
+  const csp = [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "connect-src 'self' https: wss:",
+    "media-src 'self' blob: data:",
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+    "upgrade-insecure-requests",
+  ].join("; ");
+
+  const set = (k: string, v: string) => {
+    if (!h.has(k)) h.set(k, v);
+  };
+  set("Content-Security-Policy", csp);
+  set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+  set("X-Content-Type-Options", "nosniff");
+  set("X-Frame-Options", "DENY");
+  set("Referrer-Policy", "strict-origin-when-cross-origin");
+  set(
+    "Permissions-Policy",
+    "camera=(), microphone=(self), geolocation=(self), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()",
+  );
+  set("Cross-Origin-Opener-Policy", "same-origin");
+  set("Cross-Origin-Resource-Policy", "same-origin");
+  set("X-DNS-Prefetch-Control", "off");
+  set("X-Permitted-Cross-Domain-Policies", "none");
+  return res;
+});
+
 export const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware],
+  requestMiddleware: [securityHeadersMiddleware, errorMiddleware],
 }));
