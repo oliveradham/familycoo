@@ -39,6 +39,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
@@ -74,6 +75,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ApiPublicRevenuecatWebhookRouteImport } from './routes/api/public/revenuecat-webhook'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicHooksRunWeeklyReviewRouteImport } from './routes/api/public/hooks/run-weekly-review'
 import { Route as ApiPublicHooksRunBriefingsRouteImport } from './routes/api/public/hooks/run-briefings'
 import { Route as ApiPublicHooksAgentsTickRouteImport } from './routes/api/public/hooks/agents-tick'
 
@@ -225,6 +227,11 @@ const PlansRoute = PlansRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedicalRoute = MedicalRouteImport.update({
@@ -404,6 +411,12 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksRunWeeklyReviewRoute =
+  ApiPublicHooksRunWeeklyReviewRouteImport.update({
+    id: '/api/public/hooks/run-weekly-review',
+    path: '/api/public/hooks/run-weekly-review',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksRunBriefingsRoute =
   ApiPublicHooksRunBriefingsRouteImport.update({
     id: '/api/public/hooks/run-briefings',
@@ -450,6 +463,7 @@ export interface FileRoutesByFullPath {
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
+  '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
@@ -484,6 +498,7 @@ export interface FileRoutesByFullPath {
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
+  '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -519,6 +534,7 @@ export interface FileRoutesByTo {
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
+  '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
@@ -553,6 +569,7 @@ export interface FileRoutesByTo {
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
+  '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -589,6 +606,7 @@ export interface FileRoutesById {
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
+  '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
@@ -623,6 +641,7 @@ export interface FileRoutesById {
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
+  '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -660,6 +679,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/marketplace'
     | '/medical'
+    | '/notifications'
     | '/onboarding'
     | '/plans'
     | '/predictions'
@@ -694,6 +714,7 @@ export interface FileRouteTypes {
     | '/api/public/revenuecat-webhook'
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
+    | '/api/public/hooks/run-weekly-review'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -729,6 +750,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/marketplace'
     | '/medical'
+    | '/notifications'
     | '/onboarding'
     | '/plans'
     | '/predictions'
@@ -763,6 +785,7 @@ export interface FileRouteTypes {
     | '/api/public/revenuecat-webhook'
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
+    | '/api/public/hooks/run-weekly-review'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -798,6 +821,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/marketplace'
     | '/medical'
+    | '/notifications'
     | '/onboarding'
     | '/plans'
     | '/predictions'
@@ -832,6 +856,7 @@ export interface FileRouteTypes {
     | '/api/public/revenuecat-webhook'
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
+    | '/api/public/hooks/run-weekly-review'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -868,6 +893,7 @@ export interface RootRouteChildren {
   MaintenanceRoute: typeof MaintenanceRoute
   MarketplaceRoute: typeof MarketplaceRoute
   MedicalRoute: typeof MedicalRoute
+  NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
   PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
@@ -902,6 +928,7 @@ export interface RootRouteChildren {
   ApiPublicRevenuecatWebhookRoute: typeof ApiPublicRevenuecatWebhookRoute
   ApiPublicHooksAgentsTickRoute: typeof ApiPublicHooksAgentsTickRoute
   ApiPublicHooksRunBriefingsRoute: typeof ApiPublicHooksRunBriefingsRoute
+  ApiPublicHooksRunWeeklyReviewRoute: typeof ApiPublicHooksRunWeeklyReviewRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -1115,6 +1142,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medical': {
@@ -1362,6 +1396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/run-weekly-review': {
+      id: '/api/public/hooks/run-weekly-review'
+      path: '/api/public/hooks/run-weekly-review'
+      fullPath: '/api/public/hooks/run-weekly-review'
+      preLoaderRoute: typeof ApiPublicHooksRunWeeklyReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/run-briefings': {
       id: '/api/public/hooks/run-briefings'
       path: '/api/public/hooks/run-briefings'
@@ -1412,6 +1453,7 @@ const rootRouteChildren: RootRouteChildren = {
   MaintenanceRoute: MaintenanceRoute,
   MarketplaceRoute: MarketplaceRoute,
   MedicalRoute: MedicalRoute,
+  NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
   PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
@@ -1446,6 +1488,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicRevenuecatWebhookRoute: ApiPublicRevenuecatWebhookRoute,
   ApiPublicHooksAgentsTickRoute: ApiPublicHooksAgentsTickRoute,
   ApiPublicHooksRunBriefingsRoute: ApiPublicHooksRunBriefingsRoute,
+  ApiPublicHooksRunWeeklyReviewRoute: ApiPublicHooksRunWeeklyReviewRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport

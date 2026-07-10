@@ -9,6 +9,12 @@ import { useServerFn } from "@tanstack/react-start";
 import { deleteMyAccount } from "@/lib/account.functions";
 import { getPrefs, savePrefs } from "@/lib/prefs.functions";
 import {
+  pushSupported,
+  subscribeToPush,
+  unsubscribeFromPush,
+  isCurrentlySubscribed,
+} from "@/lib/push";
+import {
   Bell,
   Clock,
   Globe,
@@ -124,6 +130,37 @@ function SettingsPage() {
   const [proactive, setProactive] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [haptics, setHaptics] = useState(true);
+
+  const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushBusy, setPushBusy] = useState(false);
+  const [pushError, setPushError] = useState<string | null>(null);
+  const canPush = typeof window !== "undefined" && pushSupported();
+
+  useEffect(() => {
+    if (!canPush) return;
+    isCurrentlySubscribed().then(setPushEnabled).catch(() => {});
+  }, [canPush]);
+
+  async function togglePush(next: boolean) {
+    setPushBusy(true);
+    setPushError(null);
+    try {
+      if (next) {
+        const res = await subscribeToPush();
+        if (!res.ok) {
+          setPushError(res.error ?? "Could not enable push");
+          setPushEnabled(false);
+        } else {
+          setPushEnabled(true);
+        }
+      } else {
+        await unsubscribeFromPush();
+        setPushEnabled(false);
+      }
+    } finally {
+      setPushBusy(false);
+    }
+  }
 
   // Load persisted prefs
   useEffect(() => {
@@ -279,6 +316,30 @@ function SettingsPage() {
         <SectionLabel>Notifications</SectionLabel>
         <Card>
           <div className="divide-y divide-hairline">
+            <Row
+              icon={Bell}
+              label="Push on this device"
+              hint={
+                !canPush
+                  ? "Not supported in this browser"
+                  : pushError
+                    ? pushError
+                    : pushEnabled
+                      ? "Enabled — you'll receive briefings & alerts"
+                      : "Enable to get briefings & agent alerts"
+              }
+              right={
+                <Toggle
+                  label="Push on this device"
+                  on={pushEnabled}
+                  onChange={(v) => {
+                    if (!canPush || pushBusy) return;
+                    void togglePush(v);
+                  }}
+                />
+              }
+            />
+
             <Row
               icon={Bell}
               label="Daily briefings"
