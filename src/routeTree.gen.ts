@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TwinRouteImport } from './routes/twin'
@@ -29,8 +30,10 @@ import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProvidersRouteImport } from './routes/providers'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
+import { Route as PlansRouteImport } from './routes/plans'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as InboxRouteImport } from './routes/inbox'
@@ -46,6 +49,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DepartureRouteImport } from './routes/departure'
 import { Route as DecisionsRouteImport } from './routes/decisions'
+import { Route as CreatorsRouteImport } from './routes/creators'
 import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -60,6 +64,11 @@ import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkflowsRoute = WorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WaitingRoute = WaitingRouteImport.update({
   id: '/waiting',
   path: '/waiting',
@@ -160,6 +169,11 @@ const PredictionsRoute = PredictionsRouteImport.update({
   path: '/predictions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -168,6 +182,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
 const MedicalRoute = MedicalRouteImport.update({
   id: '/medical',
   path: '/medical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MaintenanceRoute = MaintenanceRouteImport.update({
@@ -243,6 +262,11 @@ const DepartureRoute = DepartureRouteImport.update({
 const DecisionsRoute = DecisionsRouteImport.update({
   id: '/decisions',
   path: '/decisions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorsRoute = CreatorsRouteImport.update({
+  id: '/creators',
+  path: '/creators',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConflictsRoute = ConflictsRouteImport.update({
@@ -325,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -340,8 +365,10 @@ export interface FileRoutesByFullPath {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -362,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -377,6 +405,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -392,8 +421,10 @@ export interface FileRoutesByTo {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -414,6 +445,7 @@ export interface FileRoutesByTo {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -430,6 +462,7 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -445,8 +478,10 @@ export interface FileRoutesById {
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
+  '/marketplace': typeof MarketplaceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -467,6 +502,7 @@ export interface FileRoutesById {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -484,6 +520,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -499,8 +536,10 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -521,6 +560,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -536,6 +576,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -551,8 +592,10 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -573,6 +616,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   id:
     | '__root__'
     | '/'
@@ -588,6 +632,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -603,8 +648,10 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/integrations'
     | '/maintenance'
+    | '/marketplace'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -625,6 +672,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -641,6 +689,7 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   ConciergeRoute: typeof ConciergeRoute
   ConflictsRoute: typeof ConflictsRoute
+  CreatorsRoute: typeof CreatorsRoute
   DecisionsRoute: typeof DecisionsRoute
   DepartureRoute: typeof DepartureRoute
   DevelopersRoute: typeof DevelopersRoute
@@ -656,8 +705,10 @@ export interface RootRouteChildren {
   InboxRoute: typeof InboxRoute
   IntegrationsRoute: typeof IntegrationsRoute
   MaintenanceRoute: typeof MaintenanceRoute
+  MarketplaceRoute: typeof MarketplaceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
+  PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProvidersRoute: typeof ProvidersRoute
@@ -678,10 +729,18 @@ export interface RootRouteChildren {
   TwinRoute: typeof TwinRoute
   VaultRoute: typeof VaultRoute
   WaitingRoute: typeof WaitingRoute
+  WorkflowsRoute: typeof WorkflowsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workflows': {
+      id: '/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/waiting': {
       id: '/waiting'
       path: '/waiting'
@@ -822,6 +881,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PredictionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
@@ -834,6 +900,13 @@ declare module '@tanstack/react-router' {
       path: '/medical'
       fullPath: '/medical'
       preLoaderRoute: typeof MedicalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/maintenance': {
@@ -939,6 +1012,13 @@ declare module '@tanstack/react-router' {
       path: '/decisions'
       fullPath: '/decisions'
       preLoaderRoute: typeof DecisionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creators': {
+      id: '/creators'
+      path: '/creators'
+      fullPath: '/creators'
+      preLoaderRoute: typeof CreatorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conflicts': {
@@ -1049,6 +1129,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   ConciergeRoute: ConciergeRoute,
   ConflictsRoute: ConflictsRoute,
+  CreatorsRoute: CreatorsRoute,
   DecisionsRoute: DecisionsRoute,
   DepartureRoute: DepartureRoute,
   DevelopersRoute: DevelopersRoute,
@@ -1064,8 +1145,10 @@ const rootRouteChildren: RootRouteChildren = {
   InboxRoute: InboxRoute,
   IntegrationsRoute: IntegrationsRoute,
   MaintenanceRoute: MaintenanceRoute,
+  MarketplaceRoute: MarketplaceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
+  PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
   PrivacyRoute: PrivacyRoute,
   ProvidersRoute: ProvidersRoute,
@@ -1086,6 +1169,7 @@ const rootRouteChildren: RootRouteChildren = {
   TwinRoute: TwinRoute,
   VaultRoute: VaultRoute,
   WaitingRoute: WaitingRoute,
+  WorkflowsRoute: WorkflowsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

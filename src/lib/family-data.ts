@@ -1274,3 +1274,278 @@ export const developerPlatform = [
   { id: "dp4", partner: "Nest",          scope: "Home state read + limited controls." },
   { id: "dp5", partner: "Care.com",      scope: "Book vetted sitters via Booking layer." },
 ];
+
+// ============================================================================
+// Marketplace, Plans, Workflows, Creator Program
+// ============================================================================
+
+export type PlanTier = "free" | "pro" | "max";
+export type Plan = {
+  id: PlanTier;
+  name: string;
+  price: string;
+  cadence: string;
+  tagline: string;
+  best: string;
+  includes: string[];
+  limits?: string[];
+  cta: string;
+  featured?: boolean;
+};
+
+export const plans: Plan[] = [
+  {
+    id: "free",
+    name: "Free",
+    price: "$0",
+    cadence: "forever",
+    tagline: "Feel the calm.",
+    best: "One adult, up to two kids.",
+    includes: [
+      "Daily AI briefing",
+      "Family inbox (school, sports, medical, travel)",
+      "Gmail + Calendar connection",
+      "Basic tasks and reminders",
+      "Travel & school detection",
+      "Document storage (light)",
+    ],
+    limits: [
+      "10 AI searches / month",
+      "20 voice captures / month",
+      "5 screenshot imports / month",
+    ],
+    cta: "You are here",
+  },
+  {
+    id: "pro",
+    name: "Family COO Pro",
+    price: "$49.99",
+    cadence: "per month",
+    tagline: "A quiet chief of staff for the whole family.",
+    best: "Dual-career families with kids in activities.",
+    includes: [
+      "Unlimited household members & caregivers",
+      "Unlimited AI searches & voice",
+      "Weekly Family Review",
+      "AI travel planner + packing lists",
+      "AI grocery intelligence",
+      "Family budgeting insights",
+      "Passport & renewal tracking",
+      "Waiting-on-someone tracker",
+      "Custom household rules",
+      "Smart checklists, returns, warranties",
+      "Priority AI processing",
+      "Shared family workspaces",
+    ],
+    cta: "Start 14-day trial",
+    featured: true,
+  },
+  {
+    id: "max",
+    name: "Pro Max",
+    price: "$99.99",
+    cadence: "per month",
+    tagline: "Like hiring a full-time executive assistant for your family.",
+    best: "Complex households — multiple homes, providers, or travel.",
+    includes: [
+      "Everything in Pro",
+      "Multi-agent AI system (10 specialists)",
+      "Family Digital Twin & scenario simulator",
+      "Predictive planning",
+      "Automatic travel & trip organization",
+      "AI shopping & negotiation assistant",
+      "Advanced financial insights",
+      "Long-term family memory",
+      "Home maintenance & vehicle intelligence",
+      "Smart home integrations",
+      "Unlimited OCR & document AI",
+      "Concierge onboarding + priority support",
+      "Early access to experimental features",
+    ],
+    cta: "Talk to concierge",
+  },
+];
+
+export type MarketItem = {
+  id: string;
+  title: string;
+  creator: string;
+  category: string;
+  price: string;
+  format: string;
+  blurb: string;
+  badge?: "New" | "Editor's pick" | "Popular";
+};
+
+export const marketCategories = [
+  "All",
+  "Templates",
+  "Travel",
+  "Meal & grocery",
+  "School",
+  "Sports",
+  "Home",
+  "Finance",
+  "Parenting",
+  "Holidays",
+];
+
+export const marketItems: MarketItem[] = [
+  { id: "m1", title: "The Calm Household System", creator: "By Marcy Ellison, organizer", category: "Templates", price: "$18", format: "PDF + Notion", blurb: "Room-by-room reset, weekly rhythms, and a printable command center.", badge: "Editor's pick" },
+  { id: "m2", title: "Disney World in 4 Days", creator: "By The Family Trip Co.", category: "Travel", price: "$24", format: "Itinerary + checklists", blurb: "Ride order, dining windows, stroller strategy, and rest cadence.", badge: "Popular" },
+  { id: "m3", title: "School Year Launch Kit", creator: "By Ms. Rivera, K-6 teacher", category: "School", price: "$12", format: "Printable + digital", blurb: "Supply lists, forms tracker, and first-month calendar prompts." },
+  { id: "m4", title: "Tournament Weekend Planner", creator: "By Coach Hollis", category: "Sports", price: "$9", format: "Checklist pack", blurb: "Packing, snacks, hydration, hotel handoff, and post-game recovery." },
+  { id: "m5", title: "The Quiet Meal Plan", creator: "By Nora Cheng, RD", category: "Meal & grocery", price: "$16", format: "4 weeks · shopping lists", blurb: "Family dinners in 30 minutes with a single grocery run." },
+  { id: "m6", title: "ADHD-Friendly Household", creator: "By Dr. Simon Park", category: "Parenting", price: "$22", format: "Playbook + prompts", blurb: "Gentle structure without shame. Morning, homework, and reset routines." },
+  { id: "m7", title: "Newborn: First 90 Days", creator: "By Mia Alden, IBCLC", category: "Parenting", price: "$28", format: "Timeline + logs", blurb: "Sleep windows, feeding logs, visitor policy, and partner handoffs.", badge: "New" },
+  { id: "m8", title: "Holiday Season Command Center", creator: "By The Warm Table", category: "Holidays", price: "$14", format: "Nov–Jan calendar", blurb: "Gifts, cards, hosting, travel — laid out so nothing catches you." },
+  { id: "m9", title: "Family Budget That Sticks", creator: "By Alex Ruiz, CFP", category: "Finance", price: "$19", format: "Google Sheets", blurb: "Envelope-style categories, quarterly reviews, and kid allowance tracking." },
+  { id: "m10", title: "Move-In / Move-Out Master", creator: "By Nest & Nook", category: "Home", price: "$11", format: "8-week checklist", blurb: "Utilities, schools, mail, and the sanity items every move forgets." },
+  { id: "m11", title: "Homeschool Rhythm", creator: "By The Willow Room", category: "School", price: "$26", format: "Curriculum planner", blurb: "Weekly loop schedule, subject rotation, and family read-alouds." },
+  { id: "m12", title: "Birthday Party in a Box", creator: "By Confetti Studio", category: "Holidays", price: "$8", format: "Invite + timeline", blurb: "Guest list, cake day, day-of run of show, thank-you tracker." },
+];
+
+export type WorkflowStep = { id: string; text: string };
+export type FamilyWorkflow = {
+  id: string;
+  name: string;
+  by: string;
+  installs: string;
+  summary: string;
+  steps: WorkflowStep[];
+  tier: "free" | "pro" | "max";
+  price?: string;
+};
+
+export const workflows: FamilyWorkflow[] = [
+  {
+    id: "w1",
+    name: "New School Year",
+    by: "Family COO",
+    installs: "24k installs",
+    summary: "Get from summer to first-week-of-school without the scramble.",
+    tier: "pro",
+    steps: [
+      { id: "s1", text: "Sort every school email into the child's folder." },
+      { id: "s2", text: "Build the school calendar (breaks, half-days, conferences)." },
+      { id: "s3", text: "Detect supply lists and draft a shopping cart." },
+      { id: "s4", text: "Track forms — flag anything unsigned by Friday." },
+      { id: "s5", text: "Prep first-day briefing: bus, teacher, snack, pickup." },
+    ],
+  },
+  {
+    id: "w2",
+    name: "Tournament Weekend",
+    by: "Family COO",
+    installs: "9.4k installs",
+    summary: "Pack, plan, and hand off cleanly for a two-day tournament.",
+    tier: "pro",
+    steps: [
+      { id: "s1", text: "Build a packing list from the sport, weather, and past trips." },
+      { id: "s2", text: "Watch the forecast — nudge if rain gear is needed." },
+      { id: "s3", text: "Calculate departure time with traffic + child prep." },
+      { id: "s4", text: "Confirm hotel + share directions with the other parent." },
+      { id: "s5", text: "Save receipts to the sports budget." },
+    ],
+  },
+  {
+    id: "w3",
+    name: "International Vacation",
+    by: "Family COO",
+    installs: "12k installs",
+    summary: "Everything from passports to the ride home.",
+    tier: "max",
+    steps: [
+      { id: "s1", text: "Check every passport against travel dates." },
+      { id: "s2", text: "Build a per-person packing list by weather + activities." },
+      { id: "s3", text: "Consolidate reservations into a shareable itinerary." },
+      { id: "s4", text: "Suggest restaurants and rest days." },
+      { id: "s5", text: "Draft travel documents folder for each traveler." },
+    ],
+  },
+  {
+    id: "w4",
+    name: "Newborn: First 90 Days",
+    by: "Mia Alden, IBCLC",
+    installs: "3.1k installs",
+    summary: "A gentle operating system for the fourth trimester.",
+    tier: "pro",
+    price: "$14",
+    steps: [
+      { id: "s1", text: "Log feedings, sleep windows, and diapers without stress." },
+      { id: "s2", text: "Rotate partner handoffs and night duty." },
+      { id: "s3", text: "Track pediatrician visits and vaccine dates." },
+      { id: "s4", text: "Manage visitor cadence and thank-yous." },
+    ],
+  },
+  {
+    id: "w5",
+    name: "Household Reset Sunday",
+    by: "Family COO",
+    installs: "18k installs",
+    summary: "Ninety quiet minutes that set the whole week straight.",
+    tier: "free",
+    steps: [
+      { id: "s1", text: "Pull next week's calendar into one view." },
+      { id: "s2", text: "Draft the grocery run from meal plan + pantry." },
+      { id: "s3", text: "Assign owners for the week's key tasks." },
+      { id: "s4", text: "Send caregiver handoffs for the days that need them." },
+    ],
+  },
+  {
+    id: "w6",
+    name: "Move to a New City",
+    by: "Nest & Nook",
+    installs: "1.2k installs",
+    summary: "Eight weeks laid out — utilities, schools, mail, and mind.",
+    tier: "max",
+    price: "$19",
+    steps: [
+      { id: "s1", text: "Timeline for utilities, mail, and address changes." },
+      { id: "s2", text: "School transfer packet + enrollment checklist." },
+      { id: "s3", text: "Find providers (pediatrician, dentist, vet)." },
+      { id: "s4", text: "Track receipts for the tax-deductible portion." },
+    ],
+  },
+];
+
+export type Creator = {
+  id: string;
+  name: string;
+  discipline: string;
+  bio: string;
+  works: number;
+  status: "Approved" | "In review" | "Featured";
+};
+
+export const creators: Creator[] = [
+  { id: "c1", name: "Marcy Ellison", discipline: "Professional organizer", bio: "20 years helping families reset their homes without shame.", works: 6, status: "Featured" },
+  { id: "c2", name: "Dr. Simon Park", discipline: "Family psychologist", bio: "ADHD, anxiety, and gentle structure for neurodivergent households.", works: 4, status: "Approved" },
+  { id: "c3", name: "Coach Hollis", discipline: "Youth sports", bio: "Fifteen tournament seasons distilled into one weekend plan.", works: 3, status: "Approved" },
+  { id: "c4", name: "Nora Cheng, RD", discipline: "Registered dietitian", bio: "Family dinners that fit real weeknights and picky eaters.", works: 5, status: "Featured" },
+  { id: "c5", name: "The Willow Room", discipline: "Homeschool", bio: "A calm, curiosity-first rhythm for K–8 homeschooling families.", works: 7, status: "Approved" },
+  { id: "c6", name: "Alex Ruiz, CFP", discipline: "Financial planner", bio: "Budget systems that survive kids, moves, and career changes.", works: 2, status: "In review" },
+];
+
+export const marketRecommendations = [
+  { id: "r1", trigger: "You're planning Tokyo in April.", pack: "Tokyo with Kids: 6-Day Rhythm", why: "Reservations, walking distances, and rest days already mapped." },
+  { id: "r2", trigger: "Lily starts kindergarten in the fall.", pack: "School Year Launch Kit", why: "Supply lists, forms tracker, and first-month calendar prompts." },
+  { id: "r3", trigger: "Oliver's tennis season begins.", pack: "Tournament Weekend Planner", why: "Packing, snacks, and departure timing already tuned for youth tennis." },
+];
+
+export const creatorProgram = {
+  revenueShare: "70% to creators, 30% to platform",
+  review: "Every product is reviewed for accuracy, tone, and safety before publication.",
+  perks: [
+    "Fair, upfront revenue share",
+    "Discoverability through AI recommendations",
+    "Analytics on installs, downloads, and reviews",
+    "Optional editorial help from the Family COO team",
+  ],
+  requirements: [
+    "Real expertise in the domain you publish in",
+    "Original work — no reselling",
+    "Warm, non-judgmental tone",
+    "Clear structure, tested with at least three families",
+  ],
+};

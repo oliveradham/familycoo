@@ -9,6 +9,10 @@ export const Route = createFileRoute("/")({
 });
 
 const features: { to: string; label: string; hint: string }[] = [
+  { to: "/marketplace", label: "Marketplace", hint: "Curated templates & itineraries" },
+  { to: "/workflows", label: "AI workflows", hint: "One-tap installs" },
+  { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
+  { to: "/creators", label: "Creator program", hint: "Sell your family expertise" },
   { to: "/agents", label: "AI agents", hint: "10 specialists · one workflow" },
   { to: "/approvals", label: "Approvals", hint: "4 drafts waiting on your yes" },
   { to: "/followups", label: "Follow-ups", hint: "5 tracked · 3 need a nudge" },
@@ -216,6 +220,35 @@ function Today() {
           <span className="text-lg opacity-60">→</span>
         </Link>
       </section>
+
+      {/* Marketplace + Plans */}
+      <section className="px-6 mb-6 space-y-2">
+        <Link
+          to="/marketplace"
+          className="flex items-center justify-between rounded-3xl border border-hairline bg-surface p-5"
+        >
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Family Marketplace
+            </p>
+            <p className="mt-1 font-serif text-xl italic">Curated templates, itineraries, and AI workflows.</p>
+          </div>
+          <span className="text-lg opacity-60">→</span>
+        </Link>
+        <Link
+          to="/plans"
+          className="flex items-center justify-between rounded-3xl border border-hairline bg-surface p-5"
+        >
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              You're on Free
+            </p>
+            <p className="mt-1 font-serif text-xl italic">See what Pro quietly unlocks.</p>
+          </div>
+          <span className="text-lg opacity-60">→</span>
+        </Link>
+      </section>
+
 
       {/* Sunday review */}
       <section className="px-6">
