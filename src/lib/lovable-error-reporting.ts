@@ -18,19 +18,19 @@ declare global {
   }
 }
 
+import { captureError } from "./sentry";
+
 export function reportLovableError(error: unknown, context: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
-  window.__lovableEvents?.captureException?.(
-    error,
-    {
-      source: "react_error_boundary",
-      route: window.location.pathname,
-      ...context,
-    },
-    {
-      mechanism: "react_error_boundary",
-      handled: false,
-      severity: "error",
-    },
-  );
+  const ctx = {
+    source: "react_error_boundary",
+    route: window.location.pathname,
+    ...context,
+  };
+  window.__lovableEvents?.captureException?.(error, ctx, {
+    mechanism: "react_error_boundary",
+    handled: false,
+    severity: "error",
+  });
+  captureError(error, ctx);
 }
