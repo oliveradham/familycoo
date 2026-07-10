@@ -16,6 +16,7 @@ import { Route as TwinRouteImport } from './routes/twin'
 import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -104,6 +105,11 @@ const TermsRoute = TermsRouteImport.update({
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SubscriptionsRoute = SubscriptionsRouteImport.update({
@@ -432,6 +438,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
+  '/support': typeof SupportRoute
   '/tasks': typeof TasksRoute
   '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
@@ -495,6 +502,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
+  '/support': typeof SupportRoute
   '/tasks': typeof TasksRoute
   '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
@@ -559,6 +567,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
+  '/support': typeof SupportRoute
   '/tasks': typeof TasksRoute
   '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
@@ -624,6 +633,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
+    | '/support'
     | '/tasks'
     | '/terms'
     | '/travel'
@@ -687,6 +697,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
+    | '/support'
     | '/tasks'
     | '/terms'
     | '/travel'
@@ -750,6 +761,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
+    | '/support'
     | '/tasks'
     | '/terms'
     | '/travel'
@@ -814,6 +826,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SportsRoute: typeof SportsRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
+  SupportRoute: typeof SupportRoute
   TasksRoute: typeof TasksRoute
   TermsRoute: typeof TermsRoute
   TravelRoute: typeof TravelRoute
@@ -872,6 +885,13 @@ declare module '@tanstack/react-router' {
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/subscriptions': {
@@ -1310,6 +1330,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SportsRoute: SportsRoute,
   SubscriptionsRoute: SubscriptionsRoute,
+  SupportRoute: SupportRoute,
   TasksRoute: TasksRoute,
   TermsRoute: TermsRoute,
   TravelRoute: TravelRoute,
