@@ -465,6 +465,20 @@ function SettingsPage() {
             </p>
           </div>
           {isActive ? (
+            isNative() ? (
+              <button
+                onClick={() =>
+                  openExternal(
+                    isIOS()
+                      ? "https://apps.apple.com/account/subscriptions"
+                      : "https://play.google.com/store/account/subscriptions",
+                  )
+                }
+                className="w-full rounded-full border border-hairline bg-white px-4 py-2.5 text-[12px] font-medium uppercase tracking-widest text-foreground"
+              >
+                Manage subscription in {isIOS() ? "App Store" : "Google Play"}
+              </button>
+            ) : (
             <button
               onClick={async () => {
                 if (portalBusy) return;
@@ -485,6 +499,8 @@ function SettingsPage() {
             >
               {portalBusy ? "Opening…" : "Manage billing & payment method"}
             </button>
+            )
+
           ) : (
             <Link
               to="/plans"
