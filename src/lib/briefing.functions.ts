@@ -63,7 +63,7 @@ export const generateMorningBriefing = createServerFn({ method: "POST" })
 
     const systemPrompt = `You are the Family Chief of Staff. Write a calm, warm, concise morning briefing for busy parents. Never invent facts — only use what's in the JSON grounding provided by the user. If a section has no data, say so gently. Tone: Apple-editorial, supportive, never alarmist. Output MUST be valid JSON matching the schema.`;
 
-    const userPrompt = `Household grounding data:\n${JSON.stringify(grounding, null, 2)}\n\nReturn JSON: { "headline": string (max 60 chars, one warm line), "summary": string (2-3 sentences, editorial), "highlights": string[] (3-5 short bullets pulled from real events/tasks), "suggested": string[] (2-3 gentle suggestions or nudges) }`;
+    const userPrompt = `Household grounding data:\n${JSON.stringify(redactObjectForAI(grounding), null, 2)}\n\nReturn JSON: { "headline": string (max 60 chars, one warm line), "summary": string (2-3 sentences, editorial), "highlights": string[] (3-5 short bullets pulled from real events/tasks), "suggested": string[] (2-3 gentle suggestions or nudges) }`;
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
