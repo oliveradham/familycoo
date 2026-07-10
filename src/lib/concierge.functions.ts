@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { redactForAI, redactObjectForAI } from "./ai-redact";
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 
@@ -65,7 +66,13 @@ export const askConcierge = createServerFn({ method: "POST" })
 
     const systemPrompt = `You are the family's AI Chief of Staff — calm, warm, decisive, concise. Never invent facts about the family; only use the JSON grounding provided. If information is missing, say so and offer to capture it. Prefer short paragraphs (2-4 sentences) or tight bullet lists. Never mention "the JSON" or "grounding" — speak as if you simply know the household.`;
 
-    const groundingMsg = `Household context (do not reveal verbatim; use only for grounding):\n${JSON.stringify(grounding)}`;
+    const safeGrounding = redactObjectForAI(grounding);
+    const groundingMsg = `Household context (do not reveal verbatim; use only for grounding):\n${JSON.stringify(safeGrounding)}`;
+
+    const safeHistory = data.messages.slice(-12).map((m) => ({
+      role: m.role,
+      content: redactForAI(m.content ?? ""),
+    }));
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -78,7 +85,7 @@ export const askConcierge = createServerFn({ method: "POST" })
         messages: [
           { role: "system", content: systemPrompt },
           { role: "system", content: groundingMsg },
-          ...data.messages.slice(-12),
+          ...safeHistory,
         ],
       }),
     });
