@@ -1,11 +1,36 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { redactForAI, redactObjectForAI } from "./ai-redact";
+import { recallMemories } from "./memory.functions";
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 
+export const listConciergeHistory = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabase, userId } = context;
+    const { data } = await supabase
+      .from("concierge_messages")
+      .select("id, role, content, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(200);
+    return data ?? [];
+  });
+
+export const clearConciergeHistory = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { error } = await context.supabase
+      .from("concierge_messages")
+      .delete()
+      .eq("user_id", context.userId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 /**
- * Concierge chat — grounded in household state via Lovable AI Gateway.
+ * Concierge chat — grounded in household state + family memory via Lovable AI Gateway.
  */
 export const askConcierge = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -30,8 +55,9 @@ export const askConcierge = createServerFn({ method: "POST" })
 
     const now = new Date();
     const in7d = new Date(now.getTime() + 7 * 24 * 3600 * 1000).toISOString();
+    const latestUser = [...data.messages].reverse().find((m) => m.role === "user")?.content ?? "";
 
-    const [{ data: events }, { data: tasks }, { data: members }] = await Promise.all([
+    const [{ data: events }, { data: tasks }, { data: members }, memories] = await Promise.all([
       supabase
         .from("calendar_events")
         .select("title, starts_at, location, category")
@@ -52,6 +78,7 @@ export const askConcierge = createServerFn({ method: "POST" })
         .select("name, role")
         .eq("household_id", householdId)
         .limit(20),
+      recallMemories(supabase, householdId, latestUser, 12),
     ]);
 
     const grounding = {
@@ -59,6 +86,7 @@ export const askConcierge = createServerFn({ method: "POST" })
       family: members ?? [],
       upcoming_events: events ?? [],
       open_tasks: tasks ?? [],
+      remembered_facts: memories ?? [],
     };
 
     const apiKey = process.env.LOVABLE_API_KEY;
@@ -98,6 +126,16 @@ export const askConcierge = createServerFn({ method: "POST" })
     }
 
     const json = await res.json();
-    const reply = json?.choices?.[0]?.message?.content ?? "I'm here — could you say that again?";
+    const reply: string = json?.choices?.[0]?.message?.content ?? "I'm here — could you say that again?";
+
+    // Persist the last user turn + assistant reply
+    const lastUser = data.messages[data.messages.length - 1];
+    if (lastUser && lastUser.role === "user") {
+      await supabase.from("concierge_messages").insert([
+        { household_id: householdId, user_id: userId, role: "user", content: lastUser.content },
+        { household_id: householdId, user_id: userId, role: "assistant", content: reply },
+      ]);
+    }
+
     return { reply };
   });
