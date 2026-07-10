@@ -69,6 +69,16 @@ export async function runConflictAgent(supabase: Sb, household_id: string) {
         lane: "conflict",
         due_at: a.starts_at,
       });
+      const { notifyHousehold } = await import("./notify.server");
+      await notifyHousehold(supabase, {
+        household_id,
+        kind: "agent:conflict",
+        subject: `Schedule conflict: "${a.title}"`,
+        body: `Overlaps with "${b.title}" on ${new Date(a.starts_at).toLocaleString()}`,
+        url: "/approvals",
+        ref_id: `conflict:${a.id}:${b.id}`,
+        dedupe_hours: 24,
+      });
       created++;
     }
   }
