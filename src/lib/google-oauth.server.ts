@@ -71,10 +71,12 @@ export async function verifyState(state: string): Promise<{
   const [encoded, sig] = state.split(".");
   if (!encoded || !sig) return null;
   const sigBytes = ub64url(sig);
+  const sigBuf = new ArrayBuffer(sigBytes.byteLength);
+  new Uint8Array(sigBuf).set(sigBytes);
   const ok = await crypto.subtle.verify(
     "HMAC",
     await hmacKey(),
-    sigBytes.buffer.slice(sigBytes.byteOffset, sigBytes.byteOffset + sigBytes.byteLength),
+    sigBuf,
     new TextEncoder().encode(encoded),
   );
   if (!ok) return null;

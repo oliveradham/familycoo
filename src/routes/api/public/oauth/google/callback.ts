@@ -48,13 +48,15 @@ export const Route = createFileRoute("/api/public/oauth/google/callback")({
         const expires = new Date(Date.now() + (tok.expires_in - 30) * 1000).toISOString();
         const email = emailFromIdToken(tok.id_token);
 
-        const { data: existing } = await supabaseAdmin
+        const query = supabaseAdmin
           .from("calendar_integrations")
           .select("id, refresh_token_ciphertext")
           .eq("user_id", payload.user_id)
-          .eq("provider", "google")
-          .eq("provider_account_email", email)
-          .maybeSingle();
+          .eq("provider", "google");
+        const { data: existing } = await (email
+          ? query.eq("provider_account_email", email)
+          : query.is("provider_account_email", null)
+        ).maybeSingle();
 
         if (existing) {
           await supabaseAdmin
@@ -85,13 +87,15 @@ export const Route = createFileRoute("/api/public/oauth/google/callback")({
         // Fire-and-forget initial sync; failures land in sync_status/last_error.
         (async () => {
           try {
-            const { data: row } = await supabaseAdmin
+            const q2 = supabaseAdmin
               .from("calendar_integrations")
               .select("id")
               .eq("user_id", payload.user_id)
-              .eq("provider", "google")
-              .eq("provider_account_email", email)
-              .maybeSingle();
+              .eq("provider", "google");
+            const { data: row } = await (email
+              ? q2.eq("provider_account_email", email)
+              : q2.is("provider_account_email", null)
+            ).maybeSingle();
             if (row) {
               const { syncIntegration } = await import("@/lib/calendar-sync.server");
               await syncIntegration(supabaseAdmin, row.id);
