@@ -260,19 +260,19 @@ function SettingsPage() {
               icon={Sparkles}
               label="Approvals ready"
               hint="When an agent has a draft for you"
-              right={<Toggle on={pushApprovals} onChange={setPushApprovals} />}
+              right={<Toggle label="Approvals ready" on={pushApprovals} onChange={setPushApprovals} />}
             />
             <Row
               icon={Bell}
               label="Conflict alerts"
               hint="Overlaps, at-risk items, weather"
-              right={<Toggle on={pushConflicts} onChange={setPushConflicts} />}
+              right={<Toggle label="Conflict alerts" on={pushConflicts} onChange={setPushConflicts} />}
             />
             <Row
               icon={Bell}
               label="Product updates"
               hint="New workflows, tips"
-              right={<Toggle on={pushMarketing} onChange={setPushMarketing} />}
+              right={<Toggle label="Product updates" on={pushMarketing} onChange={setPushMarketing} />}
             />
           </div>
         </Card>
@@ -287,23 +287,23 @@ function SettingsPage() {
               icon={Sparkles}
               label="Proactive suggestions"
               hint="Surface things before they become problems"
-              right={<Toggle on={proactive} onChange={setProactive} />}
+              right={<Toggle label="Proactive suggestions" on={proactive} onChange={setProactive} />}
             />
             <Row
               icon={Sparkles}
               label="Autopilot"
               hint="Run approved rules automatically"
-              right={<Toggle on={autopilot} onChange={setAutopilot} />}
+              right={<Toggle label="Autopilot" on={autopilot} onChange={setAutopilot} />}
             />
             <Row
               icon={Mic}
               label="Voice capture"
-              right={<Toggle on={voice} onChange={setVoice} />}
+              right={<Toggle label="Voice capture" on={voice} onChange={setVoice} />}
             />
             <Row
               icon={Volume2}
               label="Haptics & sound"
-              right={<Toggle on={haptics} onChange={setHaptics} />}
+              right={<Toggle label="Haptics and sound" on={haptics} onChange={setHaptics} />}
             />
           </div>
         </Card>
@@ -318,7 +318,7 @@ function SettingsPage() {
               icon={Moon}
               label="Dark mode"
               hint="Follows briefing time by default"
-              right={<Toggle on={darkMode} onChange={setDarkMode} />}
+              right={<Toggle label="Dark mode" on={darkMode} onChange={setDarkMode} />}
             />
             <Row icon={Palette} label="Accent" right={
               <div className="flex gap-2">
