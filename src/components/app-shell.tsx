@@ -1,13 +1,14 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { useLanguage } from "@/lib/i18n";
 
-const nav: { to: string; label: string; icon: LucideIcon }[] = [
-  { to: "/", label: "Today", icon: HomeIcon },
-  { to: "/inbox", label: "Inbox", icon: Inbox },
-  { to: "/concierge", label: "Ask", icon: MessageCircle },
-  { to: "/calendar", label: "Week", icon: Calendar },
-  { to: "/review", label: "Review", icon: CalendarCheck },
+const nav: { to: string; key: string; icon: LucideIcon }[] = [
+  { to: "/", key: "nav.today", icon: HomeIcon },
+  { to: "/inbox", key: "nav.inbox", icon: Inbox },
+  { to: "/concierge", key: "nav.ask", icon: MessageCircle },
+  { to: "/calendar", key: "nav.week", icon: Calendar },
+  { to: "/review", key: "nav.review", icon: CalendarCheck },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
