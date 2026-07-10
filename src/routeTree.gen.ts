@@ -30,6 +30,7 @@ import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
 import { Route as ReadinessRouteImport } from './routes/readiness'
 import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProvidersRouteImport } from './routes/providers'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as PlansRouteImport } from './routes/plans'
@@ -169,6 +170,11 @@ const PurchasesRoute = PurchasesRouteImport.update({
 const ProvidersRoute = ProvidersRouteImport.update({
   id: '/providers',
   path: '/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -383,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
@@ -441,6 +448,7 @@ export interface FileRoutesByTo {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
@@ -500,6 +508,7 @@ export interface FileRoutesById {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
@@ -560,6 +569,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
@@ -618,6 +628,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
@@ -676,6 +687,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
@@ -735,6 +747,7 @@ export interface RootRouteChildren {
   PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
   PrivacyRoute: typeof PrivacyRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProvidersRoute: typeof ProvidersRoute
   PurchasesRoute: typeof PurchasesRoute
   ReadinessRoute: typeof ReadinessRoute
@@ -905,6 +918,13 @@ declare module '@tanstack/react-router' {
       path: '/providers'
       fullPath: '/providers'
       preLoaderRoute: typeof ProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -1191,6 +1211,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
   PrivacyRoute: PrivacyRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProvidersRoute: ProvidersRoute,
   PurchasesRoute: PurchasesRoute,
   ReadinessRoute: ReadinessRoute,
