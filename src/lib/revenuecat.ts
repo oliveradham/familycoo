@@ -25,8 +25,10 @@ export type RCOffering = {
 
 async function loadPurchases() {
   if (!isNative()) throw new Error("RevenueCat is native-only");
-  // @ts-expect-error — optional native-only dep, installed inside Capacitor shell
-  const mod = await import(/* @vite-ignore */ "@revenuecat/purchases-capacitor");
+  const pkg = ["@revenuecat", "purchases-capacitor"].join("/");
+  // Indirection prevents Vite from statically resolving this optional native-only dep.
+  const dynImport = new Function("s", "return import(s)") as (s: string) => Promise<any>;
+  const mod = await dynImport(pkg);
   return mod.Purchases;
 }
 
