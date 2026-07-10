@@ -63,7 +63,7 @@ function Row({
   );
 }
 
-function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button
       type="button"
@@ -72,6 +72,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
         on ? "bg-zinc-900 justify-end" : "bg-zinc-300 justify-start"
       }`}
       aria-pressed={on}
+      aria-label={label}
     >
       <span className="block size-5 rounded-full bg-white shadow ring-1 ring-black/5" />
     </button>
