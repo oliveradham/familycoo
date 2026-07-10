@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/app-shell";
 import { useEffect, useRef, useState } from "react";
 import { Mic, ArrowUp, Sparkles } from "lucide-react";
+import { askConcierge } from "@/lib/concierge.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/concierge")({
   head: () => ({
@@ -30,54 +33,56 @@ const seed: Msg[] = [
   {
     id: "m1",
     role: "ai",
-    text: "Good morning, Aimee. I've reviewed today's schedule, weather, and household state. What can I take off your plate?",
+    text: "Good morning. I've reviewed today's schedule and open tasks. What can I take off your plate?",
   },
 ];
 
 const suggestions = [
-  "Plan next weekend",
-  "Book Lily's dentist",
-  "Find flights to Japan",
-  "Who's picking up Oliver today?",
-  "What do we need before tennis season?",
+  "What's on today?",
+  "Summarize this week",
+  "What's overdue?",
+  "Draft a note to school",
+  "Plan the weekend",
 ];
-
-function replyFor(q: string): string {
-  const l = q.toLowerCase();
-  if (l.includes("pick") && l.includes("oliver"))
-    return "Basil is picking up Oliver from tennis today. He's set an alarm to leave at 4:15 PM to beat the 5 PM rain. I've notified him.";
-  if (l.includes("dentist"))
-    return "I can book Dr. Alvarez (Lily's usual). She has openings Tue 3 PM, Thu 9 AM, or Fri 4 PM. Which works? I'll add it to the calendar and remind Sofia.";
-  if (l.includes("japan") || l.includes("flight"))
-    return "For Tokyo Oct 24 – Nov 3: ANA 007 is your usual (nonstop, sleep pods available). Note: your passport expires within 6 months of the trip — Japan requires 6+ months validity. I've prepared the renewal packet.";
-  if (l.includes("weekend"))
-    return "Next weekend Basil and Oliver are at the Fall Classic (Fri–Sun). Lily is home with Sofia Saturday morning; Sunday is open. Shall I hold Sunday for family time, or plan a brunch with the Chens?";
-  if (l.includes("tennis"))
-    return "Before tennis season starts: new grip tape (I've added it), racquet restring due (I can book with Marco), 2 backup snacks for tournaments, sunscreen refill, and hydration pack. Say 'do it' and I'll place the order.";
-  return "Working on it — I'll pull that together across your calendar, contacts, and inventory and come back with a proposal.";
-}
 
 function ConciergePage() {
   const [msgs, setMsgs] = useState<Msg[]>(seed);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const ask = useServerFn(askConcierge);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [msgs, thinking]);
 
-  function send(text: string) {
+  async function send(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed || thinking) return;
     const userMsg: Msg = { id: crypto.randomUUID(), role: "user", text: trimmed };
-    setMsgs((m) => [...m, userMsg]);
+    const next = [...msgs, userMsg];
+    setMsgs(next);
     setInput("");
     setThinking(true);
-    setTimeout(() => {
-      setMsgs((m) => [...m, { id: crypto.randomUUID(), role: "ai", text: replyFor(trimmed) }]);
+    try {
+      const history = next
+        .filter((m) => m.id !== "m1")
+        .map((m) => ({
+          role: (m.role === "ai" ? "assistant" : "user") as "assistant" | "user",
+          content: m.text,
+        }));
+      const { reply } = await ask({ data: { messages: history } });
+      setMsgs((m) => [...m, { id: crypto.randomUUID(), role: "ai", text: reply }]);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Something went wrong.";
+      toast.error(msg);
+      setMsgs((m) => [
+        ...m,
+        { id: crypto.randomUUID(), role: "ai", text: "I couldn't reach the assistant just now. Try again in a moment." },
+      ]);
+    } finally {
       setThinking(false);
-    }, 900);
+    }
   }
 
   return (
