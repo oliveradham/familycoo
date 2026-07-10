@@ -70,14 +70,16 @@ export async function verifyState(state: string): Promise<{
 } | null> {
   const [encoded, sig] = state.split(".");
   if (!encoded || !sig) return null;
+  const sigBytes = ub64url(sig);
   const ok = await crypto.subtle.verify(
     "HMAC",
     await hmacKey(),
-    ub64url(sig),
+    sigBytes.buffer.slice(sigBytes.byteOffset, sigBytes.byteOffset + sigBytes.byteLength),
     new TextEncoder().encode(encoded),
   );
   if (!ok) return null;
-  const body = JSON.parse(new TextDecoder().decode(ub64url(encoded)));
+  const bodyBytes = ub64url(encoded);
+  const body = JSON.parse(new TextDecoder().decode(bodyBytes));
   if (typeof body?.iat !== "number" || Date.now() / 1000 - body.iat > 900) return null; // 15 min
   return body;
 }

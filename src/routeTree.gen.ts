@@ -75,9 +75,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ApiPublicRevenuecatWebhookRouteImport } from './routes/api/public/revenuecat-webhook'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicHooksSyncCalendarsRouteImport } from './routes/api/public/hooks/sync-calendars'
 import { Route as ApiPublicHooksRunWeeklyReviewRouteImport } from './routes/api/public/hooks/run-weekly-review'
 import { Route as ApiPublicHooksRunBriefingsRouteImport } from './routes/api/public/hooks/run-briefings'
 import { Route as ApiPublicHooksAgentsTickRouteImport } from './routes/api/public/hooks/agents-tick'
+import { Route as ApiPublicOauthGoogleCallbackRouteImport } from './routes/api/public/oauth/google/callback'
 
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
@@ -411,6 +413,12 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksSyncCalendarsRoute =
+  ApiPublicHooksSyncCalendarsRouteImport.update({
+    id: '/api/public/hooks/sync-calendars',
+    path: '/api/public/hooks/sync-calendars',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksRunWeeklyReviewRoute =
   ApiPublicHooksRunWeeklyReviewRouteImport.update({
     id: '/api/public/hooks/run-weekly-review',
@@ -427,6 +435,12 @@ const ApiPublicHooksAgentsTickRoute =
   ApiPublicHooksAgentsTickRouteImport.update({
     id: '/api/public/hooks/agents-tick',
     path: '/api/public/hooks/agents-tick',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicOauthGoogleCallbackRoute =
+  ApiPublicOauthGoogleCallbackRouteImport.update({
+    id: '/api/public/oauth/google/callback',
+    path: '/api/public/oauth/google/callback',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -499,7 +513,9 @@ export interface FileRoutesByFullPath {
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
+  '/api/public/hooks/sync-calendars': typeof ApiPublicHooksSyncCalendarsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/oauth/google/callback': typeof ApiPublicOauthGoogleCallbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -570,7 +586,9 @@ export interface FileRoutesByTo {
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
+  '/api/public/hooks/sync-calendars': typeof ApiPublicHooksSyncCalendarsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/oauth/google/callback': typeof ApiPublicOauthGoogleCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -642,7 +660,9 @@ export interface FileRoutesById {
   '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
   '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/hooks/run-weekly-review': typeof ApiPublicHooksRunWeeklyReviewRoute
+  '/api/public/hooks/sync-calendars': typeof ApiPublicHooksSyncCalendarsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/oauth/google/callback': typeof ApiPublicOauthGoogleCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -715,7 +735,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
     | '/api/public/hooks/run-weekly-review'
+    | '/api/public/hooks/sync-calendars'
     | '/api/public/payments/webhook'
+    | '/api/public/oauth/google/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -786,7 +808,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
     | '/api/public/hooks/run-weekly-review'
+    | '/api/public/hooks/sync-calendars'
     | '/api/public/payments/webhook'
+    | '/api/public/oauth/google/callback'
   id:
     | '__root__'
     | '/'
@@ -857,7 +881,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/agents-tick'
     | '/api/public/hooks/run-briefings'
     | '/api/public/hooks/run-weekly-review'
+    | '/api/public/hooks/sync-calendars'
     | '/api/public/payments/webhook'
+    | '/api/public/oauth/google/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -929,7 +955,9 @@ export interface RootRouteChildren {
   ApiPublicHooksAgentsTickRoute: typeof ApiPublicHooksAgentsTickRoute
   ApiPublicHooksRunBriefingsRoute: typeof ApiPublicHooksRunBriefingsRoute
   ApiPublicHooksRunWeeklyReviewRoute: typeof ApiPublicHooksRunWeeklyReviewRoute
+  ApiPublicHooksSyncCalendarsRoute: typeof ApiPublicHooksSyncCalendarsRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
+  ApiPublicOauthGoogleCallbackRoute: typeof ApiPublicOauthGoogleCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1396,6 +1424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/sync-calendars': {
+      id: '/api/public/hooks/sync-calendars'
+      path: '/api/public/hooks/sync-calendars'
+      fullPath: '/api/public/hooks/sync-calendars'
+      preLoaderRoute: typeof ApiPublicHooksSyncCalendarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/run-weekly-review': {
       id: '/api/public/hooks/run-weekly-review'
       path: '/api/public/hooks/run-weekly-review'
@@ -1415,6 +1450,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/hooks/agents-tick'
       fullPath: '/api/public/hooks/agents-tick'
       preLoaderRoute: typeof ApiPublicHooksAgentsTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/oauth/google/callback': {
+      id: '/api/public/oauth/google/callback'
+      path: '/api/public/oauth/google/callback'
+      fullPath: '/api/public/oauth/google/callback'
+      preLoaderRoute: typeof ApiPublicOauthGoogleCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -1489,7 +1531,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicHooksAgentsTickRoute: ApiPublicHooksAgentsTickRoute,
   ApiPublicHooksRunBriefingsRoute: ApiPublicHooksRunBriefingsRoute,
   ApiPublicHooksRunWeeklyReviewRoute: ApiPublicHooksRunWeeklyReviewRoute,
+  ApiPublicHooksSyncCalendarsRoute: ApiPublicHooksSyncCalendarsRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
+  ApiPublicOauthGoogleCallbackRoute: ApiPublicOauthGoogleCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
