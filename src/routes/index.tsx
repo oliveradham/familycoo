@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "AI Chief Operating Officer for busy families. Morning briefings, unified calendar, school, sports, travel, groceries, medical, and household in one calm command center.",
+          "AI Chief Operating Officer for busy families. Briefings, calendar, school, sports, travel, groceries, and medical in one calm command center.",
       },
       { property: "og:title", content: "Family COO — AI Command Center for Busy Families" },
       {
