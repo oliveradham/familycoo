@@ -13,6 +13,7 @@ const nav: { to: string; key: string; icon: LucideIcon }[] = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -31,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   key={item.to}
                   to={item.to}
                   className="-my-3 flex size-12 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg ring-1 ring-white/40 transition-transform active:scale-95"
-                  aria-label="Ask Concierge"
+                  aria-label={t("nav.ask")}
                 >
                   <Icon className="size-5" strokeWidth={2} />
                 </Link>
@@ -46,7 +47,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 }`}
               >
                 <Icon className="size-4" strokeWidth={1.75} />
-                <span>{item.label}</span>
+                <span>{t(item.key)}</span>
               </Link>
             );
           })}
