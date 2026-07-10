@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { autopilotRules, autopilotLog } from "@/lib/family-data";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/autopilot")({
   head: () => ({ meta: [{ title: "Autopilot — Family COO" }] }),
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/autopilot")({
 function Page() {
   const [rules, setRules] = useState(autopilotRules);
   return (
+    <PremiumRoute min="pro" feature="Autopilot">
     <AppShell>
       <PageHeader
         back
@@ -67,5 +69,6 @@ function Page() {
         </Card>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }
