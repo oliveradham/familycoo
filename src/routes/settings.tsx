@@ -207,7 +207,7 @@ function SettingsPage() {
               right={
                 <select
                   value={tz}
-                  onChange={(e) => setTz(e.target.value)}
+                  onChange={(e) => { setTz(e.target.value); save({ timezone: e.target.value }); }}
                   className="rounded-lg border border-hairline bg-white px-3 py-1.5 text-[12px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
                 >
                   {TIMEZONES.map((z) => (
@@ -255,9 +255,9 @@ function SettingsPage() {
             When I deliver your three daily updates.
           </p>
           <div className="divide-y divide-hairline">
-            <TimeField label="Morning briefing" value={morning} onChange={setMorning} />
-            <TimeField label="Afternoon check-in" value={afternoon} onChange={setAfternoon} />
-            <TimeField label="Evening wrap-up" value={evening} onChange={setEvening} />
+            <TimeField label="Morning briefing" value={morning} onChange={(v) => { setMorning(v); save({ morning_briefing_at: v }); }} />
+            <TimeField label="Afternoon check-in" value={afternoon} onChange={(v) => { setAfternoon(v); save({ afternoon_check_in_at: v }); }} />
+            <TimeField label="Evening wrap-up" value={evening} onChange={(v) => { setEvening(v); save({ evening_wrap_at: v }); }} />
           </div>
           <div className="mt-4 rounded-2xl bg-zinc-900/5 p-4">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -322,7 +322,7 @@ function SettingsPage() {
               icon={Sparkles}
               label="Autopilot"
               hint="Run approved rules automatically"
-              right={<Toggle label="Autopilot" on={autopilot} onChange={setAutopilot} />}
+              right={<Toggle label="Autopilot" on={autopilot} onChange={(v) => { setAutopilot(v); save({ autopilot_paused: !v }); }} />}
             />
             <Row
               icon={Mic}
