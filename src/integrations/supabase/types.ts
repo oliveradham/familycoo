@@ -731,6 +731,8 @@ export type Database = {
           household_id: string | null
           id: string
           kind: string
+          read_at: string | null
+          ref_id: string | null
           subject: string | null
           user_id: string
         }
@@ -743,6 +745,8 @@ export type Database = {
           household_id?: string | null
           id?: string
           kind: string
+          read_at?: string | null
+          ref_id?: string | null
           subject?: string | null
           user_id: string
         }
@@ -755,6 +759,8 @@ export type Database = {
           household_id?: string | null
           id?: string
           kind?: string
+          read_at?: string | null
+          ref_id?: string | null
           subject?: string | null
           user_id?: string
         }
@@ -820,6 +826,7 @@ export type Database = {
           endpoint: string
           id: string
           p256dh: string
+          platform: string
           updated_at: string
           user_agent: string | null
           user_id: string
@@ -830,6 +837,7 @@ export type Database = {
           endpoint: string
           id?: string
           p256dh: string
+          platform?: string
           updated_at?: string
           user_agent?: string | null
           user_id: string
@@ -840,6 +848,7 @@ export type Database = {
           endpoint?: string
           id?: string
           p256dh?: string
+          platform?: string
           updated_at?: string
           user_agent?: string | null
           user_id?: string
@@ -1222,6 +1231,56 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      weekly_reviews: {
+        Row: {
+          created_at: string
+          generated_at: string
+          headline: string
+          household_id: string
+          id: string
+          stats: Json
+          summary: string
+          upcoming: Json
+          updated_at: string
+          week_start: string
+          wins: Json
+        }
+        Insert: {
+          created_at?: string
+          generated_at?: string
+          headline: string
+          household_id: string
+          id?: string
+          stats?: Json
+          summary: string
+          upcoming?: Json
+          updated_at?: string
+          week_start: string
+          wins?: Json
+        }
+        Update: {
+          created_at?: string
+          generated_at?: string
+          headline?: string
+          household_id?: string
+          id?: string
+          stats?: Json
+          summary?: string
+          upcoming?: Json
+          updated_at?: string
+          week_start?: string
+          wins?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weekly_reviews_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
