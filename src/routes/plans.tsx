@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { plans } from "@/lib/family-data";
-import { Check, Sparkles, Loader2 } from "lucide-react";
+import { Check, Sparkles, Loader2, RotateCcw } from "lucide-react";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useNativePurchase } from "@/hooks/useNativePurchase";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useAuth } from "@/lib/auth-context";
 
@@ -31,16 +32,19 @@ export const Route = createFileRoute("/plans")({
   component: Page,
 });
 
-const PRICE_IDS: Record<string, string> = {
+const PADDLE_PRICE_IDS: Record<string, string> = {
   pro: "pro_monthly",
   max: "max_monthly",
 };
 
 function Page() {
-  const { openCheckout, loading } = usePaddleCheckout();
+  const { openCheckout, loading: paddleLoading } = usePaddleCheckout();
+  const { available: nativeAvailable, loading: nativeLoading, error: nativeError, buy, restore } = useNativePurchase();
   const { user } = useAuth();
   const { tier } = useSubscription();
   const navigate = useNavigate();
+
+  const loading = paddleLoading || nativeLoading;
 
   const handleClick = async (planId: string) => {
     if (planId === "free") return;
@@ -48,7 +52,15 @@ function Page() {
       navigate({ to: "/auth" });
       return;
     }
-    const priceId = PRICE_IDS[planId];
+    if (nativeAvailable) {
+      try {
+        await buy(planId);
+      } catch {
+        // handled via nativeError state
+      }
+      return;
+    }
+    const priceId = PADDLE_PRICE_IDS[planId];
     if (!priceId) return;
     await openCheckout({
       priceId,
@@ -57,6 +69,7 @@ function Page() {
       successUrl: `${window.location.origin}/checkout/success`,
     });
   };
+
 
   return (
     <AppShell>
