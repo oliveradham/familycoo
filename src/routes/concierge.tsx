@@ -259,7 +259,7 @@ function MemoryDrawer({ onClose }: { onClose: () => void }) {
   });
 
   const addMut = useMutation({
-    mutationFn: (v: { fact: string; category: string }) => add({ data: v }),
+    mutationFn: (v: { fact: string; category: (typeof CATEGORIES)[number] }) => add({ data: v }),
     onSuccess: () => {
       setFact("");
       qc.invalidateQueries({ queryKey: ["memories"] });
