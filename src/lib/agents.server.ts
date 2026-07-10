@@ -1,7 +1,4 @@
-// Proactive agent logic. Runs against Supabase admin client from a cron route.
-// Each agent scans the household's real data and, when it finds something worth
-// surfacing, writes an inbox_items row (approval-ready) plus an agent_runs entry.
-
+// Server-only proactive agents. Load from cron routes only.
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 type Sb = SupabaseClient;
@@ -20,39 +17,32 @@ async function logRun(
     status: "success",
     summary,
     items_created,
-    details: details ?? null,
+    details: (details ?? null) as never,
   });
 }
 
 async function pushInbox(
   supabase: Sb,
   household_id: string,
-  payload: {
-    title: string;
-    detail?: string;
-    source: string;
-    kind: string;
-    priority?: string;
-  },
+  payload: { subject: string; summary?: string; source: string; lane?: string; due_at?: string },
 ) {
   await supabase.from("inbox_items").insert({
     household_id,
-    title: payload.title,
-    detail: payload.detail ?? null,
+    subject: payload.subject,
+    summary: payload.summary ?? null,
     source: payload.source,
-    kind: payload.kind,
-    priority: payload.priority ?? "normal",
+    lane: payload.lane ?? "review",
     status: "pending",
+    due_at: payload.due_at ?? null,
   });
 }
 
-/** Detect overlapping calendar events in the next 7 days. */
 export async function runConflictAgent(supabase: Sb, household_id: string) {
   const now = new Date();
   const in7d = new Date(now.getTime() + 7 * 86_400_000).toISOString();
   const { data: events } = await supabase
     .from("calendar_events")
-    .select("id, title, starts_at, ends_at, family_member_id")
+    .select("id, title, starts_at, ends_at")
     .eq("household_id", household_id)
     .gte("starts_at", now.toISOString())
     .lte("starts_at", in7d)
@@ -73,11 +63,11 @@ export async function runConflictAgent(supabase: Sb, household_id: string) {
       if (seen.has(key)) continue;
       seen.add(key);
       await pushInbox(supabase, household_id, {
-        title: `Overlap: "${a.title}" and "${b.title}"`,
-        detail: `Both fall on ${new Date(a.starts_at).toLocaleString()}. Review who covers each.`,
+        subject: `Overlap: "${a.title}" and "${b.title}"`,
+        summary: `Both fall on ${new Date(a.starts_at).toLocaleString()}. Review who covers each.`,
         source: "agent:conflict",
-        kind: "conflict",
-        priority: "high",
+        lane: "conflict",
+        due_at: a.starts_at,
       });
       created++;
     }
@@ -86,7 +76,6 @@ export async function runConflictAgent(supabase: Sb, household_id: string) {
   return created;
 }
 
-/** Surface school/sports items due in the next 48h that aren't done. */
 export async function runPrepAgent(supabase: Sb, household_id: string) {
   const now = new Date();
   const in48 = new Date(now.getTime() + 48 * 3600_000).toISOString();
@@ -101,10 +90,11 @@ export async function runPrepAgent(supabase: Sb, household_id: string) {
   let created = 0;
   for (const item of school ?? []) {
     await pushInbox(supabase, household_id, {
-      title: `Prep: ${item.title}`,
-      detail: `Due ${new Date(item.due_at!).toLocaleString()}. Need signature, packing, or drop-off?`,
+      subject: `Prep: ${item.title}`,
+      summary: `Due ${item.due_at ? new Date(item.due_at).toLocaleString() : "soon"}. Needs signature, packing, or drop-off?`,
       source: "agent:prep",
-      kind: "prep",
+      lane: "prep",
+      due_at: item.due_at ?? undefined,
     });
     created++;
   }
@@ -112,26 +102,24 @@ export async function runPrepAgent(supabase: Sb, household_id: string) {
   return created;
 }
 
-/** Grocery items past their expected restock cadence. */
+/** Low-stock grocery items (below low_at threshold). */
 export async function runRestockAgent(supabase: Sb, household_id: string) {
   const { data } = await supabase
     .from("grocery_items")
-    .select("id, name, status, updated_at, recurring_days")
+    .select("id, name, qty, low_at, status")
     .eq("household_id", household_id)
-    .eq("status", "purchased");
+    .neq("status", "purchased");
 
   let created = 0;
-  const now = Date.now();
   for (const item of data ?? []) {
-    const cadence = (item as { recurring_days?: number | null }).recurring_days;
-    if (!cadence || cadence <= 0) continue;
-    const last = new Date(item.updated_at).getTime();
-    if (now - last < cadence * 86_400_000) continue;
+    const qty = item.qty ?? 0;
+    const low = item.low_at ?? null;
+    if (low == null || qty > low) continue;
     await pushInbox(supabase, household_id, {
-      title: `Restock: ${item.name}`,
-      detail: `Last purchased ${Math.round((now - last) / 86_400_000)} days ago (cadence ${cadence}d).`,
+      subject: `Restock: ${item.name}`,
+      summary: `Down to ${qty} (threshold ${low}). Add to next grocery run?`,
       source: "agent:restock",
-      kind: "restock",
+      lane: "restock",
     });
     created++;
   }
@@ -139,25 +127,24 @@ export async function runRestockAgent(supabase: Sb, household_id: string) {
   return created;
 }
 
-/** Maintenance tasks whose next_due_on is within 7 days and not complete. */
 export async function runMaintenanceAgent(supabase: Sb, household_id: string) {
   const now = new Date();
-  const in7 = new Date(now.getTime() + 7 * 86_400_000).toISOString();
+  const in7 = new Date(now.getTime() + 7 * 86_400_000);
   const { data } = await supabase
     .from("maintenance_tasks")
     .select("id, title, next_due_on, status")
     .eq("household_id", household_id)
     .neq("status", "done")
     .gte("next_due_on", now.toISOString().slice(0, 10))
-    .lte("next_due_on", in7.slice(0, 10));
+    .lte("next_due_on", in7.toISOString().slice(0, 10));
 
   let created = 0;
   for (const t of data ?? []) {
     await pushInbox(supabase, household_id, {
-      title: `Maintenance: ${t.title}`,
-      detail: `Due ${t.next_due_on}. Book a provider or schedule yourself?`,
+      subject: `Maintenance: ${t.title}`,
+      summary: `Due ${t.next_due_on}. Book a provider or schedule yourself?`,
       source: "agent:maintenance",
-      kind: "maintenance",
+      lane: "maintenance",
     });
     created++;
   }
