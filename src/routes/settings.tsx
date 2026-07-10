@@ -345,7 +345,7 @@ function SettingsPage() {
           <div className="divide-y divide-hairline">
             {[
               { icon: Shield, label: "Privacy center", hint: "See everything I read", to: "/privacy" },
-              { icon: Lock, label: "Security & fraud watch", hint: "Alerts and controls", to: "/security" },
+              { icon: Lock, label: "Security & 2FA", hint: "Two-factor auth, breach checks, protections", to: "/security" },
               { icon: Users, label: "Roles & access", hint: "Nannies, coaches, guests", to: "/providers" },
               { icon: Wallet, label: "Plan & billing", hint: "Free · upgrade anytime", to: "/plans" },
             ].map((r) => (
