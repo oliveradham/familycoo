@@ -317,6 +317,195 @@ export type Database = {
         }
         Relationships: []
       }
+      school_items: {
+        Row: {
+          amount_cents: number | null
+          created_at: string
+          created_by: string | null
+          detail: string | null
+          due_at: string | null
+          household_id: string
+          id: string
+          kid_id: string | null
+          kind: string
+          source: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          created_at?: string
+          created_by?: string | null
+          detail?: string | null
+          due_at?: string | null
+          household_id: string
+          id?: string
+          kid_id?: string | null
+          kind: string
+          source?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number | null
+          created_at?: string
+          created_by?: string | null
+          detail?: string | null
+          due_at?: string | null
+          household_id?: string
+          id?: string
+          kid_id?: string | null
+          kind?: string
+          source?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_items_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "school_items_kid_id_fkey"
+            columns: ["kid_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sport_events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          ends_at: string | null
+          equipment_note: string | null
+          household_id: string
+          id: string
+          kind: string
+          location: string | null
+          notes: string | null
+          starts_at: string
+          status: string
+          team_id: string
+          updated_at: string
+          weather_note: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          ends_at?: string | null
+          equipment_note?: string | null
+          household_id: string
+          id?: string
+          kind: string
+          location?: string | null
+          notes?: string | null
+          starts_at: string
+          status?: string
+          team_id: string
+          updated_at?: string
+          weather_note?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          ends_at?: string | null
+          equipment_note?: string | null
+          household_id?: string
+          id?: string
+          kind?: string
+          location?: string | null
+          notes?: string | null
+          starts_at?: string
+          status?: string
+          team_id?: string
+          updated_at?: string
+          weather_note?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sport_events_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sport_events_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "sport_teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sport_teams: {
+        Row: {
+          coach_contact: string | null
+          created_at: string
+          created_by: string | null
+          household_id: string
+          id: string
+          kid_id: string | null
+          notes: string | null
+          ranking: string | null
+          season: string | null
+          sport: string
+          team_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          coach_contact?: string | null
+          created_at?: string
+          created_by?: string | null
+          household_id: string
+          id?: string
+          kid_id?: string | null
+          notes?: string | null
+          ranking?: string | null
+          season?: string | null
+          sport: string
+          team_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          coach_contact?: string | null
+          created_at?: string
+          created_by?: string | null
+          household_id?: string
+          id?: string
+          kid_id?: string | null
+          notes?: string | null
+          ranking?: string | null
+          season?: string | null
+          sport?: string
+          team_name?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sport_teams_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sport_teams_kid_id_fkey"
+            columns: ["kid_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       subscriptions: {
         Row: {
           cancel_at_period_end: boolean | null
