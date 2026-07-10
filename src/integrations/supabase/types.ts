@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_runs: {
+        Row: {
+          agent_kind: string
+          created_at: string
+          details: Json | null
+          household_id: string
+          id: string
+          items_created: number
+          ran_at: string
+          status: string
+          summary: string | null
+        }
+        Insert: {
+          agent_kind: string
+          created_at?: string
+          details?: Json | null
+          household_id: string
+          id?: string
+          items_created?: number
+          ran_at?: string
+          status?: string
+          summary?: string | null
+        }
+        Update: {
+          agent_kind?: string
+          created_at?: string
+          details?: Json | null
+          household_id?: string
+          id?: string
+          items_created?: number
+          ran_at?: string
+          status?: string
+          summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_runs_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       briefings: {
         Row: {
           briefing_date: string
@@ -677,9 +721,57 @@ export type Database = {
           },
         ]
       }
+      notification_log: {
+        Row: {
+          body: string | null
+          channel: string
+          created_at: string
+          delivered_at: string | null
+          error: string | null
+          household_id: string | null
+          id: string
+          kind: string
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          channel: string
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          household_id?: string | null
+          id?: string
+          kind: string
+          subject?: string | null
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          channel?: string
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          household_id?: string | null
+          id?: string
+          kind?: string
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_log_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           afternoon_check_in_at: string | null
+          autopilot_paused: boolean
           avatar_url: string | null
           created_at: string
           display_name: string | null
@@ -693,6 +785,7 @@ export type Database = {
         }
         Insert: {
           afternoon_check_in_at?: string | null
+          autopilot_paused?: boolean
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -706,6 +799,7 @@ export type Database = {
         }
         Update: {
           afternoon_check_in_at?: string | null
+          autopilot_paused?: boolean
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -716,6 +810,39 @@ export type Database = {
           notification_channel?: string
           timezone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
         }
         Relationships: []
       }

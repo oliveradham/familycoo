@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { LANGUAGES, useLanguage } from "@/lib/i18n";
 import { family } from "@/lib/family-data";
@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { useServerFn } from "@tanstack/react-start";
 import { deleteMyAccount } from "@/lib/account.functions";
+import { getPrefs, savePrefs } from "@/lib/prefs.functions";
 import {
   Bell,
   Clock,
@@ -102,6 +103,8 @@ function SettingsPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const deleteFn = useServerFn(deleteMyAccount);
+  const loadPrefs = useServerFn(getPrefs);
+  const persistPrefs = useServerFn(savePrefs);
   const [tz, setTz] = useState("America/Los_Angeles");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
@@ -121,6 +124,25 @@ function SettingsPage() {
   const [proactive, setProactive] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [haptics, setHaptics] = useState(true);
+
+  // Load persisted prefs
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    loadPrefs({}).then((p) => {
+      if (cancelled || !p) return;
+      if (p.timezone) setTz(p.timezone);
+      if (p.morning_briefing_at) setMorning(p.morning_briefing_at.slice(0, 5));
+      if (p.afternoon_check_in_at) setAfternoon(p.afternoon_check_in_at.slice(0, 5));
+      if (p.evening_wrap_at) setEvening(p.evening_wrap_at.slice(0, 5));
+      setAutopilot(!p.autopilot_paused);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user, loadPrefs]);
+
+  const save = (patch: Parameters<typeof persistPrefs>[0]["data"]) => {
+    persistPrefs({ data: patch }).catch(() => {});
+  };
 
   return (
     <AppShell>
@@ -185,7 +207,7 @@ function SettingsPage() {
               right={
                 <select
                   value={tz}
-                  onChange={(e) => setTz(e.target.value)}
+                  onChange={(e) => { setTz(e.target.value); save({ timezone: e.target.value }); }}
                   className="rounded-lg border border-hairline bg-white px-3 py-1.5 text-[12px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
                 >
                   {TIMEZONES.map((z) => (
@@ -233,9 +255,9 @@ function SettingsPage() {
             When I deliver your three daily updates.
           </p>
           <div className="divide-y divide-hairline">
-            <TimeField label="Morning briefing" value={morning} onChange={setMorning} />
-            <TimeField label="Afternoon check-in" value={afternoon} onChange={setAfternoon} />
-            <TimeField label="Evening wrap-up" value={evening} onChange={setEvening} />
+            <TimeField label="Morning briefing" value={morning} onChange={(v) => { setMorning(v); save({ morning_briefing_at: v }); }} />
+            <TimeField label="Afternoon check-in" value={afternoon} onChange={(v) => { setAfternoon(v); save({ afternoon_check_in_at: v }); }} />
+            <TimeField label="Evening wrap-up" value={evening} onChange={(v) => { setEvening(v); save({ evening_wrap_at: v }); }} />
           </div>
           <div className="mt-4 rounded-2xl bg-zinc-900/5 p-4">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -300,7 +322,7 @@ function SettingsPage() {
               icon={Sparkles}
               label="Autopilot"
               hint="Run approved rules automatically"
-              right={<Toggle label="Autopilot" on={autopilot} onChange={setAutopilot} />}
+              right={<Toggle label="Autopilot" on={autopilot} onChange={(v) => { setAutopilot(v); save({ autopilot_paused: !v }); }} />}
             />
             <Row
               icon={Mic}
