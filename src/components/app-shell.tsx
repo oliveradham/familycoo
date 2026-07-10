@@ -100,7 +100,7 @@ export function SectionLabel({ children, action }: { children: ReactNode; action
         {children}
       </h2>
       {action && (
-        <span className="text-[11px] text-muted-foreground/80 underline underline-offset-4">
+        <span className="text-[11px] text-muted-foreground underline underline-offset-4">
           {action}
         </span>
       )}
