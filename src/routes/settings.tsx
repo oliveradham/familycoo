@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
+import { LANGUAGES, useLanguage } from "@/lib/i18n";
 import { family } from "@/lib/family-data";
 import {
   Bell,
@@ -36,59 +37,6 @@ const TIMEZONES = [
   "Australia/Sydney",
 ];
 
-const LANGUAGES: { code: string; label: string }[] = [
-  { code: "en-US", label: "English (United States)" },
-  { code: "en-GB", label: "English (United Kingdom)" },
-  { code: "en-AU", label: "English (Australia)" },
-  { code: "en-CA", label: "English (Canada)" },
-  { code: "es-ES", label: "Español (España)" },
-  { code: "es-MX", label: "Español (México)" },
-  { code: "es-AR", label: "Español (Argentina)" },
-  { code: "fr-FR", label: "Français (France)" },
-  { code: "fr-CA", label: "Français (Canada)" },
-  { code: "de-DE", label: "Deutsch" },
-  { code: "it-IT", label: "Italiano" },
-  { code: "pt-BR", label: "Português (Brasil)" },
-  { code: "pt-PT", label: "Português (Portugal)" },
-  { code: "nl-NL", label: "Nederlands" },
-  { code: "sv-SE", label: "Svenska" },
-  { code: "no-NO", label: "Norsk" },
-  { code: "da-DK", label: "Dansk" },
-  { code: "fi-FI", label: "Suomi" },
-  { code: "pl-PL", label: "Polski" },
-  { code: "cs-CZ", label: "Čeština" },
-  { code: "ro-RO", label: "Română" },
-  { code: "hu-HU", label: "Magyar" },
-  { code: "el-GR", label: "Ελληνικά" },
-  { code: "tr-TR", label: "Türkçe" },
-  { code: "ru-RU", label: "Русский" },
-  { code: "uk-UA", label: "Українська" },
-  { code: "ar-SA", label: "العربية (السعودية)" },
-  { code: "ar-EG", label: "العربية (مصر)" },
-  { code: "he-IL", label: "עברית" },
-  { code: "fa-IR", label: "فارسی" },
-  { code: "hi-IN", label: "हिन्दी" },
-  { code: "bn-IN", label: "বাংলা" },
-  { code: "ta-IN", label: "தமிழ்" },
-  { code: "te-IN", label: "తెలుగు" },
-  { code: "mr-IN", label: "मराठी" },
-  { code: "gu-IN", label: "ગુજરાતી" },
-  { code: "pa-IN", label: "ਪੰਜਾਬੀ" },
-  { code: "ur-PK", label: "اردو" },
-  { code: "th-TH", label: "ไทย" },
-  { code: "vi-VN", label: "Tiếng Việt" },
-  { code: "id-ID", label: "Bahasa Indonesia" },
-  { code: "ms-MY", label: "Bahasa Melayu" },
-  { code: "tl-PH", label: "Filipino" },
-  { code: "zh-CN", label: "中文 (简体)" },
-  { code: "zh-TW", label: "中文 (繁體)" },
-  { code: "ja-JP", label: "日本語" },
-  { code: "ko-KR", label: "한국어" },
-  { code: "sw-KE", label: "Kiswahili" },
-  { code: "am-ET", label: "አማርኛ" },
-  { code: "zu-ZA", label: "isiZulu" },
-  { code: "af-ZA", label: "Afrikaans" },
-];
 
 function Row({
   icon: Icon,
@@ -145,8 +93,8 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 }
 
 function SettingsPage() {
+  const { lang: language, setLang: setLanguage, t } = useLanguage();
   const [tz, setTz] = useState("America/Los_Angeles");
-  const [language, setLanguage] = useState("en-US");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
   const [morning, setMorning] = useState("06:30");
@@ -169,15 +117,15 @@ function SettingsPage() {
   return (
     <AppShell>
       <PageHeader
-        eyebrow="Preferences"
-        title="Settings"
-        subtitle="Adjust the times, tone, and permissions that shape how I run the household."
+        eyebrow={t("settings.eyebrow")}
+        title={t("settings.title")}
+        subtitle={t("settings.subtitle")}
         back
       />
 
       {/* Household profile */}
       <section className="px-6 mb-6">
-        <SectionLabel>Household</SectionLabel>
+        <SectionLabel>{t("settings.household")}</SectionLabel>
         <Card>
           <div className="flex items-center gap-4">
             <div className="grid size-12 place-items-center rounded-full bg-zinc-900 text-white text-sm font-medium">
@@ -193,7 +141,7 @@ function SettingsPage() {
               to="/family"
               className="text-[11px] uppercase tracking-widest text-muted-foreground underline underline-offset-4"
             >
-              Manage
+              {t("settings.manage")}
             </Link>
           </div>
         </Card>
@@ -201,13 +149,13 @@ function SettingsPage() {
 
       {/* Time & Locale */}
       <section className="px-6 mb-6">
-        <SectionLabel>Time & locale</SectionLabel>
+        <SectionLabel>{t("settings.timeLocale")}</SectionLabel>
         <Card>
           <div className="divide-y divide-hairline">
             <Row
               icon={Globe}
-              label="Language"
-              hint="Interface, briefings, and voice replies"
+              label={t("settings.language")}
+              hint={t("settings.languageHint")}
               right={
                 <select
                   value={language}
@@ -224,8 +172,8 @@ function SettingsPage() {
             />
             <Row
               icon={Globe}
-              label="Timezone"
-              hint="Used for briefings, reminders, and departure times"
+              label={t("settings.timezone")}
+              hint={t("settings.timezoneHint")}
               right={
                 <select
                   value={tz}
@@ -242,13 +190,13 @@ function SettingsPage() {
             />
             <Row
               icon={Clock}
-              label="24-hour clock"
+              label={t("settings.clock24")}
               hint={clock24 ? "e.g. 20:30" : "e.g. 8:30 PM"}
               right={<Toggle on={clock24} onChange={setClock24} />}
             />
             <Row
               icon={Clock}
-              label="Week starts on"
+              label={t("settings.weekStart")}
               right={
                 <div className="flex rounded-full bg-zinc-100 p-0.5 text-[11px]">
                   {(["Sun", "Mon"] as const).map((d) => (

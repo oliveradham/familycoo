@@ -1,17 +1,19 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { useLanguage } from "@/lib/i18n";
 
-const nav: { to: string; label: string; icon: LucideIcon }[] = [
-  { to: "/", label: "Today", icon: HomeIcon },
-  { to: "/inbox", label: "Inbox", icon: Inbox },
-  { to: "/concierge", label: "Ask", icon: MessageCircle },
-  { to: "/calendar", label: "Week", icon: Calendar },
-  { to: "/review", label: "Review", icon: CalendarCheck },
+const nav: { to: string; key: string; icon: LucideIcon }[] = [
+  { to: "/", key: "nav.today", icon: HomeIcon },
+  { to: "/inbox", key: "nav.inbox", icon: Inbox },
+  { to: "/concierge", key: "nav.ask", icon: MessageCircle },
+  { to: "/calendar", key: "nav.week", icon: Calendar },
+  { to: "/review", key: "nav.review", icon: CalendarCheck },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -30,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   key={item.to}
                   to={item.to}
                   className="-my-3 flex size-12 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg ring-1 ring-white/40 transition-transform active:scale-95"
-                  aria-label="Ask Concierge"
+                  aria-label={t("nav.ask")}
                 >
                   <Icon className="size-5" strokeWidth={2} />
                 </Link>
@@ -45,7 +47,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 }`}
               >
                 <Icon className="size-4" strokeWidth={1.75} />
-                <span>{item.label}</span>
+                <span>{t(item.key)}</span>
               </Link>
             );
           })}
@@ -66,6 +68,7 @@ export function PageHeader({
   subtitle?: string;
   back?: boolean;
 }) {
+  const { t } = useLanguage();
   return (
     <header className="px-6 pt-10 pb-6">
       {back && (
@@ -73,7 +76,7 @@ export function PageHeader({
           to="/"
           className="mb-6 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
         >
-          ← Today
+          ← {t("common.back")}
         </Link>
       )}
       {eyebrow && (
