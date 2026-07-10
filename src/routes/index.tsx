@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, Card, SectionLabel } from "@/components/app-shell";
 import { commandCenter, family, inbox } from "@/lib/family-data";
-import { AlertTriangle, Check, Clock, Mic, Sparkles } from "lucide-react";
+import { AlertTriangle, Check, Clock, Mic, Sparkles, Settings as SettingsIcon } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Command Center — Family COO" }] }),
@@ -53,7 +53,7 @@ function Today() {
     <AppShell>
       {/* Top bar */}
       <nav className="flex items-center justify-between px-6 pt-10 pb-6">
-        <div className="flex items-center gap-3">
+        <Link to="/settings" className="flex items-center gap-3" aria-label="Open settings">
           <div className="grid size-10 place-items-center rounded-full bg-zinc-900 text-[13px] font-medium text-white ring-1 ring-black/5">
             A
           </div>
@@ -63,13 +63,22 @@ function Today() {
             </p>
             <p className="text-sm font-medium text-foreground">Aimee Thompson</p>
           </div>
-        </div>
-        <Link
-          to="/calm"
-          className="rounded-full border border-hairline bg-surface px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground"
-        >
-          Calm mode
         </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/calm"
+            className="rounded-full border border-hairline bg-surface px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground"
+          >
+            Calm mode
+          </Link>
+          <Link
+            to="/settings"
+            aria-label="Settings"
+            className="grid size-9 place-items-center rounded-full border border-hairline bg-surface text-muted-foreground"
+          >
+            <SettingsIcon className="size-4" strokeWidth={1.75} />
+          </Link>
+        </div>
       </nav>
 
       {/* Command Center headline */}

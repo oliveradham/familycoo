@@ -17,6 +17,7 @@ import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SchoolRouteImport } from './routes/school'
@@ -102,6 +103,11 @@ const SubscriptionsRoute = SubscriptionsRouteImport.update({
 const SportsRoute = SportsRouteImport.update({
   id: '/sports',
   path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SecurityRoute = SecurityRouteImport.update({
@@ -382,6 +388,7 @@ export interface FileRoutesByFullPath {
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -438,6 +445,7 @@ export interface FileRoutesByTo {
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -495,6 +503,7 @@ export interface FileRoutesById {
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
+  '/settings': typeof SettingsRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -553,6 +562,7 @@ export interface FileRouteTypes {
     | '/school'
     | '/search'
     | '/security'
+    | '/settings'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -609,6 +619,7 @@ export interface FileRouteTypes {
     | '/school'
     | '/search'
     | '/security'
+    | '/settings'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -665,6 +676,7 @@ export interface FileRouteTypes {
     | '/school'
     | '/search'
     | '/security'
+    | '/settings'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -722,6 +734,7 @@ export interface RootRouteChildren {
   SchoolRoute: typeof SchoolRoute
   SearchRoute: typeof SearchRoute
   SecurityRoute: typeof SecurityRoute
+  SettingsRoute: typeof SettingsRoute
   SportsRoute: typeof SportsRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
   TasksRoute: typeof TasksRoute
@@ -788,6 +801,13 @@ declare module '@tanstack/react-router' {
       path: '/sports'
       fullPath: '/sports'
       preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/security': {
@@ -1162,6 +1182,7 @@ const rootRouteChildren: RootRouteChildren = {
   SchoolRoute: SchoolRoute,
   SearchRoute: SearchRoute,
   SecurityRoute: SecurityRoute,
+  SettingsRoute: SettingsRoute,
   SportsRoute: SportsRoute,
   SubscriptionsRoute: SubscriptionsRoute,
   TasksRoute: TasksRoute,
