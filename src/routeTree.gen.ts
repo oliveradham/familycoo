@@ -14,6 +14,7 @@ import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SchoolRouteImport } from './routes/school'
+import { Route as ReviewRouteImport } from './routes/review'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
@@ -48,6 +49,11 @@ const SportsRoute = SportsRouteImport.update({
 const SchoolRoute = SchoolRouteImport.update({
   id: '/school',
   path: '/school',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/review': typeof ReviewRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/review': typeof ReviewRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/review': typeof ReviewRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/review'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/review'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/review'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -218,6 +230,7 @@ export interface RootRouteChildren {
   MaintenanceRoute: typeof MaintenanceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
+  ReviewRoute: typeof ReviewRoute
   SchoolRoute: typeof SchoolRoute
   SportsRoute: typeof SportsRoute
   TasksRoute: typeof TasksRoute
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       path: '/school'
       fullPath: '/school'
       preLoaderRoute: typeof SchoolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -346,6 +366,7 @@ const rootRouteChildren: RootRouteChildren = {
   MaintenanceRoute: MaintenanceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
+  ReviewRoute: ReviewRoute,
   SchoolRoute: SchoolRoute,
   SportsRoute: SportsRoute,
   TasksRoute: TasksRoute,
