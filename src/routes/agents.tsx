@@ -3,7 +3,16 @@ import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell
 import { agents, agentWorkflowExample, capabilityLevels } from "@/lib/family-data";
 
 export const Route = createFileRoute("/agents")({
-  head: () => ({ meta: [{ title: "AI Agents — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "AI Agents — Family COO" },
+      { name: "description", content: "Ten specialist AI agents for school, sports, travel, health, and household — one coordinated operations team quietly working for your family." },
+      { property: "og:title", content: "AI Agents — Family COO" },
+      { property: "og:description", content: "Ten specialist agents. One family. A coordinated AI operations team, not ten disconnected bots." },
+      { property: "og:url", content: "https://familycoo.lovable.app/agents" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/agents" }],
+  }),
   component: Page,
 });
 
