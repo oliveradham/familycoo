@@ -9,6 +9,21 @@ export const Route = createFileRoute("/")({
 });
 
 const features: { to: string; label: string; hint: string }[] = [
+  { to: "/agents", label: "AI agents", hint: "10 specialists · one workflow" },
+  { to: "/approvals", label: "Approvals", hint: "4 drafts waiting on your yes" },
+  { to: "/followups", label: "Follow-ups", hint: "5 tracked · 3 need a nudge" },
+  { to: "/comms", label: "Communication", hint: "Turns messages into actions" },
+  { to: "/rules", label: "Household rules", hint: "Plain-language, no code" },
+  { to: "/integrations", label: "Integrations", hint: "Home · car · wearables · location" },
+  { to: "/predictions", label: "Predictions", hint: "7 likely needs ahead" },
+  { to: "/twin", label: "Family digital twin", hint: "Simulate before you commit" },
+  { to: "/compare", label: "Comparisons", hint: "Camps · hotels · plans" },
+  { to: "/bookings", label: "Bookings", hint: "Prefilled from your history" },
+  { to: "/providers", label: "Provider portal", hint: "Scoped access for helpers" },
+  { to: "/subscriptions", label: "Subs & rewards", hint: "Renewals · miles · credits" },
+  { to: "/security", label: "Security", hint: "Scam & fraud watch" },
+  { to: "/privacy", label: "Privacy center", hint: "Everything I see, visible" },
+  { to: "/developers", label: "Developer platform", hint: "Scoped partner integrations" },
   { to: "/responsibilities", label: "Who's doing what", hint: "Live responsibility map" },
   { to: "/conflicts", label: "Conflicts", hint: "5 detected · solutions ready" },
   { to: "/waiting", label: "Waiting on", hint: "5 open · 1 needs a nudge" },
@@ -121,16 +136,20 @@ function Today() {
 
       {/* Decisions needing approval */}
       <section className="px-6 mb-6">
-        <SectionLabel>Needs your approval</SectionLabel>
+        <SectionLabel action={<Link to="/approvals">All</Link>}>Needs your approval</SectionLabel>
         <div className="space-y-2">
           {commandCenter.approvals.map((a) => (
-            <div key={a.id} className="flex items-start gap-3 rounded-2xl bg-zinc-900 px-4 py-3.5 text-white">
+            <Link
+              key={a.id}
+              to="/approvals"
+              className="flex items-start gap-3 rounded-2xl bg-zinc-900 px-4 py-3.5 text-white"
+            >
               <Sparkles className="mt-0.5 size-3.5 shrink-0 opacity-70" strokeWidth={1.5} />
               <p className="flex-1 text-sm leading-snug">{a.text}</p>
-              <button className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-zinc-900">
+              <span className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-zinc-900">
                 {a.cta}
-              </button>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </section>

@@ -11,38 +11,53 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
+import { Route as TwinRouteImport } from './routes/twin'
 import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SchoolRouteImport } from './routes/school'
 import { Route as ScenariosRouteImport } from './routes/scenarios'
+import { Route as RulesRouteImport } from './routes/rules'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
 import { Route as ReadinessRouteImport } from './routes/readiness'
 import { Route as PurchasesRouteImport } from './routes/purchases'
+import { Route as ProvidersRouteImport } from './routes/providers'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as HealthPrepRouteImport } from './routes/health-prep'
 import { Route as HandoffRouteImport } from './routes/handoff'
 import { Route as GroceriesRouteImport } from './routes/groceries'
 import { Route as GiftsRouteImport } from './routes/gifts'
+import { Route as FollowupsRouteImport } from './routes/followups'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DepartureRouteImport } from './routes/departure'
 import { Route as DecisionsRouteImport } from './routes/decisions'
 import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ConciergeRouteImport } from './routes/concierge'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as CommsRouteImport } from './routes/comms'
 import { Route as ChecklistsRouteImport } from './routes/checklists'
 import { Route as CaptureRouteImport } from './routes/capture'
 import { Route as CalmRouteImport } from './routes/calm'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as AutopilotRouteImport } from './routes/autopilot'
+import { Route as ApprovalsRouteImport } from './routes/approvals'
+import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WaitingRoute = WaitingRouteImport.update({
@@ -55,6 +70,11 @@ const VaultRoute = VaultRouteImport.update({
   path: '/vault',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TwinRoute = TwinRouteImport.update({
+  id: '/twin',
+  path: '/twin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TravelRoute = TravelRouteImport.update({
   id: '/travel',
   path: '/travel',
@@ -65,9 +85,19 @@ const TasksRoute = TasksRouteImport.update({
   path: '/tasks',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubscriptionsRoute = SubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SportsRoute = SportsRouteImport.update({
   id: '/sports',
   path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -83,6 +113,11 @@ const SchoolRoute = SchoolRouteImport.update({
 const ScenariosRoute = ScenariosRouteImport.update({
   id: '/scenarios',
   path: '/scenarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RulesRoute = RulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReviewRoute = ReviewRouteImport.update({
@@ -110,6 +145,21 @@ const PurchasesRoute = PurchasesRouteImport.update({
   path: '/purchases',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProvidersRoute = ProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PredictionsRoute = PredictionsRouteImport.update({
+  id: '/predictions',
+  path: '/predictions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -123,6 +173,11 @@ const MedicalRoute = MedicalRouteImport.update({
 const MaintenanceRoute = MaintenanceRouteImport.update({
   id: '/maintenance',
   path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InboxRoute = InboxRouteImport.update({
@@ -155,6 +210,11 @@ const GiftsRoute = GiftsRouteImport.update({
   path: '/gifts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FollowupsRoute = FollowupsRouteImport.update({
+  id: '/followups',
+  path: '/followups',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FamilyRoute = FamilyRouteImport.update({
   id: '/family',
   path: '/family',
@@ -168,6 +228,11 @@ const ExpensesRoute = ExpensesRouteImport.update({
 const EmergencyRoute = EmergencyRouteImport.update({
   id: '/emergency',
   path: '/emergency',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevelopersRoute = DevelopersRouteImport.update({
+  id: '/developers',
+  path: '/developers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartureRoute = DepartureRouteImport.update({
@@ -190,6 +255,16 @@ const ConciergeRoute = ConciergeRouteImport.update({
   path: '/concierge',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommsRoute = CommsRouteImport.update({
+  id: '/comms',
+  path: '/comms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChecklistsRoute = ChecklistsRouteImport.update({
   id: '/checklists',
   path: '/checklists',
@@ -210,9 +285,24 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AutopilotRoute = AutopilotRouteImport.update({
   id: '/autopilot',
   path: '/autopilot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApprovalsRoute = ApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -223,113 +313,158 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/approvals': typeof ApprovalsRoute
   '/autopilot': typeof AutopilotRoute
+  '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/comms': typeof CommsRoute
+  '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
+  '/developers': typeof DevelopersRoute
   '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/followups': typeof FollowupsRoute
   '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/predictions': typeof PredictionsRoute
+  '/privacy': typeof PrivacyRoute
+  '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/rules': typeof RulesRoute
   '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
+  '/security': typeof SecurityRoute
   '/sports': typeof SportsRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
+  '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/approvals': typeof ApprovalsRoute
   '/autopilot': typeof AutopilotRoute
+  '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/comms': typeof CommsRoute
+  '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
+  '/developers': typeof DevelopersRoute
   '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/followups': typeof FollowupsRoute
   '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/predictions': typeof PredictionsRoute
+  '/privacy': typeof PrivacyRoute
+  '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/rules': typeof RulesRoute
   '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
+  '/security': typeof SecurityRoute
   '/sports': typeof SportsRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
+  '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/approvals': typeof ApprovalsRoute
   '/autopilot': typeof AutopilotRoute
+  '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/comms': typeof CommsRoute
+  '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
+  '/developers': typeof DevelopersRoute
   '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/followups': typeof FollowupsRoute
   '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
+  '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/predictions': typeof PredictionsRoute
+  '/privacy': typeof PrivacyRoute
+  '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/rules': typeof RulesRoute
   '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
   '/search': typeof SearchRoute
+  '/security': typeof SecurityRoute
   '/sports': typeof SportsRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
+  '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
 }
@@ -337,150 +472,210 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agents'
+    | '/approvals'
     | '/autopilot'
+    | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/comms'
+    | '/compare'
     | '/concierge'
     | '/conflicts'
     | '/decisions'
     | '/departure'
+    | '/developers'
     | '/emergency'
     | '/expenses'
     | '/family'
+    | '/followups'
     | '/gifts'
     | '/groceries'
     | '/handoff'
     | '/health-prep'
     | '/history'
     | '/inbox'
+    | '/integrations'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/predictions'
+    | '/privacy'
+    | '/providers'
     | '/purchases'
     | '/readiness'
     | '/responsibilities'
     | '/returns'
     | '/review'
+    | '/rules'
     | '/scenarios'
     | '/school'
     | '/search'
+    | '/security'
     | '/sports'
+    | '/subscriptions'
     | '/tasks'
     | '/travel'
+    | '/twin'
     | '/vault'
     | '/waiting'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agents'
+    | '/approvals'
     | '/autopilot'
+    | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/comms'
+    | '/compare'
     | '/concierge'
     | '/conflicts'
     | '/decisions'
     | '/departure'
+    | '/developers'
     | '/emergency'
     | '/expenses'
     | '/family'
+    | '/followups'
     | '/gifts'
     | '/groceries'
     | '/handoff'
     | '/health-prep'
     | '/history'
     | '/inbox'
+    | '/integrations'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/predictions'
+    | '/privacy'
+    | '/providers'
     | '/purchases'
     | '/readiness'
     | '/responsibilities'
     | '/returns'
     | '/review'
+    | '/rules'
     | '/scenarios'
     | '/school'
     | '/search'
+    | '/security'
     | '/sports'
+    | '/subscriptions'
     | '/tasks'
     | '/travel'
+    | '/twin'
     | '/vault'
     | '/waiting'
   id:
     | '__root__'
     | '/'
+    | '/agents'
+    | '/approvals'
     | '/autopilot'
+    | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/comms'
+    | '/compare'
     | '/concierge'
     | '/conflicts'
     | '/decisions'
     | '/departure'
+    | '/developers'
     | '/emergency'
     | '/expenses'
     | '/family'
+    | '/followups'
     | '/gifts'
     | '/groceries'
     | '/handoff'
     | '/health-prep'
     | '/history'
     | '/inbox'
+    | '/integrations'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/predictions'
+    | '/privacy'
+    | '/providers'
     | '/purchases'
     | '/readiness'
     | '/responsibilities'
     | '/returns'
     | '/review'
+    | '/rules'
     | '/scenarios'
     | '/school'
     | '/search'
+    | '/security'
     | '/sports'
+    | '/subscriptions'
     | '/tasks'
     | '/travel'
+    | '/twin'
     | '/vault'
     | '/waiting'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentsRoute: typeof AgentsRoute
+  ApprovalsRoute: typeof ApprovalsRoute
   AutopilotRoute: typeof AutopilotRoute
+  BookingsRoute: typeof BookingsRoute
   CalendarRoute: typeof CalendarRoute
   CalmRoute: typeof CalmRoute
   CaptureRoute: typeof CaptureRoute
   ChecklistsRoute: typeof ChecklistsRoute
+  CommsRoute: typeof CommsRoute
+  CompareRoute: typeof CompareRoute
   ConciergeRoute: typeof ConciergeRoute
   ConflictsRoute: typeof ConflictsRoute
   DecisionsRoute: typeof DecisionsRoute
   DepartureRoute: typeof DepartureRoute
+  DevelopersRoute: typeof DevelopersRoute
   EmergencyRoute: typeof EmergencyRoute
   ExpensesRoute: typeof ExpensesRoute
   FamilyRoute: typeof FamilyRoute
+  FollowupsRoute: typeof FollowupsRoute
   GiftsRoute: typeof GiftsRoute
   GroceriesRoute: typeof GroceriesRoute
   HandoffRoute: typeof HandoffRoute
   HealthPrepRoute: typeof HealthPrepRoute
   HistoryRoute: typeof HistoryRoute
   InboxRoute: typeof InboxRoute
+  IntegrationsRoute: typeof IntegrationsRoute
   MaintenanceRoute: typeof MaintenanceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
+  PredictionsRoute: typeof PredictionsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ProvidersRoute: typeof ProvidersRoute
   PurchasesRoute: typeof PurchasesRoute
   ReadinessRoute: typeof ReadinessRoute
   ResponsibilitiesRoute: typeof ResponsibilitiesRoute
   ReturnsRoute: typeof ReturnsRoute
   ReviewRoute: typeof ReviewRoute
+  RulesRoute: typeof RulesRoute
   ScenariosRoute: typeof ScenariosRoute
   SchoolRoute: typeof SchoolRoute
   SearchRoute: typeof SearchRoute
+  SecurityRoute: typeof SecurityRoute
   SportsRoute: typeof SportsRoute
+  SubscriptionsRoute: typeof SubscriptionsRoute
   TasksRoute: typeof TasksRoute
   TravelRoute: typeof TravelRoute
+  TwinRoute: typeof TwinRoute
   VaultRoute: typeof VaultRoute
   WaitingRoute: typeof WaitingRoute
 }
@@ -501,6 +696,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VaultRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/twin': {
+      id: '/twin'
+      path: '/twin'
+      fullPath: '/twin'
+      preLoaderRoute: typeof TwinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/travel': {
       id: '/travel'
       path: '/travel'
@@ -515,11 +717,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TasksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/subscriptions': {
+      id: '/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/subscriptions'
+      preLoaderRoute: typeof SubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sports': {
       id: '/sports'
       path: '/sports'
       fullPath: '/sports'
       preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -541,6 +757,13 @@ declare module '@tanstack/react-router' {
       path: '/scenarios'
       fullPath: '/scenarios'
       preLoaderRoute: typeof ScenariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rules': {
+      id: '/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof RulesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/review': {
@@ -578,6 +801,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PurchasesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/providers': {
+      id: '/providers'
+      path: '/providers'
+      fullPath: '/providers'
+      preLoaderRoute: typeof ProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/predictions': {
+      id: '/predictions'
+      path: '/predictions'
+      fullPath: '/predictions'
+      preLoaderRoute: typeof PredictionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
@@ -597,6 +841,13 @@ declare module '@tanstack/react-router' {
       path: '/maintenance'
       fullPath: '/maintenance'
       preLoaderRoute: typeof MaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inbox': {
@@ -641,6 +892,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GiftsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/followups': {
+      id: '/followups'
+      path: '/followups'
+      fullPath: '/followups'
+      preLoaderRoute: typeof FollowupsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/family': {
       id: '/family'
       path: '/family'
@@ -660,6 +918,13 @@ declare module '@tanstack/react-router' {
       path: '/emergency'
       fullPath: '/emergency'
       preLoaderRoute: typeof EmergencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers': {
+      id: '/developers'
+      path: '/developers'
+      fullPath: '/developers'
+      preLoaderRoute: typeof DevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/departure': {
@@ -690,6 +955,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConciergeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comms': {
+      id: '/comms'
+      path: '/comms'
+      fullPath: '/comms'
+      preLoaderRoute: typeof CommsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checklists': {
       id: '/checklists'
       path: '/checklists'
@@ -718,11 +997,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/autopilot': {
       id: '/autopilot'
       path: '/autopilot'
       fullPath: '/autopilot'
       preLoaderRoute: typeof AutopilotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approvals': {
+      id: '/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof ApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -737,38 +1037,53 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentsRoute: AgentsRoute,
+  ApprovalsRoute: ApprovalsRoute,
   AutopilotRoute: AutopilotRoute,
+  BookingsRoute: BookingsRoute,
   CalendarRoute: CalendarRoute,
   CalmRoute: CalmRoute,
   CaptureRoute: CaptureRoute,
   ChecklistsRoute: ChecklistsRoute,
+  CommsRoute: CommsRoute,
+  CompareRoute: CompareRoute,
   ConciergeRoute: ConciergeRoute,
   ConflictsRoute: ConflictsRoute,
   DecisionsRoute: DecisionsRoute,
   DepartureRoute: DepartureRoute,
+  DevelopersRoute: DevelopersRoute,
   EmergencyRoute: EmergencyRoute,
   ExpensesRoute: ExpensesRoute,
   FamilyRoute: FamilyRoute,
+  FollowupsRoute: FollowupsRoute,
   GiftsRoute: GiftsRoute,
   GroceriesRoute: GroceriesRoute,
   HandoffRoute: HandoffRoute,
   HealthPrepRoute: HealthPrepRoute,
   HistoryRoute: HistoryRoute,
   InboxRoute: InboxRoute,
+  IntegrationsRoute: IntegrationsRoute,
   MaintenanceRoute: MaintenanceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
+  PredictionsRoute: PredictionsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ProvidersRoute: ProvidersRoute,
   PurchasesRoute: PurchasesRoute,
   ReadinessRoute: ReadinessRoute,
   ResponsibilitiesRoute: ResponsibilitiesRoute,
   ReturnsRoute: ReturnsRoute,
   ReviewRoute: ReviewRoute,
+  RulesRoute: RulesRoute,
   ScenariosRoute: ScenariosRoute,
   SchoolRoute: SchoolRoute,
   SearchRoute: SearchRoute,
+  SecurityRoute: SecurityRoute,
   SportsRoute: SportsRoute,
+  SubscriptionsRoute: SubscriptionsRoute,
   TasksRoute: TasksRoute,
   TravelRoute: TravelRoute,
+  TwinRoute: TwinRoute,
   VaultRoute: VaultRoute,
   WaitingRoute: WaitingRoute,
 }
