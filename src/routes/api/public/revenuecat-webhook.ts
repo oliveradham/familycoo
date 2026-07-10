@@ -60,9 +60,12 @@ export const Route = createFileRoute("/api/public/revenuecat-webhook")({
 
         if (!status) return new Response("Ignored", { status: 200 });
 
-        const productId = ev.product_id ?? "unknown";
-        const priceId =
-          ev.entitlement_ids?.[0] === "pro_max" ? "max_monthly" : "pro_monthly";
+        // Map RevenueCat entitlement → our internal product/price identifiers.
+        // useSubscription() keys tier off product_id, so these MUST match
+        // the strings the Paddle webhook writes (`family_coo_pro` / `family_coo_max`).
+        const entitlement = ev.entitlement_ids?.[0];
+        const productId = entitlement === "pro_max" ? "family_coo_max" : "family_coo_pro";
+        const priceId = entitlement === "pro_max" ? "max_monthly" : "pro_monthly";
         const periodEnd =
           ev.expiration_at_ms != null
             ? new Date(ev.expiration_at_ms).toISOString()
@@ -85,11 +88,15 @@ export const Route = createFileRoute("/api/public/revenuecat-webhook")({
             status,
             current_period_start: periodStart,
             current_period_end: periodEnd,
-            cancel_at_period_end: status === "canceled",
+            // cancel_at_period_end means "will not renew" — true for CANCELLATION
+            // (user turned off auto-renew, still has access until expiration).
+            // EXPIRATION means access has already ended; leave the flag false.
+            cancel_at_period_end: ev.type === "CANCELLATION",
             environment: "live",
           },
           { onConflict: "paddle_subscription_id" },
         );
+
 
         if (error) {
           console.error("[revenuecat-webhook] upsert failed", error);
