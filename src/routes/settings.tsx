@@ -131,6 +131,37 @@ function SettingsPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [haptics, setHaptics] = useState(true);
 
+  const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushBusy, setPushBusy] = useState(false);
+  const [pushError, setPushError] = useState<string | null>(null);
+  const canPush = typeof window !== "undefined" && pushSupported();
+
+  useEffect(() => {
+    if (!canPush) return;
+    isCurrentlySubscribed().then(setPushEnabled).catch(() => {});
+  }, [canPush]);
+
+  async function togglePush(next: boolean) {
+    setPushBusy(true);
+    setPushError(null);
+    try {
+      if (next) {
+        const res = await subscribeToPush();
+        if (!res.ok) {
+          setPushError(res.error ?? "Could not enable push");
+          setPushEnabled(false);
+        } else {
+          setPushEnabled(true);
+        }
+      } else {
+        await unsubscribeFromPush();
+        setPushEnabled(false);
+      }
+    } finally {
+      setPushBusy(false);
+    }
+  }
+
   // Load persisted prefs
   useEffect(() => {
     if (!user) return;
