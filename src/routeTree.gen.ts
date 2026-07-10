@@ -14,6 +14,7 @@ import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TwinRouteImport } from './routes/twin'
 import { Route as TravelRouteImport } from './routes/travel'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
@@ -88,6 +89,11 @@ const TwinRoute = TwinRouteImport.update({
 const TravelRoute = TravelRouteImport.update({
   id: '/travel',
   path: '/travel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -392,6 +398,7 @@ export interface FileRoutesByFullPath {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -449,6 +456,7 @@ export interface FileRoutesByTo {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -507,6 +515,7 @@ export interface FileRoutesById {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -566,6 +575,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -623,6 +633,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -680,6 +691,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -738,6 +750,7 @@ export interface RootRouteChildren {
   SportsRoute: typeof SportsRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
   TasksRoute: typeof TasksRoute
+  TermsRoute: typeof TermsRoute
   TravelRoute: typeof TravelRoute
   TwinRoute: typeof TwinRoute
   VaultRoute: typeof VaultRoute
@@ -780,6 +793,13 @@ declare module '@tanstack/react-router' {
       path: '/travel'
       fullPath: '/travel'
       preLoaderRoute: typeof TravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -1186,6 +1206,7 @@ const rootRouteChildren: RootRouteChildren = {
   SportsRoute: SportsRoute,
   SubscriptionsRoute: SubscriptionsRoute,
   TasksRoute: TasksRoute,
+  TermsRoute: TermsRoute,
   TravelRoute: TravelRoute,
   TwinRoute: TwinRoute,
   VaultRoute: VaultRoute,
