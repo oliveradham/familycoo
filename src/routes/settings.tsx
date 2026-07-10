@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
+import { LANGUAGES, useLanguage } from "@/lib/i18n";
 import { family } from "@/lib/family-data";
 import {
   Bell,
