@@ -1,141 +1,148 @@
-# Store Listing Copy — Family COO
+# App Store & Google Play Listing — Family COO
 
-Ready-to-paste content for App Store Connect and Google Play Console.
+Copy/paste ready. Tune to your brand voice before submission.
 
 ---
 
-## App name (30 char max on both stores)
+## App Name
 **Family COO — AI Chief of Staff**
 
-Fallback shorter version if rejected: `Family COO`
+- iOS name (max 30 chars): `Family COO: AI Chief of Staff`
+- Subtitle (max 30 chars): `Run family life on autopilot`
+- Google Play short description (max 80): `The AI Chief Operating Officer for busy families. Not another calendar.`
 
----
+## Promotional Text (iOS, 170 chars, editable without review)
+`New: AI Morning Briefing, Autopilot for recurring family ops, and a private AI Concierge that knows your household — all encrypted, all yours.`
 
-## Subtitle / Short description
+## Description (both stores, ~4000 chars)
 
-**iOS subtitle (30 chars):**
-`Your family's AI Chief of Staff`
+Family COO is the AI Chief Operating Officer for busy families. It's not another calendar or to‑do app — it proactively runs your household so you can be present, not managing.
 
-**Android short description (80 chars):**
-`An AI Chief of Staff for your family — schedules, school, sports, and daily life.`
+**Built for dual‑career parents, multi‑kid households, and families juggling nannies, sports, school, and travel.**
 
----
+WHAT IT DOES
+• AI Morning Briefing — a plain‑English summary of your day, kids' schedules, conflicts, and what needs your attention
+• Unified Calendar — every family member, school, sport, and nanny in one place
+• Inbox — forward school emails, sports notices, and permission slips; the AI extracts dates, tasks, and signatures
+• Ask — natural‑language concierge grounded in your household ("what's Emma's soccer this week?")
+• Autopilot — recurring family ops that run themselves
+• School Hub, Sports Manager, Medical Hub, Document Vault, Grocery & Pantry, Travel Assistant, Household Maintenance
+• Family AI Memory — remembers birthdays, sizes, allergies, preferences
+• Smart Expense Tracking with OCR
+• Morning / Afternoon / Evening notifications
 
-## Full description
+PRIVACY & SECURITY
+• End‑to‑end TLS, encryption at rest
+• Row‑level security so only your household sees your data
+• Two‑factor authentication (TOTP)
+• Leaked‑password blocking (HIBP)
+• AI Redaction Layer strips SSNs, cards, and PII before anything reaches an AI model
+• Your data is never sold. Never used to train public models.
 
-> Family COO is your household's AI Chief of Staff — not another calendar, not another to-do list. It's the invisible operator that keeps a busy family running.
->
-> Built for dual-career parents juggling multiple kids, nannies, sports, school, travel, and everything in between, Family COO connects to your email once and starts learning your household. It sorts every actionable message into what needs a signature, a payment, a response, or your attention — so you can stop mentally tracking it all.
->
-> **What Family COO does:**
->
-> • **AI Morning Briefing** — a warm, one-glance rundown of your day, drawn from your real calendar and open tasks.
-> • **Unified Family Inbox** — school forms, sports emails, medical portals, bills, and travel confirmations, sorted by what they need.
-> • **Household Task Management** — delegate anything to anyone, with gentle, calm reminders.
-> • **AI Concierge** — ask anything in natural language: "When's Emma's next tournament?", "What did we spend on groceries last month?", "Book the pediatrician."
-> • **Voice + Screenshot Capture** — snap a form, forward an email, dictate a note. We handle the rest.
-> • **Autopilot** — repeating decisions ("permission slips") handled on your behalf, always with your approval.
-> • **Weekly Review** — a Sunday-night briefing that helps the household reset.
->
-> **Designed to be calm.**
-> No streaks. No shame. No red badges. Just a quiet, supportive Chief of Staff that removes invisible work.
->
-> **Privacy first.**
-> Your household data is yours. End-to-end encryption in transit, row-level security at rest, and you can delete your account and all its data at any time.
->
-> **Free.** Get started with the essentials for your family.
-> **Pro ($49.99/mo).** AI Concierge, Autopilot, unlimited inbox, family memory.
-> **Pro Max ($99.99/mo).** Everything, plus premium AI agents and workflows.
+PREMIUM (optional)
+• Pro — $49.99/mo: Autopilot workflows, unlimited AI Concierge, OCR
+• Pro Max — $99.99/mo: Everything in Pro plus Scenario Planning, Emergency Mode, priority AI, unlimited household members
+• Free tier available forever
 
----
+WHY FAMILY COO
+Traditional apps make you the operator. Family COO makes you the executive.
 
-## Keywords (App Store — 100 chars total, comma-separated)
+Support: https://familycoo.lovable.app/support
+Privacy: https://familycoo.lovable.app/privacy
+Terms: https://familycoo.lovable.app/terms
 
-`family,calendar,household,chore,ai,assistant,school,kids,parents,tasks,planner,organizer,mom,chief`
-
----
+## Keywords (iOS, 100 char comma-sep, no spaces after commas)
+`family,calendar,household,AI,assistant,kids,school,sports,nanny,parents,planner,concierge,chores`
 
 ## Category
+- Primary: Productivity
+- Secondary: Lifestyle
 
-- **Primary**: Productivity
-- **Secondary**: Lifestyle
+## Age Rating
+- 4+ (iOS) / Everyone (Play)
 
----
+## Support URL
+https://familycoo.lovable.app/support
 
-## Age rating
+## Marketing URL
+https://familycoo.lovable.app
 
-- **Apple**: 4+
-- **Google**: Everyone
-
-Content questionnaire: no user-generated public content, no violence, no gambling, contains "unrestricted web access" if you keep the Concierge open.
-
----
-
-## Support & marketing URLs
-
-- **Support URL**: https://familycoo.lovable.app/support (create this route if missing, or point at your email)
-- **Marketing URL**: https://familycoo.lovable.app
-- **Privacy Policy URL**: https://familycoo.lovable.app/privacy-policy
-- **Terms of Service URL**: https://familycoo.lovable.app/terms
+## Privacy Policy URL
+https://familycoo.lovable.app/privacy
 
 ---
 
-## App Privacy (App Store Connect)
+## Screenshots Required
 
-Declare the following data collections:
+### iPhone 6.7" (1290 × 2796) — required
+### iPhone 6.5" (1242 × 2688) — required
+### iPad 13" (2064 × 2752) — required if iPad build
+### Android Phone (1080 × 1920 min) — required
+### Android Tablet 7" and 10" — required if tablet build
 
-| Data | Linked to user | Purpose |
-|---|---|---|
-| Email address | Yes | Auth, product functionality |
-| Name | Yes | Personalization |
-| User content (household data) | Yes | Product functionality |
-| Purchase history | Yes | Product functionality (Paddle) |
-| Diagnostic data | No | App functionality |
+**Recommended 6 shots, in order:**
+1. Today screen — "Your family, briefed at 6am"
+2. Ask (AI Concierge) — "Natural language for anything family"
+3. Inbox — "Forward it. We'll handle it."
+4. Autopilot — "Set it once. Runs forever."
+5. Calendar — "Every kid. Every activity. One view."
+6. Security & 2FA — "Bank‑level encryption. Zero data selling."
 
-Nothing sold to third parties. AI prompts are sent to model providers (Google, OpenAI) via Lovable AI Gateway for processing only.
+### Screenshot Capture Script (Playwright)
 
----
+Run locally after `bun dev`:
 
-## Play Console Data Safety
+```bash
+node scripts/capture-store-screenshots.mjs
+```
 
-Same as above. Mark all data as **encrypted in transit** and **user can request deletion**.
-
----
-
-## Screenshots — required sizes
-
-Take these against a real signed-in demo household. Turn off Test Mode banner before capturing.
-
-**iOS (required):**
-- 6.9" iPhone 16 Pro Max: 1290 × 2796 (5 shots minimum)
-- 6.7" iPhone 15 Pro Max: 1290 × 2796
-- iPad Pro 13": 2064 × 2752 (only if you support iPad)
-
-**Android (required):**
-- Phone screenshots: 1080 × 1920 minimum, 16:9 or 9:16 (2 min, 8 max)
-- Feature graphic: 1024 × 500 (required)
-- 7" tablet: 1024 × 600 (recommended)
-
-**Suggested shots (in order):**
-1. Home / Morning Briefing card
-2. Unified Inbox with lanes
-3. Calendar with events
-4. Tasks list
-5. Concierge / Ask screen
-6. Settings + delete account (proves compliance)
+See `scripts/capture-store-screenshots.mjs` (generated below).
 
 ---
 
-## What's New (release notes)
-
-**v1.0.0**
-> Family COO launches. Your household's AI Chief of Staff — briefings, unified inbox, unified calendar, task delegation, and an AI Concierge that answers real questions about your family's week.
+## App Preview Video (optional but boosts conversion 20-30%)
+- 15-30 seconds, portrait
+- Show: Today briefing → Ask a question → Autopilot completes a task
+- No voiceover needed; captions on
+- Export at 1080×1920, H.264, <500MB
 
 ---
 
-## Reviewer notes
+## Google Play — Data Safety Form Answers
 
-Provide a test account so Apple/Google reviewers can sign in without going through Google OAuth:
-- Email: `reviewer@familycoo.app`
-- Password: (create one)
-- Notes: "This is an AI assistant for families. All AI features work with the seeded demo household attached to this account. Paddle checkout is in test mode during review and can be exercised without a real card."
+**Data collected:**
+- Name, email → Account management, required, encrypted in transit
+- Photos (receipts, docs) → App functionality, optional, encrypted at rest
+- Calendar events → App functionality, required, encrypted at rest
+- Health info (medical hub) → App functionality, optional, encrypted at rest, user can delete
+
+**Data shared:** None
+**Data encrypted in transit:** Yes
+**User can request deletion:** Yes → Settings → Delete Account
+
+---
+
+## Apple — App Privacy Nutrition Label
+
+| Data Type | Linked to You | Used for Tracking | Purpose |
+|-----------|---------------|-------------------|---------|
+| Contact Info (email, name) | Yes | No | App Functionality |
+| User Content (photos, docs) | Yes | No | App Functionality |
+| Identifiers (User ID) | Yes | No | App Functionality |
+| Health & Fitness (optional) | Yes | No | App Functionality |
+| Usage Data | No | No | Analytics |
+
+---
+
+## Review Notes (Apple)
+
+> Family COO is a household operations app for dual-career families. Test account: `demo@familycoo.app` / `Demo1234!` (pre-populated with sample family data).
+>
+> Subscriptions use StoreKit In-App Purchase (RevenueCat) on iOS. Web/Android use Paddle. There are no external purchase links inside the iOS app.
+>
+> AI responses are generated via Lovable AI Gateway (Google Gemini). All PII is redacted before transmission.
+
+---
+
+## Version Notes (What's New)
+`First release: Meet your family's AI Chief of Staff. Morning briefings, unified calendar, natural-language concierge, and Autopilot for the ops that repeat every week.`
