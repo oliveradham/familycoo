@@ -74,6 +74,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ApiPublicRevenuecatWebhookRouteImport } from './routes/api/public/revenuecat-webhook'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicHooksRunBriefingsRouteImport } from './routes/api/public/hooks/run-briefings'
+import { Route as ApiPublicHooksAgentsTickRouteImport } from './routes/api/public/hooks/agents-tick'
 
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
@@ -402,6 +404,18 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksRunBriefingsRoute =
+  ApiPublicHooksRunBriefingsRouteImport.update({
+    id: '/api/public/hooks/run-briefings',
+    path: '/api/public/hooks/run-briefings',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicHooksAgentsTickRoute =
+  ApiPublicHooksAgentsTickRouteImport.update({
+    id: '/api/public/hooks/agents-tick',
+    path: '/api/public/hooks/agents-tick',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -468,6 +482,8 @@ export interface FileRoutesByFullPath {
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
+  '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
+  '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -535,6 +551,8 @@ export interface FileRoutesByTo {
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
+  '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
+  '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -603,6 +621,8 @@ export interface FileRoutesById {
   '/workflows': typeof WorkflowsRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/api/public/revenuecat-webhook': typeof ApiPublicRevenuecatWebhookRoute
+  '/api/public/hooks/agents-tick': typeof ApiPublicHooksAgentsTickRoute
+  '/api/public/hooks/run-briefings': typeof ApiPublicHooksRunBriefingsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -672,6 +692,8 @@ export interface FileRouteTypes {
     | '/workflows'
     | '/checkout/success'
     | '/api/public/revenuecat-webhook'
+    | '/api/public/hooks/agents-tick'
+    | '/api/public/hooks/run-briefings'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -739,6 +761,8 @@ export interface FileRouteTypes {
     | '/workflows'
     | '/checkout/success'
     | '/api/public/revenuecat-webhook'
+    | '/api/public/hooks/agents-tick'
+    | '/api/public/hooks/run-briefings'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -806,6 +830,8 @@ export interface FileRouteTypes {
     | '/workflows'
     | '/checkout/success'
     | '/api/public/revenuecat-webhook'
+    | '/api/public/hooks/agents-tick'
+    | '/api/public/hooks/run-briefings'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -874,6 +900,8 @@ export interface RootRouteChildren {
   WorkflowsRoute: typeof WorkflowsRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   ApiPublicRevenuecatWebhookRoute: typeof ApiPublicRevenuecatWebhookRoute
+  ApiPublicHooksAgentsTickRoute: typeof ApiPublicHooksAgentsTickRoute
+  ApiPublicHooksRunBriefingsRoute: typeof ApiPublicHooksRunBriefingsRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -1334,6 +1362,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/run-briefings': {
+      id: '/api/public/hooks/run-briefings'
+      path: '/api/public/hooks/run-briefings'
+      fullPath: '/api/public/hooks/run-briefings'
+      preLoaderRoute: typeof ApiPublicHooksRunBriefingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/agents-tick': {
+      id: '/api/public/hooks/agents-tick'
+      path: '/api/public/hooks/agents-tick'
+      fullPath: '/api/public/hooks/agents-tick'
+      preLoaderRoute: typeof ApiPublicHooksAgentsTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1402,6 +1444,8 @@ const rootRouteChildren: RootRouteChildren = {
   WorkflowsRoute: WorkflowsRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   ApiPublicRevenuecatWebhookRoute: ApiPublicRevenuecatWebhookRoute,
+  ApiPublicHooksAgentsTickRoute: ApiPublicHooksAgentsTickRoute,
+  ApiPublicHooksRunBriefingsRoute: ApiPublicHooksRunBriefingsRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
