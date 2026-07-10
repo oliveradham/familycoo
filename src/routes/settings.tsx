@@ -318,6 +318,29 @@ function SettingsPage() {
           <div className="divide-y divide-hairline">
             <Row
               icon={Bell}
+              label="Push on this device"
+              hint={
+                !canPush
+                  ? "Not supported in this browser"
+                  : pushError
+                    ? pushError
+                    : pushEnabled
+                      ? "Enabled — you'll receive briefings & alerts"
+                      : "Enable to get briefings & agent alerts"
+              }
+              right={
+                <Toggle
+                  label="Push on this device"
+                  on={pushEnabled}
+                  onChange={(v) => {
+                    if (!canPush || pushBusy) return;
+                    void togglePush(v);
+                  }}
+                />
+              }
+            />
+
+              icon={Bell}
               label="Daily briefings"
               hint="Morning, afternoon, evening"
               right={<Toggle label="Daily briefings" on={pushBriefings} onChange={setPushBriefings} />}
