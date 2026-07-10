@@ -68,6 +68,7 @@ export function PageHeader({
   subtitle?: string;
   back?: boolean;
 }) {
+  const { t } = useLanguage();
   return (
     <header className="px-6 pt-10 pb-6">
       {back && (
@@ -75,7 +76,7 @@ export function PageHeader({
           to="/"
           className="mb-6 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
         >
-          ← Today
+          ← {t("common.back")}
         </Link>
       )}
       {eyebrow && (
