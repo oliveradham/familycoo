@@ -16,19 +16,57 @@ export const family: Person[] = [
   { id: "nanny", name: "Sofia (Nanny)", role: "nanny", initials: "S", detail: "M–F · 2–7 PM", color: "bg-amber-50 text-zinc-900" },
 ];
 
+export type Confidence = "high" | "medium" | "low";
 export type BriefingItem = {
   id: string;
   priority: "high" | "medium" | "low";
   text: string;
   action?: string;
+  confidence: Confidence;
+  why: string;
 };
 
 export const briefing: BriefingItem[] = [
-  { id: "b1", priority: "high", text: "Oliver has tennis at 4:30 PM. Rain starts at 5:00 PM — leave 15 minutes early.", action: "Notify Basil" },
-  { id: "b2", priority: "high", text: "Lily's tuition for Saint Jude's is due Friday ($2,400).", action: "Schedule payment" },
-  { id: "b3", priority: "medium", text: "Nanny hours are 12% above this week's budget.", action: "Review timesheet" },
-  { id: "b4", priority: "medium", text: "Groceries: you're out of milk, eggs, and fruit.", action: "Add to list" },
-  { id: "b5", priority: "high", text: "Your passport expires in 6 months — Japan trip in October needs renewal.", action: "Start renewal" },
+  {
+    id: "b1",
+    priority: "high",
+    text: "Oliver's tennis starts at 4:30 PM. Traffic is heavier than usual — leaving by 3:55 PM keeps you calm.",
+    action: "Notify Basil",
+    confidence: "high",
+    why: "Weather feed shows rain from 5 PM. Maps history for this route runs 12 minutes slower on Mondays after 4 PM.",
+  },
+  {
+    id: "b2",
+    priority: "high",
+    text: "Lily's tuition ($2,400) is scheduled for Friday. I have it ready to send — you just need to confirm.",
+    action: "Approve payment",
+    confidence: "high",
+    why: "Saint Jude's bursar email · matches last quarter's invoice · your usual card on file.",
+  },
+  {
+    id: "b3",
+    priority: "medium",
+    text: "You have a free hour this afternoon. Lily's dentist visit is still open — I can hold 2:15 PM.",
+    action: "Hold 2:15 PM",
+    confidence: "medium",
+    why: "Willowdale Dental has openings. Your calendar is clear 2–3 PM. Lily is due for a 6-month cleaning.",
+  },
+  {
+    id: "b4",
+    priority: "medium",
+    text: "Your grocery pattern suggests milk and fruit will run out mid-week. I can add both to Thursday's order.",
+    action: "Add to Thursday",
+    confidence: "medium",
+    why: "H-E-B reorder rhythm is every 8 days. Last delivery was 6 days ago. Milk and blueberries appear in 9 of the last 10 orders.",
+  },
+  {
+    id: "b5",
+    priority: "high",
+    text: "Start your passport renewal this month so it's in hand before Tokyo in November.",
+    action: "Begin renewal",
+    confidence: "high",
+    why: "Passport on file expires within 6 months of ANA flight on Oct 24 — Japan requires 6+ months validity.",
+  },
 ];
 
 export type CalendarEvent = {
@@ -297,6 +335,16 @@ export const detectedActions = [
   },
 ];
 
+export type InboxLane =
+  | "Needs Signature"
+  | "Needs Payment"
+  | "Needs Response"
+  | "Needs Scheduling"
+  | "Waiting on Others"
+  | "Upcoming Travel"
+  | "Renewals"
+  | "Low Priority";
+
 export type InboxItem = {
   id: string;
   from: string;
@@ -306,6 +354,7 @@ export type InboxItem = {
   assigned: string;
   confidence: number;
   category: "School" | "Sports" | "Medical" | "Travel" | "Grocery" | "Finance" | "Home";
+  lane: InboxLane;
   reason: string;
   extracted?: { label: string; value: string }[];
 };
@@ -320,6 +369,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.97,
     category: "Sports",
+    lane: "Needs Response",
     reason: "Sender is Oliver's tennis coach. Tournament on his calendar. 12 prior emails classified to Oliver.",
     extracted: [
       { label: "Deadline", value: "Jul 22" },
@@ -336,6 +386,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.99,
     category: "Medical",
+    lane: "Needs Signature",
     reason: "School matches Oliver's grade record. Attachment filename contains 'Oliver_Thompson_2025.pdf'.",
     extracted: [
       { label: "Deadline", value: "Aug 10" },
@@ -352,6 +403,7 @@ export const inbox: InboxItem[] = [
     assigned: "aimee",
     confidence: 0.98,
     category: "Travel",
+    lane: "Upcoming Travel",
     reason: "Airline confirmation. 4 travelers match household. Grouped with Aman Tokyo hotel + JR pass emails into one trip.",
     extracted: [
       { label: "Confirmation", value: "7XKQR2" },
@@ -368,6 +420,7 @@ export const inbox: InboxItem[] = [
     assigned: "aimee",
     confidence: 0.94,
     category: "Grocery",
+    lane: "Low Priority",
     reason: "Recurring receipt from H-E-B. Household reorders milk every ~8 days.",
     extracted: [
       { label: "Total", value: "$146.20" },
@@ -383,6 +436,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.72,
     category: "School",
+    lane: "Needs Scheduling",
     reason: "Teacher of Oliver's classroom. Content references Grade 4 curriculum. Not fully certain — needs confirm.",
     extracted: [{ label: "Deadline", value: "Wednesday quiz" }],
   },
@@ -395,10 +449,69 @@ export const inbox: InboxItem[] = [
     assigned: "basil",
     confidence: 0.9,
     category: "Home",
+    lane: "Renewals",
     reason: "Sender matches household home policy on file.",
     extracted: [
       { label: "Renews", value: "Dec 1" },
       { label: "Change", value: "+6.4% premium" },
     ],
   },
+  {
+    id: "i7",
+    from: "Saint Jude's Bursar",
+    subject: "Q2 tuition invoice · $2,400",
+    preview: "Auto-draft scheduled Friday Oct 18. Confirm or change card on file.",
+    time: "5d ago",
+    assigned: "aimee",
+    confidence: 0.99,
+    category: "Finance",
+    lane: "Needs Payment",
+    reason: "Recurring bursar invoice matches your quarterly tuition rhythm. Card ending 4412 on file.",
+    extracted: [
+      { label: "Amount", value: "$2,400" },
+      { label: "Draft date", value: "Fri Oct 18" },
+    ],
+  },
+  {
+    id: "i8",
+    from: "Basil",
+    subject: "Re: Enterprise rental for tournament",
+    preview: "Still waiting on Basil to confirm the rental car pickup time.",
+    time: "1d ago",
+    assigned: "basil",
+    confidence: 0.85,
+    category: "Travel",
+    lane: "Waiting on Others",
+    reason: "You asked Basil to book the rental 2 days ago. No confirmation email received yet.",
+    extracted: [
+      { label: "Waiting since", value: "Wed 9:30 AM" },
+      { label: "Needed by", value: "Fri Oct 18" },
+    ],
+  },
 ];
+
+// ---------- Weekly Family Review ----------
+
+export const weeklyReview = {
+  headline: "A calm week. Two items still open.",
+  wins: [
+    "Oliver's medical form submitted — 3 days ahead of deadline.",
+    "Grocery spend down 4% versus last month.",
+    "Lily's ballet tuition paid without a reminder.",
+  ],
+  upcoming: [
+    { label: "Tuition · Saint Jude's", when: "Friday", amount: "$2,400" },
+    { label: "Tennis Fall Classic", when: "Fri–Sun", amount: "Travel + entry $340" },
+    { label: "HVAC filter change", when: "Next Tuesday", amount: "—" },
+  ],
+  attention: [
+    "Passport renewal — 18 weeks until Tokyo. Still worth starting this month.",
+    "Basil's Rx refill — 8 days of supply left.",
+  ],
+  trends: [
+    { label: "Childcare spend", value: "+12%", note: "Nanny picked up 3 extra evenings for board prep." },
+    { label: "Sports spend", value: "+8%", note: "Tournament travel." },
+    { label: "Medical spend", value: "−22%", note: "Lower than last month." },
+  ],
+  prompt: "What would you like me to help organize next week?",
+};

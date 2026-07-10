@@ -1,39 +1,85 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
-import { inbox, family, type InboxItem } from "@/lib/family-data";
-import { useState } from "react";
+import { inbox, family, type InboxItem, type InboxLane } from "@/lib/family-data";
+import { useMemo, useState } from "react";
 import { Check, HelpCircle, Info } from "lucide-react";
 
 export const Route = createFileRoute("/inbox")({
-  head: () => ({ meta: [{ title: "Inbox Intelligence — Family COO" }] }),
+  head: () => ({ meta: [{ title: "Family Inbox — Family COO" }] }),
   component: InboxPage,
 });
 
+const LANES: InboxLane[] = [
+  "Needs Signature",
+  "Needs Payment",
+  "Needs Response",
+  "Needs Scheduling",
+  "Waiting on Others",
+  "Upcoming Travel",
+  "Renewals",
+  "Low Priority",
+];
+
 function InboxPage() {
+  const [active, setActive] = useState<InboxLane | "All">("All");
+
+  const grouped = useMemo(() => {
+    const map: Record<string, InboxItem[]> = {};
+    for (const item of inbox) {
+      (map[item.lane] ||= []).push(item);
+    }
+    return map;
+  }, []);
+
+  const visibleLanes = active === "All" ? LANES : [active];
+
   return (
     <AppShell>
       <PageHeader
         back
-        eyebrow="Email intelligence"
-        title="What I learned."
-        subtitle="From 90 days of Gmail. Each item shows who it belongs to, why, and what to do."
+        eyebrow="One inbox for the family"
+        title="Sorted, so you don't have to."
+        subtitle="Every actionable message from schools, sports, travel, bills, and medical — organized by what it needs from you."
       />
 
       <section className="px-6 mb-6">
         <div className="grid grid-cols-3 gap-2 rounded-2xl border border-hairline bg-surface p-2 text-center">
-          <Stat n="1,240" l="Emails scanned" />
-          <Stat n="47" l="Auto-classified" />
-          <Stat n="6" l="Need review" />
+          <Stat n="1,240" l="Scanned this month" />
+          <Stat n={String(inbox.length)} l="Sorted for you" />
+          <Stat n="1" l="Needs your eye" />
         </div>
       </section>
 
-      <section className="px-6">
-        <SectionLabel>Classified messages</SectionLabel>
-        <div className="space-y-2">
-          {inbox.map((m) => (
-            <InboxCard key={m.id} m={m} />
+      <section className="px-6 mb-4">
+        <div className="flex gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <FilterChip label="All" active={active === "All"} onClick={() => setActive("All")} count={inbox.length} />
+          {LANES.map((l) => (
+            <FilterChip
+              key={l}
+              label={l}
+              active={active === l}
+              onClick={() => setActive(l)}
+              count={(grouped[l] ?? []).length}
+            />
           ))}
         </div>
+      </section>
+
+      <section className="px-6 space-y-8 pb-10">
+        {visibleLanes.map((lane) => {
+          const items = grouped[lane] ?? [];
+          if (items.length === 0) return null;
+          return (
+            <div key={lane}>
+              <SectionLabel>{lane}</SectionLabel>
+              <div className="space-y-2">
+                {items.map((m) => (
+                  <InboxCard key={m.id} m={m} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </section>
     </AppShell>
   );
@@ -48,12 +94,51 @@ function Stat({ n, l }: { n: string; l: string }) {
   );
 }
 
+function FilterChip({
+  label,
+  active,
+  onClick,
+  count,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  count: number;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] uppercase tracking-widest transition-colors ${
+        active
+          ? "bg-zinc-900 text-white"
+          : "border border-hairline bg-surface text-muted-foreground"
+      }`}
+    >
+      {label}
+      <span className={`ml-1.5 ${active ? "opacity-60" : "opacity-50"}`}>{count}</span>
+    </button>
+  );
+}
+
 function InboxCard({ m }: { m: InboxItem }) {
   const [assignee, setAssignee] = useState(m.assigned);
   const [showWhy, setShowWhy] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const p = family.find((f) => f.id === assignee);
-  const low = m.confidence < 0.8;
+  const confidence: "high" | "medium" | "low" =
+    m.confidence >= 0.9 ? "high" : m.confidence >= 0.75 ? "medium" : "low";
+  const confidenceLabel =
+    confidence === "high"
+      ? "I can handle this"
+      : confidence === "medium"
+        ? "Suggested"
+        : "Please confirm";
+  const dot =
+    confidence === "high"
+      ? "bg-emerald-500"
+      : confidence === "medium"
+        ? "bg-amber-500"
+        : "bg-zinc-400";
 
   return (
     <div className="rounded-3xl border border-hairline bg-surface p-5">
@@ -124,16 +209,9 @@ function InboxCard({ m }: { m: InboxItem }) {
       )}
 
       <div className="mt-4 flex items-center justify-between border-t border-hairline pt-3">
-        <span
-          className={`inline-flex items-center gap-1.5 text-[11px] ${
-            low ? "text-amber-700" : "text-muted-foreground"
-          }`}
-        >
-          <span
-            className={`size-1.5 rounded-full ${low ? "bg-amber-500" : "bg-emerald-500"}`}
-          />
-          {Math.round(m.confidence * 100)}% confidence
-          {low && " · needs confirmation"}
+        <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          <span className={`size-1.5 rounded-full ${dot}`} />
+          {confidenceLabel} · {Math.round(m.confidence * 100)}%
           {confirmed && " · learned"}
         </span>
         <div className="flex gap-1.5">
@@ -145,7 +223,7 @@ function InboxCard({ m }: { m: InboxItem }) {
             {p ? ` · ${p.name.split(" ")[0]}` : ""}
           </button>
           <button className="rounded-full border border-hairline px-3 py-1.5 text-[11px] uppercase tracking-widest">
-            Ignore
+            Later
           </button>
         </div>
       </div>
