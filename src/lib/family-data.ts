@@ -984,3 +984,293 @@ export const calm = {
   tomorrow: ["Lily's pediatrician appt · 10:30 AM", "Passport renewal — start"],
   everythingElseNote: "I'm holding 14 other items. None are urgent today.",
 };
+
+// ---------- Expansion: Agents, Approvals, Follow-ups, Integrations ----------
+
+export const capabilityLevels = [
+  { id: "L1", level: "Understand", title: "Reads the family signal", note: "Email, calendar, receipts, forms — sorted and understood." },
+  { id: "L2", level: "Recommend", title: "Suggests the next move", note: "Small nudges with a clear 'Why?' and confidence." },
+  { id: "L3", level: "Prepare", title: "Drafts the work", note: "Emails, forms, checklists, bookings — ready for one tap." },
+  { id: "L4", level: "Coordinate", title: "Works across agents", note: "School × Health × Calendar × Comms — one workflow." },
+  { id: "L5", level: "Act", title: "Completes approved actions", note: "Only after you say yes — or inside a rule you set." },
+] as const;
+
+export const agents = [
+  { id: "school",     name: "School Agent",      status: "active",   summary: "Tracking 3 forms, 2 events, 1 tuition draft.",       lastAction: "Sorted Oliver's field trip slip · 12 min ago" },
+  { id: "health",     name: "Health Logistics",  status: "active",   summary: "2 appointments prepped · 1 form waiting on doctor.", lastAction: "Emailed Dr. Reyes for Oliver's physical form · 2d" },
+  { id: "travel",     name: "Travel Agent",      status: "active",   summary: "Tokyo trip · 76% ready · passport OK through 2028.", lastAction: "Grouped 4 reservations into 'Tokyo · Nov 12–20'" },
+  { id: "grocery",    name: "Grocery Agent",     status: "active",   summary: "Milk, eggs due Sunday · learned from Instacart.",     lastAction: "Predicted reorder · added 6 items" },
+  { id: "finance",    name: "Finance Agent",     status: "watching", summary: "Tuition draft over $500 — waiting for your OK.",     lastAction: "Flagged $612 charge for approval" },
+  { id: "home",       name: "Home Maintenance",  status: "active",   summary: "HVAC filter next weekend · leak sensors quiet.",     lastAction: "Scheduled filter reminder for Sat" },
+  { id: "sports",     name: "Sports Agent",      status: "active",   summary: "Tennis moved to 5:30 tomorrow · uniform ready.",     lastAction: "Updated Oliver's practice from text msg" },
+  { id: "childcare",  name: "Childcare Agent",   status: "active",   summary: "Sofia briefed for Tue afternoon.",                    lastAction: "Sent handoff card to Sofia" },
+  { id: "shopping",   name: "Shopping & Returns",status: "active",   summary: "2 return windows closing this week.",                lastAction: "Prepared Amazon return · label ready" },
+  { id: "comms",      name: "Communication",     status: "active",   summary: "3 drafts ready · nothing sent without approval.",    lastAction: "Drafted note to Coach Marco" },
+] as const;
+
+export const agentWorkflowExample = {
+  title: "Oliver's school medical form",
+  steps: [
+    { agent: "school",  did: "Detected a physician-signed form is due Aug 5." },
+    { agent: "health",  did: "Identified Dr. Reyes as Oliver's pediatrician." },
+    { agent: "calendar",did: "Found 3 open slots this week matching the practice." },
+    { agent: "comms",   did: "Drafted an email to Dr. Reyes with the form attached." },
+    { agent: "task",    did: "Set a follow-up for Aug 2 if the form hasn't returned." },
+  ],
+};
+
+export const approvals = [
+  {
+    id: "ap1",
+    title: "Email Oliver's pediatrician",
+    steps: [
+      "Send email to Dr. Reyes at reyes.ped@…",
+      "Attach the school medical form (PDF)",
+      "Request completion by August 5",
+      "Create a follow-up reminder for August 2",
+    ],
+    why: "Because Oliver's school requires a physician-signed form before the season starts.",
+    reversible: true,
+  },
+  {
+    id: "ap2",
+    title: "Move Oliver's tennis to Thursday 4:30 PM",
+    steps: [
+      "Update calendar event",
+      "Notify Sofia (nanny) about the change",
+      "Add 'white uniform' to Oliver's kit checklist",
+    ],
+    why: "Detected from Coach Marco's text: \"Practice moved to Thursday 4:30. Bring the white uniform.\"",
+    reversible: true,
+  },
+  {
+    id: "ap3",
+    title: "Charge tonight — EV at 22%",
+    steps: [
+      "Schedule charging session from 10 PM to 6 AM",
+      "Aim for 90% by morning",
+      "Notify Basil the car will be ready by 7 AM",
+    ],
+    why: "Tomorrow's tournament is 74 miles away; current range is not sufficient with margin.",
+    reversible: true,
+  },
+  {
+    id: "ap4",
+    title: "Refund follow-up · Amazon order #A-2109",
+    steps: [
+      "Send templated follow-up to Amazon support",
+      "Attach original refund thread",
+      "Set another check-in for 3 business days",
+    ],
+    why: "Refund promised 8 business days ago; nothing has posted to the card.",
+    reversible: true,
+  },
+] as const;
+
+export const followUps = [
+  { id: "fu1", who: "Dr. Reyes (pediatrician)", about: "Oliver's medical form", sent: "6 business days ago", suggest: "Prepared: gentle follow-up",     window: "Typical reply: 3–5 days" },
+  { id: "fu2", who: "Saint Jude's registrar",   about: "Lily's kindergarten registration confirmation", sent: "9 days ago", suggest: "Prepared: polite nudge", window: "Typical reply: 5–7 days" },
+  { id: "fu3", who: "Coach Marco",              about: "Tournament weekend logistics",  sent: "4 days ago", suggest: "Wait 1 more day",                    window: "Typical reply: 2–5 days" },
+  { id: "fu4", who: "Amazon support",           about: "Refund on order #A-2109",       sent: "8 business days ago", suggest: "Prepared: escalation",       window: "Refund SLA: 5–10 days" },
+  { id: "fu5", who: "Contractor · G. Alvarez",  about: "Estimate for downstairs bath",  sent: "12 days ago", suggest: "Prepared: friendly nudge",           window: "Typical reply: 5–7 days" },
+];
+
+export const commsIntake = [
+  {
+    id: "cx1",
+    source: "Text · Coach Marco",
+    raw: "Practice moved to 5:30 tomorrow. Bring the white uniform.",
+    parsed: [
+      { label: "Event", value: "Oliver's tennis practice" },
+      { label: "New time", value: "Tomorrow · 5:30 PM" },
+      { label: "Bring", value: "White uniform" },
+    ],
+    ask: "Update Oliver's practice to 5:30 PM and add 'white uniform' to his checklist?",
+  },
+  {
+    id: "cx2",
+    source: "Email · Saint Jude's",
+    raw: "Field trip permission slip attached. Please sign and return by Friday.",
+    parsed: [
+      { label: "Action", value: "Signature" },
+      { label: "Owner", value: "Lily" },
+      { label: "Due", value: "Friday" },
+    ],
+    ask: "Add 'Sign Lily's field trip slip' to your inbox with a Thursday reminder?",
+  },
+  {
+    id: "cx3",
+    source: "Photo · school flyer",
+    raw: "School Carnival · Oct 18 · 5–8 PM · Main lawn",
+    parsed: [
+      { label: "Event", value: "School Carnival" },
+      { label: "When", value: "Oct 18 · 5–8 PM" },
+    ],
+    ask: "Add to the family calendar?",
+  },
+];
+
+export const rules = [
+  { id: "r1", text: "Never schedule appointments during school hours.", on: true },
+  { id: "r2", text: "Always ask before sending an email.", on: true },
+  { id: "r3", text: "Automatically add travel confirmations to the calendar.", on: true },
+  { id: "r4", text: "Notify both parents about medical matters.", on: true },
+  { id: "r5", text: "Send pickup changes to Sofia.", on: true },
+  { id: "r6", text: "Do not show financial information to caregivers.", on: true },
+  { id: "r7", text: "Prefer nonstop flights when traveling with children.", on: true },
+  { id: "r8", text: "Remind us two weeks before every school deadline.", on: true },
+  { id: "r9", text: "Flag any purchase over $500.", on: true },
+  { id: "r10", text: "Quiet hours: no notifications between 9 PM and 6:30 AM.", on: false },
+];
+
+export const integrations = {
+  smartHome: [
+    { id: "sh1", label: "Front door lock", state: "Locked · Sofia's temp pass active until 6 PM" },
+    { id: "sh2", label: "Garage door", state: "Closed · alert if open > 10 min" },
+    { id: "sh3", label: "Thermostat", state: "Warming to 71° for 6:30 PM arrival" },
+    { id: "sh4", label: "HVAC filter", state: "Replace in 9 days" },
+    { id: "sh5", label: "Leak sensor · basement", state: "Dry · last check 2 min ago" },
+    { id: "sh6", label: "Robot vacuum", state: "Runs 9:15 AM weekdays after school drop-off" },
+  ],
+  vehicle: [
+    { id: "v1", label: "EV · Model Y", state: "22% · 74 mi to tomorrow's tournament — charge tonight?" },
+    { id: "v2", label: "Tire pressure", state: "Rear-left low · service in 2 weeks" },
+    { id: "v3", label: "Next service", state: "Due in 1,200 mi · booking suggestion ready" },
+  ],
+  wearables: [
+    { id: "w1", label: "Oliver · sleep", state: "3 late nights this week — suggest earlier bedtime tonight" },
+    { id: "w2", label: "Aimee · schedule load", state: "High week detected — recovery Sunday recommended" },
+    { id: "w3", label: "Medication reminders", state: "Basil · evening dose · quiet nudge at 9 PM" },
+  ],
+  location: [
+    { id: "l1", label: "Sofia (nanny)", state: "8 min from tennis courts · on time" },
+    { id: "l2", label: "Basil", state: "Near Whole Foods · reminder: pick up milk" },
+    { id: "l3", label: "Oliver's arrival", state: "Home at 3:42 PM · sent Aimee a discreet ping" },
+  ],
+};
+
+export const predictions = [
+  { id: "p1", when: "Next 3 weeks",  text: "Summer camp registration likely opens soon — want me to watch for it?" },
+  { id: "p2", when: "July",           text: "School forms usually arrive from Saint Jude's — I'll pre-file them." },
+  { id: "p3", when: "August",         text: "Tennis registration typically opens — Oliver's spot at risk if late." },
+  { id: "p4", when: "Before Nov 12",  text: "Passports look fine, but Lily's is under 6 months on return — flagging." },
+  { id: "p5", when: "This weekend",   text: "One unscheduled Saturday + calm Sunday. Good window for a short trip." },
+  { id: "p6", when: "September",      text: "Oliver may need a larger shoe size soon (last bump: ~14 mo ago)." },
+  { id: "p7", when: "This month",     text: "Refill likely: Basil's monthly prescription — I can queue it." },
+];
+
+export const opportunities = [
+  { id: "o1", text: "You have one unscheduled Saturday this month, and no early Sunday events. A short trip could fit." },
+  { id: "o2", text: "$220 in unused United credits expire in 6 weeks." },
+  { id: "o3", text: "A camp opening matches Oliver's July calendar and interests." },
+  { id: "o4", text: "The stroller you flagged dropped $60 today." },
+  { id: "o5", text: "Sofia's birthday is 3 weeks out — enough time to plan something nice." },
+];
+
+export const twin = {
+  household: "Thompson family · 4 people, 1 nanny",
+  routines: [
+    "Weekday mornings: Aimee drops Lily, Sofia handles Oliver by 7:45 AM.",
+    "Sunday grocery restock — usually via Instacart.",
+    "Family dinner Wednesdays, screens off after 7 PM.",
+  ],
+  preferences: [
+    "Nonstop flights when traveling with kids.",
+    "Prefers fewer activities over a crowded schedule.",
+    "No pork in weekday groceries.",
+    "Aimee likes reminders 3 days early; Basil the morning of.",
+  ],
+  trusted: ["Sofia (nanny)", "Dr. Reyes (pediatrician)", "Coach Marco (tennis)", "Ms. Patel (Lily's teacher)"],
+  simulate: "If Oliver adds a second weekly tennis lesson, Tuesdays overload and Lily needs a different pickup.",
+};
+
+export const comparisons = [
+  {
+    id: "cmp1",
+    kind: "Summer camp",
+    options: [
+      { name: "Redwood Day Camp",    price: "$1,240/wk", fit: "9/10", note: "Matches Oliver's tennis focus, 12 min drive." },
+      { name: "Bay Adventures",       price: "$980/wk",  fit: "7/10", note: "Cheaper but pickup at 3:15 conflicts with Lily." },
+      { name: "Coastal Kids",         price: "$1,410/wk", fit: "6/10", note: "Great reviews, 34 min drive each way." },
+    ],
+    recommend: "Redwood Day Camp — best schedule fit for the family week.",
+  },
+  {
+    id: "cmp2",
+    kind: "Tokyo hotel",
+    options: [
+      { name: "Park Hyatt Shinjuku",  price: "$620/nt", fit: "8/10", note: "Family suite available; near Nov 15 dinner." },
+      { name: "Aman Tokyo",           price: "$1,780/nt", fit: "7/10", note: "Beautiful but far from your itinerary." },
+      { name: "Hoshinoya Tokyo",      price: "$980/nt", fit: "9/10", note: "Onsen, ryokan feel; matches your preferences." },
+    ],
+    recommend: "Hoshinoya — closest fit to how you like to travel with kids.",
+  },
+];
+
+export const bookingCategories = [
+  { id: "bk1", label: "Babysitters",   note: "Sofia + 2 vetted backups" },
+  { id: "bk2", label: "Tutors",         note: "Math · reading · Mandarin" },
+  { id: "bk3", label: "Camps",          note: "3 shortlisted for July" },
+  { id: "bk4", label: "House cleaners", note: "Every other Friday" },
+  { id: "bk5", label: "Repair services",note: "Plumber · handyman · HVAC" },
+  { id: "bk6", label: "Pediatric",      note: "Dr. Reyes + 2 nearby" },
+  { id: "bk7", label: "Dental",         note: "Family dentist" },
+  { id: "bk8", label: "Grocery",        note: "Instacart · Whole Foods" },
+  { id: "bk9", label: "Pet care",       note: "Walker · sitter · vet" },
+  { id: "bk10", label: "Travel",        note: "Prefilled from your history" },
+];
+
+export const providerPortal = [
+  { role: "Nanny · Sofia",      sees: "Today's pickups, kids' allergies, emergency contacts.", cannotSee: "Financials, medical history." },
+  { role: "Coach · Marco",      sees: "Oliver's practice schedule, kit checklist.",            cannotSee: "Family calendar, addresses." },
+  { role: "Tutor · Ms. Kim",    sees: "Lily's lesson times and homework confirmations.",       cannotSee: "Anything about Oliver or finances." },
+  { role: "Pediatrician office",sees: "Forms in progress and appointment prep.",               cannotSee: "Other providers' notes." },
+  { role: "Contractor",         sees: "Estimate thread, project photos you share.",            cannotSee: "Family schedule or personal data." },
+];
+
+export const subscriptions = [
+  { id: "s1", label: "SF Museum family membership", renews: "Nov 4",  cost: "$180/yr", note: "Not visited in 11 months." },
+  { id: "s2", label: "Netflix",                      renews: "Monthly", cost: "$22.99", note: "Two duplicate profiles inactive." },
+  { id: "s3", label: "Costco",                        renews: "Feb 12", cost: "$65/yr", note: "Renews next quarter." },
+  { id: "s4", label: "Tennis club",                   renews: "Aug 1",  cost: "$1,200/yr", note: "Used weekly — keep." },
+  { id: "s5", label: "Peloton",                       renews: "Monthly","cost": "$44", note: "Only 2 rides this month." },
+];
+
+export const rewards = [
+  { id: "rw1", label: "United miles",           balance: "82,140",  note: "Enough for 2 domestic tickets." },
+  { id: "rw2", label: "Marriott points",        balance: "134,500", note: "Covers 3 nights at Park Hyatt equivalent." },
+  { id: "rw3", label: "Amex Membership Rewards",balance: "245,000", note: "Transfer to ANA before Tokyo?" },
+  { id: "rw4", label: "Hotel credit · Andaz",   balance: "$300",    note: "Expires before Nov trip — plan to use." },
+  { id: "rw5", label: "REI dividend",           balance: "$62",     note: "Apply to Oliver's new sneakers?" },
+];
+
+export const security = [
+  { id: "sec1", severity: "warn", text: "Payment request from 'saintjude-billing.co' — this doesn't match the school's usual domain.", advice: "Verify with the office before paying." },
+  { id: "sec2", severity: "info", text: "Airline itinerary from a sender you've never received from — matches your Tokyo trip.",     advice: "Legit — added to Travel with a confidence note." },
+  { id: "sec3", severity: "warn", text: "Unusual $612 charge on the shared card at a new merchant.",                                    advice: "Flagged for your review before I do anything." },
+];
+
+export const privacy = {
+  connected: [
+    { label: "Aimee's Gmail",       status: "Connected · read only" },
+    { label: "Basil's Outlook",     status: "Connected · read only" },
+    { label: "Shared calendar",     status: "Connected" },
+    { label: "Instacart (email)",   status: "Read via inbox" },
+    { label: "Bank (read only)",    status: "Connected for trends" },
+  ],
+  agentsPaused: [] as string[],
+  recentActions: [
+    "Drafted email to Dr. Reyes · not sent",
+    "Added 'white uniform' to Oliver's checklist",
+    "Scheduled HVAC filter reminder",
+  ],
+  deletions: "Delete a data source and everything derived from it is removed within 24 hours.",
+};
+
+export const developerPlatform = [
+  { id: "dp1", partner: "PowerSchool",   scope: "Read grades & attendance for connected children only." },
+  { id: "dp2", partner: "Instacart",     scope: "Send order history to Grocery Agent." },
+  { id: "dp3", partner: "Delta",         scope: "Push itineraries to Travel Agent." },
+  { id: "dp4", partner: "Nest",          scope: "Home state read + limited controls." },
+  { id: "dp5", partner: "Care.com",      scope: "Book vetted sitters via Booking layer." },
+];
