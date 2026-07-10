@@ -64,10 +64,10 @@ export const loadSampleFamily = createServerFn({ method: "POST" }).middleware([
   ];
 
   const grocery = [
-    { household_id: householdId, name: "Oat milk", quantity: 2, category: "dairy", status: "needed", created_by: userId },
-    { household_id: householdId, name: "Bananas", quantity: 6, category: "produce", status: "needed", created_by: userId },
-    { household_id: householdId, name: "Sourdough bread", quantity: 1, category: "bakery", status: "needed", created_by: userId },
-    { household_id: householdId, name: "Chicken breast", quantity: 2, category: "meat", status: "needed", created_by: userId },
+    { household_id: householdId, name: "Oat milk", qty: 2, category: "dairy", status: "needed", created_by: userId },
+    { household_id: householdId, name: "Bananas", qty: 6, category: "produce", status: "needed", created_by: userId },
+    { household_id: householdId, name: "Sourdough bread", qty: 1, category: "bakery", status: "needed", created_by: userId },
+    { household_id: householdId, name: "Chicken breast", qty: 2, category: "meat", status: "needed", created_by: userId },
   ];
 
   const [f, e, t, g] = await Promise.all([
