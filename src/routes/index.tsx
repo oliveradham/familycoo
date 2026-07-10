@@ -4,7 +4,7 @@ import { commandCenter, family, inbox } from "@/lib/family-data";
 import { AlertTriangle, Check, Clock, Mic, Sparkles, Settings as SettingsIcon } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Command Center — Family COO" }] }),
+  head: () => ({ meta: [{ title: "Family COO" }] }),
   component: Today,
 });
 

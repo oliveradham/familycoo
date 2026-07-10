@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Family COO — Your family's chief of staff" },
+      { title: "Family COO" },
       {
         name: "description",
         content:
@@ -85,13 +85,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { name: "author", content: "Family COO" },
       { name: "theme-color", content: "#fcfcfc" },
-      { property: "og:title", content: "Family COO — Your family's chief of staff" },
+      { property: "og:title", content: "Family COO" },
       {
         property: "og:description",
-        content: "The calm, competent AI running your family's operations.",
+        content: "An AI Chief Operating Officer for busy families. Proactively coordinates schedules, school, sports, travel, household, and daily logistics.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Family COO" },
+      { name: "twitter:description", content: "An AI Chief Operating Officer for busy families. Proactively coordinates schedules, school, sports, travel, household, and daily logistics." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/241851bb-7fea-4567-a366-8377d4015998/id-preview-97549ab2--393bb380-cbb3-4ccb-8c49-57ec7dcb9a12.lovable.app-1783688306861.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/241851bb-7fea-4567-a366-8377d4015998/id-preview-97549ab2--393bb380-cbb3-4ccb-8c49-57ec7dcb9a12.lovable.app-1783688306861.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
