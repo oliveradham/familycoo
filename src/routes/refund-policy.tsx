@@ -37,7 +37,7 @@ function RefundPolicyPage() {
           <section>
             <h2 className="text-lg font-semibold">30-day money-back guarantee</h2>
             <p>
-              Family COO, operated by <strong>Aimee Robert</strong>, offers a
+              Family COO, operated by <strong>Oliver Robert Adham</strong>, offers a
               <strong> 30-day money-back guarantee</strong> on paid subscriptions.
               If you are not satisfied with the Service, you can request a full
               refund within 30 days of your original purchase date.
@@ -66,7 +66,7 @@ function RefundPolicyPage() {
               </li>
               <li>Select the transaction and choose "Request a refund".</li>
               <li>
-                Alternatively, contact Aimee Robert through the in-app support
+                Alternatively, contact Oliver Robert Adham through the in-app support
                 channel and we will help you with the request.
               </li>
             </ol>
@@ -112,7 +112,7 @@ function RefundPolicyPage() {
               >
                 paddle.net
               </a>{" "}
-              or reach Aimee Robert through the in-app support channel.
+              or reach Oliver Robert Adham through the in-app support channel.
             </p>
           </section>
         </div>
