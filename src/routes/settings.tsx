@@ -11,6 +11,8 @@ import { deleteMyAccount } from "@/lib/account.functions";
 import { createBillingPortalSession } from "@/lib/billing.functions";
 import { useSubscription } from "@/hooks/useSubscription";
 import { getPrefs, savePrefs } from "@/lib/prefs.functions";
+import { isNative, isIOS, openExternal } from "@/lib/platform";
+
 import {
   pushSupported,
   subscribeToPush,
