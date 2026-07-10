@@ -7,7 +7,7 @@ export const Route = createFileRoute("/privacy-policy")({
       {
         name: "description",
         content:
-          "How Aimee Robert collects, uses, and protects personal data in Family COO.",
+          "How Oliver Robert Adham collects, uses, and protects personal data in Family COO.",
       },
       { property: "og:title", content: "Privacy Policy — Family COO" },
       {
@@ -37,8 +37,8 @@ function PrivacyPolicyPage() {
           <section>
             <h2 className="text-lg font-semibold">1. Who we are</h2>
             <p>
-              Family COO ("the Service") is operated by <strong>Aimee Robert</strong>.
-              Aimee Robert is the <em>data controller</em> for personal data
+              Family COO ("the Service") is operated by <strong>Oliver Robert Adham</strong>.
+              Oliver Robert Adham is the <em>data controller</em> for personal data
               processed through the Service and is responsible for how that
               data is collected, used, and protected. This notice explains
               what we do with your information.
@@ -239,7 +239,7 @@ function PrivacyPolicyPage() {
             <h2 className="text-lg font-semibold">14. Contact</h2>
             <p>
               To exercise your rights or ask a privacy question, contact
-              Aimee Robert through the in-app support channel. For
+              Oliver Robert Adham through the in-app support channel. For
               billing-related privacy questions, please contact Paddle at{" "}
               <a
                 href="https://paddle.net"

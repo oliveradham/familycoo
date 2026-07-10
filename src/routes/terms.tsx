@@ -7,7 +7,7 @@ export const Route = createFileRoute("/terms")({
       {
         name: "description",
         content:
-          "Terms and conditions for using Family COO, operated by Aimee Robert.",
+          "Terms and conditions for using Family COO, operated by Oliver Robert Adham.",
       },
       { property: "og:title", content: "Terms & Conditions — Family COO" },
       {
@@ -37,9 +37,9 @@ function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold">1. Who we are</h2>
             <p>
-              Family COO ("the Service") is operated by <strong>Aimee Robert</strong>{" "}
+              Family COO ("the Service") is operated by <strong>Oliver Robert Adham</strong>{" "}
               ("we", "us", "our"). By using the Service you are entering into an
-              agreement with Aimee Robert.
+              agreement with Oliver Robert Adham.
             </p>
           </section>
 
@@ -108,7 +108,7 @@ function TermsPage() {
             <h2 className="text-lg font-semibold">7. Intellectual property</h2>
             <p>
               The Service, including its software, design, and branding, is
-              owned by Aimee Robert and protected by intellectual property laws.
+              owned by Oliver Robert Adham and protected by intellectual property laws.
               We grant you a limited, non-exclusive, non-transferable right to
               use the Service under your selected plan. You retain ownership of
               content you submit and grant us a limited license to host and
@@ -187,7 +187,7 @@ function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold">12. Indemnity</h2>
             <p>
-              You agree to indemnify Aimee Robert against claims arising from
+              You agree to indemnify Oliver Robert Adham against claims arising from
               your content, your unlawful use of the Service, or your breach of
               these terms.
             </p>
@@ -206,7 +206,7 @@ function TermsPage() {
             <h2 className="text-lg font-semibold">14. Governing law</h2>
             <p>
               These terms are governed by the laws of the jurisdiction in which
-              Aimee Robert operates, without regard to conflict-of-law rules.
+              Oliver Robert Adham operates, without regard to conflict-of-law rules.
               Disputes will be resolved in the competent courts of that
               jurisdiction, unless local consumer law provides otherwise.
             </p>
@@ -215,7 +215,7 @@ function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold">15. Contact</h2>
             <p>
-              Questions about these terms? Contact Aimee Robert through the
+              Questions about these terms? Contact Oliver Robert Adham through the
               in-app support channel. For billing and refunds, please contact
               Paddle at{" "}
               <a
