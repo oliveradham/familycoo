@@ -11,6 +11,7 @@ import {
 } from "@/lib/integrations.functions";
 import { Calendar, Check, Copy, Mail, RefreshCw, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/integrations")({
   head: () => ({ meta: [{ title: "Integrations — Family COO" }] }),
@@ -70,6 +71,7 @@ function Page() {
   };
 
   return (
+    <PremiumRoute min="pro" feature="External Integrations">
     <AppShell>
       <PageHeader
         back
@@ -193,5 +195,6 @@ function Page() {
         </Card>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }

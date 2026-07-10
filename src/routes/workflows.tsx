@@ -3,6 +3,7 @@ import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell
 import { workflows } from "@/lib/family-data";
 import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/workflows")({
   head: () => ({
@@ -31,6 +32,7 @@ function Page() {
   const [installed, setInstalled] = useState<Record<string, boolean>>({});
 
   return (
+    <PremiumRoute min="pro" feature="AI Workflows">
     <AppShell>
       <PageHeader
         back
@@ -123,5 +125,6 @@ function Page() {
         </Card>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }

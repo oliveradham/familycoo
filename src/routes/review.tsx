@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell, PageHeader, SectionLabel, Card } from "@/components/app-shell";
 import { getLatestWeeklyReview } from "@/lib/weekly-review.functions";
 import { Check, Calendar } from "lucide-react";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/review")({
   head: () => ({ meta: [{ title: "Weekly Review — Family COO" }] }),
@@ -23,6 +24,7 @@ function ReviewPage() {
   const review = data?.review;
 
   return (
+    <PremiumRoute min="pro" feature="Weekly Family Review">
     <AppShell>
       <PageHeader
         back
@@ -126,5 +128,6 @@ function ReviewPage() {
         )}
       </div>
     </AppShell>
+      </PremiumRoute>
   );
 }

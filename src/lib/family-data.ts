@@ -1343,7 +1343,7 @@ export const plans: Plan[] = [
   {
     id: "max",
     name: "Pro Max",
-    price: "$99.99",
+    price: "$110.99",
     cadence: "per month",
     tagline: "Like hiring a full-time executive assistant for your family.",
     best: "Complex households — multiple homes, providers, or travel.",
@@ -1362,7 +1362,7 @@ export const plans: Plan[] = [
       "Concierge onboarding + priority support",
       "Early access to experimental features",
     ],
-    cta: "Talk to concierge",
+    cta: "Start 14-day trial",
   },
 ];
 

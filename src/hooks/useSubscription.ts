@@ -14,6 +14,8 @@ export type Subscription = {
   environment: string;
 };
 
+export type Tier = "free" | "pro" | "max";
+
 export function useSubscription() {
   const { user } = useAuth();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
@@ -56,15 +58,34 @@ export function useSubscription() {
 
   const now = Date.now();
   const end = subscription?.current_period_end ? new Date(subscription.current_period_end).getTime() : null;
+  const withinPeriod = end == null || end > now;
   const isActive = !!subscription && (
-    (["active", "trialing", "past_due"].includes(subscription.status) && (!end || end > now)) ||
+    (["active", "trialing", "past_due"].includes(subscription.status) && withinPeriod) ||
     (subscription.status === "canceled" && !!end && end > now)
   );
-  const tier: "free" | "pro" | "max" = !isActive
+  const isTrialing = !!subscription && subscription.status === "trialing" && withinPeriod;
+  const isPastDue = !!subscription && subscription.status === "past_due" && withinPeriod;
+  const tier: Tier = !isActive
     ? "free"
     : subscription?.product_id === "family_coo_max"
       ? "max"
-      : "pro";
+      : subscription?.product_id === "family_coo_pro"
+        ? "pro"
+        : "free";
 
-  return { subscription, loading, isActive, tier, refetch: load };
+  return {
+    subscription,
+    loading,
+    isActive,
+    isTrialing,
+    isPastDue,
+    tier,
+    trialEndsAt: isTrialing ? subscription?.current_period_end ?? null : null,
+    refetch: load,
+  };
+}
+
+const TIER_RANK: Record<Tier, number> = { free: 0, pro: 1, max: 2 };
+export function tierMeets(current: Tier, min: Tier): boolean {
+  return TIER_RANK[current] >= TIER_RANK[min];
 }

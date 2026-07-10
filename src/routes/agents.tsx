@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { agents, agentWorkflowExample, capabilityLevels } from "@/lib/family-data";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/agents")({
   head: () => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/agents")({
 
 function Page() {
   return (
+    <PremiumRoute min="pro" feature="AI Agents">
     <AppShell>
       <PageHeader
         back
@@ -105,5 +107,6 @@ function Page() {
         </Card>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }

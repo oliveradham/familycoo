@@ -13,7 +13,7 @@ export const Route = createFileRoute("/plans")({
       {
         name: "description",
         content:
-          "Family COO pricing: start free, upgrade to Pro at $49.99/mo or Pro Max at $99.99/mo. Cancel anytime with a 30-day money-back guarantee.",
+          "Family COO pricing: start free, upgrade to Pro at $49.99/mo or Pro Max at $110.99/mo. 14-day free trial. Cancel anytime.",
       },
       { property: "og:title", content: "Family COO Pricing — Free, Pro, Pro Max" },
       {
@@ -154,23 +154,6 @@ function Page() {
         </Card>
       </section>
 
-      <section className="px-6 mt-6 pb-10">
-        <Link
-          to="/marketplace"
-          className="flex items-center justify-between rounded-3xl border border-hairline bg-surface p-5"
-        >
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Also available
-            </p>
-            <p className="mt-1 font-serif text-xl italic">Family Marketplace</p>
-            <p className="mt-1 text-[12px] text-muted-foreground">
-              One-time templates, itineraries, and installable AI workflows.
-            </p>
-          </div>
-          <span className="text-lg opacity-60">→</span>
-        </Link>
-      </section>
 
       <footer className="px-6 pb-10 pt-4">
         <div className="flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-muted-foreground">

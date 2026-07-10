@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { twin } from "@/lib/family-data";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/twin")({
   head: () => ({ meta: [{ title: "Family Digital Twin — Family COO" }] }),
@@ -9,6 +10,7 @@ export const Route = createFileRoute("/twin")({
 
 function Page() {
   return (
+    <PremiumRoute min="max" feature="Family Digital Twin">
     <AppShell>
       <PageHeader
         back
@@ -37,6 +39,7 @@ function Page() {
         </Card>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }
 

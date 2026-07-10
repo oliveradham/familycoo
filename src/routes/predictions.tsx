@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { predictions, opportunities } from "@/lib/family-data";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/predictions")({
   head: () => ({ meta: [{ title: "Predictions & Opportunities — Family COO" }] }),
@@ -9,6 +10,7 @@ export const Route = createFileRoute("/predictions")({
 
 function Page() {
   return (
+    <PremiumRoute min="max" feature="Predictive Planning">
     <AppShell>
       <PageHeader
         back
@@ -48,5 +50,6 @@ function Page() {
         </div>
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }

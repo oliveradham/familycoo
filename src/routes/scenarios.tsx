@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader } from "@/components/app-shell";
 import { scenarios } from "@/lib/family-data";
+import { PremiumRoute } from "@/components/PremiumRoute";
 
 export const Route = createFileRoute("/scenarios")({
   head: () => ({ meta: [{ title: "Scenarios — Family COO" }] }),
@@ -9,6 +10,7 @@ export const Route = createFileRoute("/scenarios")({
 
 function Page() {
   return (
+    <PremiumRoute min="max" feature="Scenario Simulator">
     <AppShell>
       <PageHeader
         back
@@ -35,5 +37,6 @@ function Page() {
         ))}
       </section>
     </AppShell>
+      </PremiumRoute>
   );
 }

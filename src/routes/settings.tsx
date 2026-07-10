@@ -6,7 +6,10 @@ import { family } from "@/lib/family-data";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { useServerFn } from "@tanstack/react-start";
+import { useQueryClient } from "@tanstack/react-query";
 import { deleteMyAccount } from "@/lib/account.functions";
+import { createBillingPortalSession } from "@/lib/billing.functions";
+import { useSubscription } from "@/hooks/useSubscription";
 import { getPrefs, savePrefs } from "@/lib/prefs.functions";
 import {
   pushSupported,
@@ -108,7 +111,11 @@ function SettingsPage() {
   const { lang: language, setLang: setLanguage, t } = useLanguage();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const deleteFn = useServerFn(deleteMyAccount);
+  const openPortalFn = useServerFn(createBillingPortalSession);
+  const { isActive, tier } = useSubscription();
+  const [portalBusy, setPortalBusy] = useState(false);
   const loadPrefs = useServerFn(getPrefs);
   const persistPrefs = useServerFn(savePrefs);
   const [tz, setTz] = useState("America/Los_Angeles");
@@ -445,6 +452,50 @@ function SettingsPage() {
         </Card>
       </section>
 
+      {/* Billing */}
+      <section className="px-6 mb-6">
+        <SectionLabel>Billing</SectionLabel>
+        <Card>
+          <div className="mb-4">
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Current plan
+            </p>
+            <p className="mt-1 font-serif text-[18px] italic capitalize">
+              {tier === "free" ? "Free" : tier === "max" ? "Pro Max" : "Family COO Pro"}
+            </p>
+          </div>
+          {isActive ? (
+            <button
+              onClick={async () => {
+                if (portalBusy) return;
+                setPortalBusy(true);
+                try {
+                  const res = await openPortalFn();
+                  const url = res.overviewUrl;
+                  if (url) window.open(url, "_blank", "noopener");
+                  else window.alert("Could not open billing portal.");
+                } catch (e) {
+                  window.alert(e instanceof Error ? e.message : "Could not open portal");
+                } finally {
+                  setPortalBusy(false);
+                }
+              }}
+              disabled={portalBusy}
+              className="w-full rounded-full border border-hairline bg-white px-4 py-2.5 text-[12px] font-medium uppercase tracking-widest text-foreground disabled:opacity-60"
+            >
+              {portalBusy ? "Opening…" : "Manage billing & payment method"}
+            </button>
+          ) : (
+            <Link
+              to="/plans"
+              className="block w-full rounded-full bg-zinc-900 px-4 py-2.5 text-center text-[12px] font-medium uppercase tracking-widest text-white"
+            >
+              See plans
+            </Link>
+          )}
+        </Card>
+      </section>
+
       {/* Account */}
       <section className="px-6 mb-10">
         <SectionLabel>Account</SectionLabel>
@@ -457,6 +508,9 @@ function SettingsPage() {
           <button
             onClick={async () => {
               await supabase.auth.signOut();
+              // Clear cached queries so a subsequent sign-in on the same
+              // device doesn't briefly show the previous user's data.
+              queryClient.clear();
               navigate({ to: "/auth", replace: true });
             }}
             className="flex w-full items-center gap-3 py-2 text-left text-[14px] text-foreground"
@@ -466,12 +520,13 @@ function SettingsPage() {
           <button
             onClick={async () => {
               const confirmed = window.confirm(
-                "Permanently delete your account? This removes your profile, household, and all associated data. This cannot be undone.",
+                "Permanently delete your account? This cancels any active subscription and removes your profile, household, and all associated data. This cannot be undone.",
               );
               if (!confirmed) return;
               try {
                 await deleteFn({});
                 await supabase.auth.signOut();
+                queryClient.clear();
                 navigate({ to: "/auth", replace: true });
               } catch (e) {
                 window.alert(e instanceof Error ? e.message : "Failed to delete account");
@@ -482,7 +537,7 @@ function SettingsPage() {
             Delete account permanently
           </button>
           <p className="mt-3 text-[11px] text-muted-foreground">
-            Version 1.0.0 · Deleting removes all your data from our servers.
+            Version 1.0.0 · Deleting cancels billing and removes all your data.
           </p>
         </Card>
       </section>
