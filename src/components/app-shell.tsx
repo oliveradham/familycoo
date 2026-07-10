@@ -15,7 +15,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-[520px] pb-32">{children}</div>
+      <main className="mx-auto max-w-[520px] pb-32">{children}</main>
 
       <nav className="fixed bottom-6 left-1/2 z-40 w-[calc(100%-32px)] max-w-[440px] -translate-x-1/2">
         <div className="flex items-center justify-between rounded-full bg-zinc-900/95 px-3 py-2.5 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] ring-1 ring-white/10 backdrop-blur-xl">

@@ -4,7 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { Mic, ArrowUp, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/concierge")({
-  head: () => ({ meta: [{ title: "AI Concierge — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "AI Concierge — Ask Anything About Your Family | Family COO" },
+      {
+        name: "description",
+        content:
+          "Natural-language concierge for your household. Ask about pickups, plans, packing, groceries, or bookings — get answers grounded in your family's context.",
+      },
+      { property: "og:title", content: "AI Concierge — Family COO" },
+      {
+        property: "og:description",
+        content: "A conversational chief of staff for the family, available anytime.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/concierge" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/concierge" }],
+  }),
   component: ConciergePage,
 });
 

@@ -4,7 +4,23 @@ import { plans } from "@/lib/family-data";
 import { Check, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/plans")({
-  head: () => ({ meta: [{ title: "Plans — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Pricing — Free, Pro & Pro Max | Family COO" },
+      {
+        name: "description",
+        content:
+          "Family COO pricing: start free, upgrade to Pro at $49.99/mo or Pro Max at $99.99/mo. Cancel anytime with a 30-day money-back guarantee.",
+      },
+      { property: "og:title", content: "Family COO Pricing — Free, Pro, Pro Max" },
+      {
+        property: "og:description",
+        content: "Three plans for busy households. Start free; upgrade when the calm becomes something you'd pay to keep.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/plans" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/plans" }],
+  }),
   component: Page,
 });
 
