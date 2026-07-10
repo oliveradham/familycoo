@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, Card, SectionLabel } from "@/components/app-shell";
 import { commandCenter, family, inbox } from "@/lib/family-data";
-import { AlertTriangle, Check, Clock, Mic, Sparkles } from "lucide-react";
+import { AlertTriangle, Check, Clock, Mic, Sparkles, Settings as SettingsIcon } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Command Center — Family COO" }] }),
