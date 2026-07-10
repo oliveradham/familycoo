@@ -13,7 +13,7 @@ export const Route = createFileRoute("/plans")({
       {
         name: "description",
         content:
-          "Family COO pricing: start free, upgrade to Pro at $49.99/mo or Pro Max at $99.99/mo. Cancel anytime with a 30-day money-back guarantee.",
+          "Family COO pricing: start free, upgrade to Pro at $49.99/mo or Pro Max at $110.99/mo. 14-day free trial. Cancel anytime.",
       },
       { property: "og:title", content: "Family COO Pricing — Free, Pro, Pro Max" },
       {

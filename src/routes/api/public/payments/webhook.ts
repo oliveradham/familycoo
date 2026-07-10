@@ -67,6 +67,50 @@ async function handleSubscriptionCanceled(data: any, env: PaddleEnv) {
     .eq("environment", env);
 }
 
+async function logBillingEvent(userId: string, kind: string, title: string, body: string) {
+  try {
+    await getSupabase().from("notification_log").insert({
+      user_id: userId,
+      kind,
+      title,
+      body,
+      channel: "billing",
+    });
+  } catch (e) {
+    // notification_log columns vary — silently ignore if the shape doesn't match.
+    console.warn("notification_log insert skipped", e);
+  }
+}
+
+async function handleTransactionEvent(data: any, kind: "completed" | "payment_failed") {
+  // Look up the user via customerId → subscription
+  const customerId = data?.customerId;
+  if (!customerId) return;
+  const { data: sub } = await getSupabase()
+    .from("subscriptions")
+    .select("user_id")
+    .eq("paddle_customer_id", customerId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!sub?.user_id) return;
+  if (kind === "completed") {
+    await logBillingEvent(
+      sub.user_id,
+      "billing.payment_succeeded",
+      "Payment received",
+      "Your subscription payment was processed successfully.",
+    );
+  } else {
+    await logBillingEvent(
+      sub.user_id,
+      "billing.payment_failed",
+      "Payment failed",
+      "We couldn't charge your card. Update your payment method to avoid interruption.",
+    );
+  }
+}
+
 async function handleWebhook(req: Request, env: PaddleEnv) {
   const event = await verifyWebhook(req, env);
   switch (event.eventType) {
@@ -79,6 +123,12 @@ async function handleWebhook(req: Request, env: PaddleEnv) {
     case EventName.SubscriptionCanceled:
       await handleSubscriptionCanceled(event.data, env);
       break;
+    case EventName.TransactionCompleted:
+      await handleTransactionEvent(event.data, "completed");
+      break;
+    case EventName.TransactionPaymentFailed:
+      await handleTransactionEvent(event.data, "payment_failed");
+      break;
     default:
       console.log("Unhandled event:", event.eventType);
   }
@@ -89,7 +139,15 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
     handlers: {
       POST: async ({ request }) => {
         const url = new URL(request.url);
-        const env = (url.searchParams.get("env") || "sandbox") as PaddleEnv;
+        const rawEnv = url.searchParams.get("env");
+        // Require an explicit env — a missing param used to silently default
+        // to "sandbox" which would corrupt live subs if the live webhook were
+        // ever misconfigured.
+        if (rawEnv !== "sandbox" && rawEnv !== "live") {
+          console.error("Webhook missing/invalid env param:", rawEnv);
+          return new Response("Missing env query param", { status: 400 });
+        }
+        const env = rawEnv as PaddleEnv;
         try {
           await handleWebhook(request, env);
           return Response.json({ received: true });

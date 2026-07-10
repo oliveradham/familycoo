@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { unreadCount } from "@/lib/notifications.functions";
+import { SubscriptionBanners } from "@/components/SubscriptionBanners";
 
 const nav: { to: string; key: string; icon: LucideIcon }[] = [
   { to: "/", key: "nav.today", icon: HomeIcon },
@@ -61,6 +62,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SubscriptionBanners />
       <NotificationBell />
       <main className="mx-auto max-w-[520px] pb-32">{children}</main>
 
