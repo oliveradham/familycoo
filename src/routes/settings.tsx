@@ -206,6 +206,24 @@ function SettingsPage() {
           <div className="divide-y divide-hairline">
             <Row
               icon={Globe}
+              label="Language"
+              hint="Interface, briefings, and voice replies"
+              right={
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="max-w-[10rem] truncate rounded-lg border border-hairline bg-white px-3 py-1.5 text-[12px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                >
+                  {LANGUAGES.map((l) => (
+                    <option key={l.code} value={l.code}>
+                      {l.label}
+                    </option>
+                  ))}
+                </select>
+              }
+            />
+            <Row
+              icon={Globe}
               label="Timezone"
               hint="Used for briefings, reminders, and departure times"
               right={
