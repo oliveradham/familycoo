@@ -1,7 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { plans } from "@/lib/family-data";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, Loader2 } from "lucide-react";
+import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useSubscription } from "@/hooks/useSubscription";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/plans")({
   head: () => ({
@@ -24,7 +27,33 @@ export const Route = createFileRoute("/plans")({
   component: Page,
 });
 
+const PRICE_IDS: Record<string, string> = {
+  pro: "pro_monthly",
+  max: "max_monthly",
+};
+
 function Page() {
+  const { openCheckout, loading } = usePaddleCheckout();
+  const { user } = useAuth();
+  const { tier } = useSubscription();
+  const navigate = useNavigate();
+
+  const handleClick = async (planId: string) => {
+    if (planId === "free") return;
+    if (!user) {
+      navigate({ to: "/auth" });
+      return;
+    }
+    const priceId = PRICE_IDS[planId];
+    if (!priceId) return;
+    await openCheckout({
+      priceId,
+      userId: user.id,
+      customerEmail: user.email ?? undefined,
+      successUrl: `${window.location.origin}/checkout/success`,
+    });
+  };
+
   return (
     <AppShell>
       <PageHeader
@@ -35,7 +64,16 @@ function Page() {
       />
 
       <section className="px-6 space-y-4">
-        {plans.map((p) => (
+        {plans.map((p) => {
+          const isCurrent = tier === p.id;
+          const label = isCurrent
+            ? "Current plan"
+            : p.id === "free"
+              ? "You are here"
+              : loading
+                ? "Opening checkout…"
+                : p.cta;
+          return (
           <Card
             key={p.id}
             className={
@@ -83,17 +121,22 @@ function Page() {
             )}
 
             <button
-              className={`mt-5 w-full rounded-full px-4 py-3 text-[12px] font-medium uppercase tracking-widest ${
+              onClick={() => handleClick(p.id)}
+              disabled={p.id === "free" || isCurrent || loading}
+              className={`mt-5 w-full rounded-full px-4 py-3 text-[12px] font-medium uppercase tracking-widest inline-flex items-center justify-center gap-2 disabled:opacity-60 ${
                 p.featured
                   ? "bg-zinc-900 text-white"
                   : "border border-hairline bg-surface text-foreground"
               }`}
             >
-              {p.cta}
+              {loading && p.id !== "free" && !isCurrent && <Loader2 className="size-3.5 animate-spin" />}
+              {label}
             </button>
           </Card>
-        ))}
+          );
+        })}
       </section>
+
 
       <section className="px-6 mt-10">
         <SectionLabel>How upgrading feels here</SectionLabel>
