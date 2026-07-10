@@ -95,14 +95,16 @@ export const Route = createFileRoute("/api/public/hooks/run-briefings")({
                 },
                 { onConflict: "household_id,kind,briefing_date" },
               );
-              await supabaseAdmin.from("notification_log").insert({
-                user_id: p.id,
+              const { notifyHousehold } = await import("@/lib/notify.server");
+              await notifyHousehold(supabaseAdmin, {
                 household_id: householdId,
-                channel: "in_app",
                 kind: `briefing:${kind}`,
                 subject: content.headline,
                 body: content.summary,
-                delivered_at: new Date().toISOString(),
+                url: "/",
+                ref_id: `briefing:${kind}:${today}`,
+                user_ids: [p.id],
+                dedupe_hours: 20,
               });
               results.push({ user: p.id, kind });
             } catch (e) {
