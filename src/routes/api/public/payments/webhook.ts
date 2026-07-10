@@ -67,17 +67,16 @@ async function handleSubscriptionCanceled(data: any, env: PaddleEnv) {
     .eq("environment", env);
 }
 
-async function logBillingEvent(userId: string, kind: string, title: string, body: string) {
+async function logBillingEvent(userId: string, kind: string, subject: string, body: string) {
   try {
     await getSupabase().from("notification_log").insert({
       user_id: userId,
       kind,
-      title,
+      subject,
       body,
       channel: "billing",
     });
   } catch (e) {
-    // notification_log columns vary — silently ignore if the shape doesn't match.
     console.warn("notification_log insert skipped", e);
   }
 }
