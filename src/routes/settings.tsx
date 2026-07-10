@@ -146,6 +146,7 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 
 function SettingsPage() {
   const [tz, setTz] = useState("America/Los_Angeles");
+  const [language, setLanguage] = useState("en-US");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
   const [morning, setMorning] = useState("06:30");
