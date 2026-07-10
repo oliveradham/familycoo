@@ -1,111 +1,129 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { AppShell, PageHeader, SectionLabel, Card } from "@/components/app-shell";
-import { weeklyReview } from "@/lib/family-data";
-import { Check } from "lucide-react";
+import { getLatestWeeklyReview } from "@/lib/weekly-review.functions";
+import { Check, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/review")({
   head: () => ({ meta: [{ title: "Weekly Review — Family COO" }] }),
   component: ReviewPage,
 });
 
+type Stats = { tasks_completed?: number; events_count?: number; total_spent_cents?: number };
+type UpcomingItem = { title: string; when: string };
+
 function ReviewPage() {
+  const fetchReview = useServerFn(getLatestWeeklyReview);
+  const { data, isLoading } = useQuery({
+    queryKey: ["weekly-review"],
+    queryFn: () => fetchReview(),
+  });
+
+  const review = data?.review;
+
   return (
     <AppShell>
       <PageHeader
         back
         eyebrow="Sunday · Family review"
-        title={weeklyReview.headline}
-        subtitle="A quiet summary of the past seven days and the week ahead. Nothing urgent — this is context, not homework."
+        title={review?.headline ?? "Your weekly review"}
+        subtitle="A quiet summary of the past seven days and the week ahead. Generated every Sunday morning."
       />
 
       <div className="space-y-6 px-6 pb-10">
-        <Card>
-          <SectionLabel>Family wins</SectionLabel>
-          <ul className="space-y-3">
-            {weeklyReview.wins.map((w) => (
-              <li key={w} className="flex gap-3 text-[14px] leading-relaxed">
-                <span className="mt-1 grid size-4 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
-                  <Check className="size-2.5" strokeWidth={3} />
-                </span>
-                {w}
-              </li>
-            ))}
-          </ul>
-        </Card>
+        {isLoading && (
+          <Card>
+            <p className="py-6 text-center text-[13px] text-muted-foreground">
+              Loading your review…
+            </p>
+          </Card>
+        )}
 
-        <Card>
-          <SectionLabel>Coming up next week</SectionLabel>
-          <div className="divide-y divide-hairline">
-            {weeklyReview.upcoming.map((u) => (
-              <div
-                key={u.label}
-                className="flex items-baseline justify-between gap-3 py-3"
-              >
-                <div>
-                  <p className="text-[14px]">{u.label}</p>
-                  <p className="text-[11px] uppercase tracking-widest text-muted-foreground">
-                    {u.when}
-                  </p>
+        {!isLoading && !review && (
+          <Card>
+            <SectionLabel>No review yet</SectionLabel>
+            <p className="text-[14px] text-muted-foreground">
+              Your first weekly review will arrive Sunday morning. It's generated from your real
+              week: events, completed tasks, and expenses. Nothing to configure.
+            </p>
+          </Card>
+        )}
+
+        {review && (
+          <>
+            <Card>
+              <SectionLabel>Summary</SectionLabel>
+              <p className="text-[14px] leading-relaxed text-foreground">{review.summary}</p>
+            </Card>
+
+            {(() => {
+              const stats = (review.stats as Stats) ?? {};
+              const spent = (stats.total_spent_cents ?? 0) / 100;
+              return (
+                <div className="grid grid-cols-3 gap-3">
+                  <Card>
+                    <SectionLabel>Tasks done</SectionLabel>
+                    <p className="text-2xl font-semibold">{stats.tasks_completed ?? 0}</p>
+                  </Card>
+                  <Card>
+                    <SectionLabel>Events</SectionLabel>
+                    <p className="text-2xl font-semibold">{stats.events_count ?? 0}</p>
+                  </Card>
+                  <Card>
+                    <SectionLabel>Spent</SectionLabel>
+                    <p className="text-2xl font-semibold">
+                      ${spent.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </p>
+                  </Card>
                 </div>
-                <p className="font-serif text-lg italic">{u.amount}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+              );
+            })()}
 
-        <Card>
-          <SectionLabel>Still needs attention</SectionLabel>
-          <ul className="space-y-3">
-            {weeklyReview.attention.map((a) => (
-              <li
-                key={a}
-                className="flex gap-3 text-[14px] leading-relaxed text-foreground/80"
-              >
-                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-amber-500" />
-                {a}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-[11px] text-muted-foreground">
-            There's time to complete these — no rush this weekend.
-          </p>
-        </Card>
-
-        <Card>
-          <SectionLabel>Where the money went</SectionLabel>
-          <div className="divide-y divide-hairline">
-            {weeklyReview.trends.map((t) => (
-              <div key={t.label} className="flex items-baseline justify-between gap-3 py-3">
-                <div className="flex-1">
-                  <p className="text-[14px]">{t.label}</p>
-                  <p className="text-[11px] text-muted-foreground">{t.note}</p>
-                </div>
-                <p
-                  className={`font-serif text-lg italic ${
-                    t.value.startsWith("+") ? "text-amber-700" : "text-emerald-700"
-                  }`}
-                >
-                  {t.value}
+            <Card>
+              <SectionLabel>Family wins</SectionLabel>
+              {(review.wins as string[])?.length ? (
+                <ul className="space-y-3">
+                  {(review.wins as string[]).map((w, i) => (
+                    <li key={i} className="flex gap-3 text-[14px] leading-relaxed">
+                      <span className="mt-1 grid size-4 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
+                        <Check className="size-2.5" strokeWidth={3} />
+                      </span>
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-[13px] text-muted-foreground">
+                  Nothing logged this week — that's OK.
                 </p>
-              </div>
-            ))}
-          </div>
-        </Card>
+              )}
+            </Card>
 
-        <Link
-          to="/concierge"
-          className="flex items-center justify-between rounded-3xl bg-zinc-900 p-6 text-white"
-        >
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60">
-              Ask me anything
+            <Card>
+              <SectionLabel>Coming up next week</SectionLabel>
+              {(review.upcoming as UpcomingItem[])?.length ? (
+                <div className="divide-y divide-hairline">
+                  {(review.upcoming as UpcomingItem[]).map((u, i) => (
+                    <div key={i} className="flex items-start gap-3 py-3 text-[14px]">
+                      <Calendar className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-medium text-foreground">{u.title}</p>
+                        <p className="text-[12px] text-muted-foreground">{u.when}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[13px] text-muted-foreground">Clear week ahead.</p>
+              )}
+            </Card>
+
+            <p className="text-center text-[11px] text-muted-foreground">
+              Generated {new Date(review.generated_at).toLocaleString()}
             </p>
-            <p className="mt-1 font-serif text-xl italic leading-tight">
-              {weeklyReview.prompt}
-            </p>
-          </div>
-          <span className="text-lg opacity-70">→</span>
-        </Link>
+          </>
+        )}
       </div>
     </AppShell>
   );
