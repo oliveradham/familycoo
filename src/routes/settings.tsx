@@ -193,7 +193,7 @@ function SettingsPage() {
               icon={Clock}
               label={t("settings.clock24")}
               hint={clock24 ? "e.g. 20:30" : "e.g. 8:30 PM"}
-              right={<Toggle on={clock24} onChange={setClock24} />}
+              right={<Toggle label="24-hour clock" on={clock24} onChange={setClock24} />}
             />
             <Row
               icon={Clock}
