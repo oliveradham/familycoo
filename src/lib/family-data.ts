@@ -456,4 +456,62 @@ export const inbox: InboxItem[] = [
       { label: "Change", value: "+6.4% premium" },
     ],
   },
+  {
+    id: "i7",
+    from: "Saint Jude's Bursar",
+    subject: "Q2 tuition invoice · $2,400",
+    preview: "Auto-draft scheduled Friday Oct 18. Confirm or change card on file.",
+    time: "5d ago",
+    assigned: "aimee",
+    confidence: 0.99,
+    category: "Finance",
+    lane: "Needs Payment",
+    reason: "Recurring bursar invoice matches your quarterly tuition rhythm. Card ending 4412 on file.",
+    extracted: [
+      { label: "Amount", value: "$2,400" },
+      { label: "Draft date", value: "Fri Oct 18" },
+    ],
+  },
+  {
+    id: "i8",
+    from: "Basil",
+    subject: "Re: Enterprise rental for tournament",
+    preview: "Still waiting on Basil to confirm the rental car pickup time.",
+    time: "1d ago",
+    assigned: "basil",
+    confidence: 0.85,
+    category: "Travel",
+    lane: "Waiting on Others",
+    reason: "You asked Basil to book the rental 2 days ago. No confirmation email received yet.",
+    extracted: [
+      { label: "Waiting since", value: "Wed 9:30 AM" },
+      { label: "Needed by", value: "Fri Oct 18" },
+    ],
+  },
 ];
+
+// ---------- Weekly Family Review ----------
+
+export const weeklyReview = {
+  headline: "A calm week. Two items still open.",
+  wins: [
+    "Oliver's medical form submitted — 3 days ahead of deadline.",
+    "Grocery spend down 4% versus last month.",
+    "Lily's ballet tuition paid without a reminder.",
+  ],
+  upcoming: [
+    { label: "Tuition · Saint Jude's", when: "Friday", amount: "$2,400" },
+    { label: "Tennis Fall Classic", when: "Fri–Sun", amount: "Travel + entry $340" },
+    { label: "HVAC filter change", when: "Next Tuesday", amount: "—" },
+  ],
+  attention: [
+    "Passport renewal — 18 weeks until Tokyo. Still worth starting this month.",
+    "Basil's Rx refill — 8 days of supply left.",
+  ],
+  trends: [
+    { label: "Childcare spend", value: "+12%", note: "Nanny picked up 3 extra evenings for board prep." },
+    { label: "Sports spend", value: "+8%", note: "Tournament travel." },
+    { label: "Medical spend", value: "−22%", note: "Lower than last month." },
+  ],
+  prompt: "What would you like me to help organize next week?",
+};
