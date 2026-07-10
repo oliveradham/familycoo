@@ -340,6 +340,7 @@ function SettingsPage() {
               }
             />
 
+            <Row
               icon={Bell}
               label="Daily briefings"
               hint="Morning, afternoon, evening"
