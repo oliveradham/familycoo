@@ -36,6 +36,60 @@ const TIMEZONES = [
   "Australia/Sydney",
 ];
 
+const LANGUAGES: { code: string; label: string }[] = [
+  { code: "en-US", label: "English (United States)" },
+  { code: "en-GB", label: "English (United Kingdom)" },
+  { code: "en-AU", label: "English (Australia)" },
+  { code: "en-CA", label: "English (Canada)" },
+  { code: "es-ES", label: "Español (España)" },
+  { code: "es-MX", label: "Español (México)" },
+  { code: "es-AR", label: "Español (Argentina)" },
+  { code: "fr-FR", label: "Français (France)" },
+  { code: "fr-CA", label: "Français (Canada)" },
+  { code: "de-DE", label: "Deutsch" },
+  { code: "it-IT", label: "Italiano" },
+  { code: "pt-BR", label: "Português (Brasil)" },
+  { code: "pt-PT", label: "Português (Portugal)" },
+  { code: "nl-NL", label: "Nederlands" },
+  { code: "sv-SE", label: "Svenska" },
+  { code: "no-NO", label: "Norsk" },
+  { code: "da-DK", label: "Dansk" },
+  { code: "fi-FI", label: "Suomi" },
+  { code: "pl-PL", label: "Polski" },
+  { code: "cs-CZ", label: "Čeština" },
+  { code: "ro-RO", label: "Română" },
+  { code: "hu-HU", label: "Magyar" },
+  { code: "el-GR", label: "Ελληνικά" },
+  { code: "tr-TR", label: "Türkçe" },
+  { code: "ru-RU", label: "Русский" },
+  { code: "uk-UA", label: "Українська" },
+  { code: "ar-SA", label: "العربية (السعودية)" },
+  { code: "ar-EG", label: "العربية (مصر)" },
+  { code: "he-IL", label: "עברית" },
+  { code: "fa-IR", label: "فارسی" },
+  { code: "hi-IN", label: "हिन्दी" },
+  { code: "bn-IN", label: "বাংলা" },
+  { code: "ta-IN", label: "தமிழ்" },
+  { code: "te-IN", label: "తెలుగు" },
+  { code: "mr-IN", label: "मराठी" },
+  { code: "gu-IN", label: "ગુજરાતી" },
+  { code: "pa-IN", label: "ਪੰਜਾਬੀ" },
+  { code: "ur-PK", label: "اردو" },
+  { code: "th-TH", label: "ไทย" },
+  { code: "vi-VN", label: "Tiếng Việt" },
+  { code: "id-ID", label: "Bahasa Indonesia" },
+  { code: "ms-MY", label: "Bahasa Melayu" },
+  { code: "tl-PH", label: "Filipino" },
+  { code: "zh-CN", label: "中文 (简体)" },
+  { code: "zh-TW", label: "中文 (繁體)" },
+  { code: "ja-JP", label: "日本語" },
+  { code: "ko-KR", label: "한국어" },
+  { code: "sw-KE", label: "Kiswahili" },
+  { code: "am-ET", label: "አማርኛ" },
+  { code: "zu-ZA", label: "isiZulu" },
+  { code: "af-ZA", label: "Afrikaans" },
+];
+
 function Row({
   icon: Icon,
   label,
@@ -92,6 +146,7 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 
 function SettingsPage() {
   const [tz, setTz] = useState("America/Los_Angeles");
+  const [language, setLanguage] = useState("en-US");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
   const [morning, setMorning] = useState("06:30");
@@ -149,6 +204,24 @@ function SettingsPage() {
         <SectionLabel>Time & locale</SectionLabel>
         <Card>
           <div className="divide-y divide-hairline">
+            <Row
+              icon={Globe}
+              label="Language"
+              hint="Interface, briefings, and voice replies"
+              right={
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="max-w-[10rem] truncate rounded-lg border border-hairline bg-white px-3 py-1.5 text-[12px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                >
+                  {LANGUAGES.map((l) => (
+                    <option key={l.code} value={l.code}>
+                      {l.label}
+                    </option>
+                  ))}
+                </select>
+              }
+            />
             <Row
               icon={Globe}
               label="Timezone"
