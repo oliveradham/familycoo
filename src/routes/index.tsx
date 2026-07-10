@@ -34,7 +34,6 @@ export const Route = createFileRoute("/")({
 const features: { to: string; label: string; hint: string }[] = [
   { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
   { to: "/workflows", label: "AI workflows", hint: "One-tap installs" },
-  { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
   { to: "/creators", label: "Creator program", hint: "Sell your family expertise" },
   { to: "/agents", label: "AI agents", hint: "10 specialists · one workflow" },
   { to: "/approvals", label: "Approvals", hint: "4 drafts waiting on your yes" },
