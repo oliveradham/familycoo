@@ -117,15 +117,15 @@ function SettingsPage() {
   return (
     <AppShell>
       <PageHeader
-        eyebrow="Preferences"
-        title="Settings"
-        subtitle="Adjust the times, tone, and permissions that shape how I run the household."
+        eyebrow={t("settings.eyebrow")}
+        title={t("settings.title")}
+        subtitle={t("settings.subtitle")}
         back
       />
 
       {/* Household profile */}
       <section className="px-6 mb-6">
-        <SectionLabel>Household</SectionLabel>
+        <SectionLabel>{t("settings.household")}</SectionLabel>
         <Card>
           <div className="flex items-center gap-4">
             <div className="grid size-12 place-items-center rounded-full bg-zinc-900 text-white text-sm font-medium">
@@ -141,7 +141,7 @@ function SettingsPage() {
               to="/family"
               className="text-[11px] uppercase tracking-widest text-muted-foreground underline underline-offset-4"
             >
-              Manage
+              {t("settings.manage")}
             </Link>
           </div>
         </Card>
@@ -149,13 +149,13 @@ function SettingsPage() {
 
       {/* Time & Locale */}
       <section className="px-6 mb-6">
-        <SectionLabel>Time & locale</SectionLabel>
+        <SectionLabel>{t("settings.timeLocale")}</SectionLabel>
         <Card>
           <div className="divide-y divide-hairline">
             <Row
               icon={Globe}
-              label="Language"
-              hint="Interface, briefings, and voice replies"
+              label={t("settings.language")}
+              hint={t("settings.languageHint")}
               right={
                 <select
                   value={language}
@@ -172,8 +172,8 @@ function SettingsPage() {
             />
             <Row
               icon={Globe}
-              label="Timezone"
-              hint="Used for briefings, reminders, and departure times"
+              label={t("settings.timezone")}
+              hint={t("settings.timezoneHint")}
               right={
                 <select
                   value={tz}
@@ -190,13 +190,13 @@ function SettingsPage() {
             />
             <Row
               icon={Clock}
-              label="24-hour clock"
+              label={t("settings.clock24")}
               hint={clock24 ? "e.g. 20:30" : "e.g. 8:30 PM"}
               right={<Toggle on={clock24} onChange={setClock24} />}
             />
             <Row
               icon={Clock}
-              label="Week starts on"
+              label={t("settings.weekStart")}
               right={
                 <div className="flex rounded-full bg-zinc-100 p-0.5 text-[11px]">
                   {(["Sun", "Mon"] as const).map((d) => (
