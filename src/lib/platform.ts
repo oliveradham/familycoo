@@ -36,8 +36,10 @@ export function isAndroid(): boolean {
 export async function openExternal(url: string): Promise<void> {
   if (isNative()) {
     try {
-      // @ts-expect-error — optional native-only dep, installed inside Capacitor shell
-      const mod = await import(/* @vite-ignore */ "@capacitor/browser");
+      const pkg = ["@capacitor", "browser"].join("/");
+      // Indirection prevents Vite from statically resolving this optional native-only dep.
+      const dynImport = new Function("s", "return import(s)") as (s: string) => Promise<any>;
+      const mod = await dynImport(pkg);
       await mod.Browser.open({ url });
       return;
     } catch {
