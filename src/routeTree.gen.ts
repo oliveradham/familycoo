@@ -18,6 +18,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SearchRouteImport } from './routes/search'
@@ -111,6 +112,11 @@ const SubscriptionsRoute = SubscriptionsRouteImport.update({
 const SportsRoute = SportsRouteImport.update({
   id: '/sports',
   path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -409,6 +415,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -469,6 +476,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -530,6 +538,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/security': typeof SecurityRoute
   '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
@@ -592,6 +601,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/security'
     | '/settings'
+    | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -652,6 +662,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/security'
     | '/settings'
+    | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -712,6 +723,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/security'
     | '/settings'
+    | '/sitemap.xml'
     | '/sports'
     | '/subscriptions'
     | '/tasks'
@@ -773,6 +785,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SecurityRoute: typeof SecurityRoute
   SettingsRoute: typeof SettingsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SportsRoute: typeof SportsRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
   TasksRoute: typeof TasksRoute
@@ -847,6 +860,13 @@ declare module '@tanstack/react-router' {
       path: '/sports'
       fullPath: '/sports'
       preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -1245,6 +1265,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SecurityRoute: SecurityRoute,
   SettingsRoute: SettingsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SportsRoute: SportsRoute,
   SubscriptionsRoute: SubscriptionsRoute,
   TasksRoute: TasksRoute,
@@ -1258,3 +1279,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
