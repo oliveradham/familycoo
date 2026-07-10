@@ -61,7 +61,13 @@ export const updateFamilyMember = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }) => {
     const { supabase } = context;
-    const patch: Record<string, unknown> = {};
+    const patch: {
+      name?: string;
+      role?: string;
+      birth_date?: string | null;
+      color?: string | null;
+      notes?: string | null;
+    } = {};
     if (data.name !== undefined) patch.name = data.name.trim();
     if (data.role !== undefined) patch.role = data.role.trim();
     if (data.birth_date !== undefined) patch.birth_date = data.birth_date || null;
