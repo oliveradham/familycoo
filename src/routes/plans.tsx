@@ -108,6 +108,18 @@ function Page() {
           <span className="text-lg opacity-60">→</span>
         </Link>
       </section>
+
+      <footer className="px-6 pb-10 pt-4">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
+          <Link to="/terms" className="hover:underline">Terms & Conditions</Link>
+          <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+          <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
+        </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
+          Payments are processed by our reseller Paddle.com, the Merchant of Record for all Family COO orders. Family COO is operated by Aimee Robert.
+        </p>
+      </footer>
     </AppShell>
   );
 }
+

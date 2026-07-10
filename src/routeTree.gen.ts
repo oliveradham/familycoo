@@ -14,6 +14,7 @@ import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TwinRouteImport } from './routes/twin'
 import { Route as TravelRouteImport } from './routes/travel'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as SportsRouteImport } from './routes/sports'
@@ -26,9 +27,11 @@ import { Route as RulesRouteImport } from './routes/rules'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ReadinessRouteImport } from './routes/readiness'
 import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProvidersRouteImport } from './routes/providers'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as PlansRouteImport } from './routes/plans'
@@ -88,6 +91,11 @@ const TwinRoute = TwinRouteImport.update({
 const TravelRoute = TravelRouteImport.update({
   id: '/travel',
   path: '/travel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -150,6 +158,11 @@ const ResponsibilitiesRoute = ResponsibilitiesRouteImport.update({
   path: '/responsibilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReadinessRoute = ReadinessRouteImport.update({
   id: '/readiness',
   path: '/readiness',
@@ -163,6 +176,11 @@ const PurchasesRoute = PurchasesRouteImport.update({
 const ProvidersRoute = ProvidersRouteImport.update({
   id: '/providers',
   path: '/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -377,9 +395,11 @@ export interface FileRoutesByFullPath {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -392,6 +412,7 @@ export interface FileRoutesByFullPath {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -434,9 +455,11 @@ export interface FileRoutesByTo {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -449,6 +472,7 @@ export interface FileRoutesByTo {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -492,9 +516,11 @@ export interface FileRoutesById {
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -507,6 +533,7 @@ export interface FileRoutesById {
   '/sports': typeof SportsRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/tasks': typeof TasksRoute
+  '/terms': typeof TermsRoute
   '/travel': typeof TravelRoute
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
@@ -551,9 +578,11 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -566,6 +595,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -608,9 +638,11 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -623,6 +655,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -665,9 +698,11 @@ export interface FileRouteTypes {
     | '/plans'
     | '/predictions'
     | '/privacy'
+    | '/privacy-policy'
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -680,6 +715,7 @@ export interface FileRouteTypes {
     | '/sports'
     | '/subscriptions'
     | '/tasks'
+    | '/terms'
     | '/travel'
     | '/twin'
     | '/vault'
@@ -723,9 +759,11 @@ export interface RootRouteChildren {
   PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
   PrivacyRoute: typeof PrivacyRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProvidersRoute: typeof ProvidersRoute
   PurchasesRoute: typeof PurchasesRoute
   ReadinessRoute: typeof ReadinessRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ResponsibilitiesRoute: typeof ResponsibilitiesRoute
   ReturnsRoute: typeof ReturnsRoute
   ReviewRoute: typeof ReviewRoute
@@ -738,6 +776,7 @@ export interface RootRouteChildren {
   SportsRoute: typeof SportsRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
   TasksRoute: typeof TasksRoute
+  TermsRoute: typeof TermsRoute
   TravelRoute: typeof TravelRoute
   TwinRoute: typeof TwinRoute
   VaultRoute: typeof VaultRoute
@@ -780,6 +819,13 @@ declare module '@tanstack/react-router' {
       path: '/travel'
       fullPath: '/travel'
       preLoaderRoute: typeof TravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -866,6 +912,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResponsibilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/readiness': {
       id: '/readiness'
       path: '/readiness'
@@ -885,6 +938,13 @@ declare module '@tanstack/react-router' {
       path: '/providers'
       fullPath: '/providers'
       preLoaderRoute: typeof ProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -1171,9 +1231,11 @@ const rootRouteChildren: RootRouteChildren = {
   PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
   PrivacyRoute: PrivacyRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProvidersRoute: ProvidersRoute,
   PurchasesRoute: PurchasesRoute,
   ReadinessRoute: ReadinessRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ResponsibilitiesRoute: ResponsibilitiesRoute,
   ReturnsRoute: ReturnsRoute,
   ReviewRoute: ReviewRoute,
@@ -1186,6 +1248,7 @@ const rootRouteChildren: RootRouteChildren = {
   SportsRoute: SportsRoute,
   SubscriptionsRoute: SubscriptionsRoute,
   TasksRoute: TasksRoute,
+  TermsRoute: TermsRoute,
   TravelRoute: TravelRoute,
   TwinRoute: TwinRoute,
   VaultRoute: VaultRoute,
