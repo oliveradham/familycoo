@@ -27,6 +27,7 @@ import { Route as RulesRouteImport } from './routes/rules'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ReadinessRouteImport } from './routes/readiness'
 import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProvidersRouteImport } from './routes/providers'
@@ -155,6 +156,11 @@ const ReturnsRoute = ReturnsRouteImport.update({
 const ResponsibilitiesRoute = ResponsibilitiesRouteImport.update({
   id: '/responsibilities',
   path: '/responsibilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReadinessRoute = ReadinessRouteImport.update({
@@ -393,6 +399,7 @@ export interface FileRoutesByFullPath {
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -452,6 +459,7 @@ export interface FileRoutesByTo {
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -512,6 +520,7 @@ export interface FileRoutesById {
   '/providers': typeof ProvidersRoute
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -573,6 +582,7 @@ export interface FileRouteTypes {
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -632,6 +642,7 @@ export interface FileRouteTypes {
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -691,6 +702,7 @@ export interface FileRouteTypes {
     | '/providers'
     | '/purchases'
     | '/readiness'
+    | '/refund-policy'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -751,6 +763,7 @@ export interface RootRouteChildren {
   ProvidersRoute: typeof ProvidersRoute
   PurchasesRoute: typeof PurchasesRoute
   ReadinessRoute: typeof ReadinessRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ResponsibilitiesRoute: typeof ResponsibilitiesRoute
   ReturnsRoute: typeof ReturnsRoute
   ReviewRoute: typeof ReviewRoute
@@ -897,6 +910,13 @@ declare module '@tanstack/react-router' {
       path: '/responsibilities'
       fullPath: '/responsibilities'
       preLoaderRoute: typeof ResponsibilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/readiness': {
@@ -1215,6 +1235,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProvidersRoute: ProvidersRoute,
   PurchasesRoute: PurchasesRoute,
   ReadinessRoute: ReadinessRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ResponsibilitiesRoute: ResponsibilitiesRoute,
   ReturnsRoute: ReturnsRoute,
   ReviewRoute: ReviewRoute,
