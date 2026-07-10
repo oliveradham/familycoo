@@ -29,6 +29,7 @@ import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProvidersRouteImport } from './routes/providers'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
+import { Route as PlansRouteImport } from './routes/plans'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
@@ -158,6 +159,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const PredictionsRoute = PredictionsRouteImport.update({
   id: '/predictions',
   path: '/predictions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -342,6 +348,7 @@ export interface FileRoutesByFullPath {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -394,6 +401,7 @@ export interface FileRoutesByTo {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -447,6 +455,7 @@ export interface FileRoutesById {
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
   '/providers': typeof ProvidersRoute
@@ -501,6 +510,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -553,6 +563,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -605,6 +616,7 @@ export interface FileRouteTypes {
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/plans'
     | '/predictions'
     | '/privacy'
     | '/providers'
@@ -658,6 +670,7 @@ export interface RootRouteChildren {
   MaintenanceRoute: typeof MaintenanceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
+  PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProvidersRoute: typeof ProvidersRoute
@@ -820,6 +833,13 @@ declare module '@tanstack/react-router' {
       path: '/predictions'
       fullPath: '/predictions'
       preLoaderRoute: typeof PredictionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -1066,6 +1086,7 @@ const rootRouteChildren: RootRouteChildren = {
   MaintenanceRoute: MaintenanceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
+  PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
   PrivacyRoute: PrivacyRoute,
   ProvidersRoute: ProvidersRoute,
