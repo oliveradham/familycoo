@@ -68,14 +68,26 @@ function TermsPage() {
 
           <section>
             <h2 className="text-lg font-semibold">4. Acceptable use</h2>
-            <p>You agree not to:</p>
+            <p>
+              You may use the Service only for lawful, personal or household
+              purposes. You agree not to, and not to permit any other person to:
+            </p>
             <ul className="list-disc pl-6">
-              <li>Use the Service for any unlawful purpose or in violation of any regulation;</li>
-              <li>Commit fraud, send spam, or impersonate another person;</li>
-              <li>Infringe intellectual property or privacy rights of others;</li>
-              <li>Interfere with the security or integrity of the Service (malware, probing, scraping, reverse engineering, circumventing technical limits);</li>
-              <li>Resell, sublicense, or redistribute the Service without written permission.</li>
+              <li>Use the Service for any unlawful purpose, or in violation of any applicable law, regulation, or third-party right;</li>
+              <li>Commit or facilitate fraud, phishing, spam, unsolicited marketing, harassment, threats, hate speech, or impersonation of any person or organization;</li>
+              <li>Upload, generate, or transmit content that is illegal, defamatory, obscene, sexually explicit involving minors, or that infringes intellectual property, privacy, or publicity rights;</li>
+              <li>Attempt to interfere with the security, availability, or integrity of the Service, including introducing malware, probing or scanning for vulnerabilities, bypassing rate limits or access controls, scraping, or reverse engineering;</li>
+              <li>Use the Service to build a competing product, or to resell, sublicense, or redistribute the Service or its outputs without our prior written permission;</li>
+              <li>Use the Service to generate deepfakes, non-consensual imagery, weapons or malware instructions, disinformation, or content intended to deceive or harm others;</li>
+              <li>Use the Service to make automated decisions with legal or similarly significant effects on individuals (for example, medical, financial, employment, or insurance decisions) without independent human review;</li>
+              <li>Share your account credentials, or use another user's account without authorization.</li>
             </ul>
+            <p>
+              We may investigate suspected violations, remove or restrict
+              content, refuse or filter AI outputs, and suspend or terminate
+              accounts that violate this section or that pose a security, legal,
+              or fraud risk to us, our users, or third parties.
+            </p>
           </section>
 
           <section>
