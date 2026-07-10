@@ -115,6 +115,41 @@ export type Database = {
           },
         ]
       }
+      concierge_messages: {
+        Row: {
+          content: string
+          created_at: string
+          household_id: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          household_id: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          household_id?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "concierge_messages_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           category: string
@@ -284,6 +319,63 @@ export type Database = {
             columns: ["household_id"]
             isOneToOne: false
             referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      family_memory: {
+        Row: {
+          category: string
+          confidence: number
+          created_at: string
+          created_by: string | null
+          expires_at: string | null
+          fact: string
+          household_id: string
+          id: string
+          source: string
+          subject_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          confidence?: number
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          fact: string
+          household_id: string
+          id?: string
+          source?: string
+          subject_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          confidence?: number
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          fact?: string
+          household_id?: string
+          id?: string
+          source?: string
+          subject_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_memory_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "family_memory_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
             referencedColumns: ["id"]
           },
         ]
@@ -587,29 +679,41 @@ export type Database = {
       }
       profiles: {
         Row: {
+          afternoon_check_in_at: string | null
           avatar_url: string | null
           created_at: string
           display_name: string | null
+          evening_wrap_at: string | null
           id: string
           locale: string | null
+          morning_briefing_at: string | null
+          notification_channel: string
           timezone: string | null
           updated_at: string
         }
         Insert: {
+          afternoon_check_in_at?: string | null
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
+          evening_wrap_at?: string | null
           id: string
           locale?: string | null
+          morning_briefing_at?: string | null
+          notification_channel?: string
           timezone?: string | null
           updated_at?: string
         }
         Update: {
+          afternoon_check_in_at?: string | null
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
+          evening_wrap_at?: string | null
           id?: string
           locale?: string | null
+          morning_briefing_at?: string | null
+          notification_channel?: string
           timezone?: string | null
           updated_at?: string
         }
