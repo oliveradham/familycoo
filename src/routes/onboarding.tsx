@@ -97,6 +97,18 @@ function OnboardingPage() {
           <NextButton disabled={!connected} onClick={() => setStep(1)}>
             {connected ? "Continue" : "Connect to continue"}
           </NextButton>
+
+          <button
+            onClick={handleSample}
+            disabled={sampleState !== "idle"}
+            className="mt-3 w-full rounded-full border border-hairline bg-surface py-3 text-[12px] uppercase tracking-widest text-foreground/70 hover:bg-secondary/40 disabled:opacity-50"
+          >
+            {sampleState === "loading"
+              ? "Loading sample family…"
+              : sampleState === "done"
+                ? "Opening your COO…"
+                : "Or explore with a sample family"}
+          </button>
         </section>
       )}
 
