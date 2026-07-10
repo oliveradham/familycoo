@@ -41,7 +41,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 className={`flex flex-1 flex-col items-center gap-1 py-1 text-[10px] font-medium uppercase tracking-[0.14em] transition-opacity ${
-                  active ? "text-white opacity-100" : "text-white/60 hover:opacity-90"
+                  active ? "text-white opacity-100" : "text-white/90 hover:opacity-100"
                 }`}
               >
                 <Icon className="size-4" strokeWidth={1.75} />
