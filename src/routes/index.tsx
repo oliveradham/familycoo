@@ -9,7 +9,10 @@ export const Route = createFileRoute("/")({
 });
 
 const features: { to: string; label: string; hint: string }[] = [
-  { to: "/agents", label: "AI agents", hint: "10 specialists · one workflow" },
+  { to: "/marketplace", label: "Marketplace", hint: "Curated templates & itineraries" },
+  { to: "/workflows", label: "AI workflows", hint: "One-tap installs" },
+  { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
+  { to: "/creators", label: "Creator program", hint: "Sell your family expertise" },
   { to: "/approvals", label: "Approvals", hint: "4 drafts waiting on your yes" },
   { to: "/followups", label: "Follow-ups", hint: "5 tracked · 3 need a nudge" },
   { to: "/comms", label: "Communication", hint: "Turns messages into actions" },

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TwinRouteImport } from './routes/twin'
@@ -48,6 +49,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DepartureRouteImport } from './routes/departure'
 import { Route as DecisionsRouteImport } from './routes/decisions'
+import { Route as CreatorsRouteImport } from './routes/creators'
 import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -62,6 +64,11 @@ import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkflowsRoute = WorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WaitingRoute = WaitingRouteImport.update({
   id: '/waiting',
   path: '/waiting',
@@ -257,6 +264,11 @@ const DecisionsRoute = DecisionsRouteImport.update({
   path: '/decisions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreatorsRoute = CreatorsRouteImport.update({
+  id: '/creators',
+  path: '/creators',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConflictsRoute = ConflictsRouteImport.update({
   id: '/conflicts',
   path: '/conflicts',
@@ -337,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -376,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -391,6 +405,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -430,6 +445,7 @@ export interface FileRoutesByTo {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -446,6 +462,7 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
   '/conflicts': typeof ConflictsRoute
+  '/creators': typeof CreatorsRoute
   '/decisions': typeof DecisionsRoute
   '/departure': typeof DepartureRoute
   '/developers': typeof DevelopersRoute
@@ -485,6 +502,7 @@ export interface FileRoutesById {
   '/twin': typeof TwinRoute
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
+  '/workflows': typeof WorkflowsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -502,6 +520,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -541,6 +560,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -556,6 +576,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -595,6 +616,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   id:
     | '__root__'
     | '/'
@@ -610,6 +632,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/concierge'
     | '/conflicts'
+    | '/creators'
     | '/decisions'
     | '/departure'
     | '/developers'
@@ -649,6 +672,7 @@ export interface FileRouteTypes {
     | '/twin'
     | '/vault'
     | '/waiting'
+    | '/workflows'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -665,6 +689,7 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   ConciergeRoute: typeof ConciergeRoute
   ConflictsRoute: typeof ConflictsRoute
+  CreatorsRoute: typeof CreatorsRoute
   DecisionsRoute: typeof DecisionsRoute
   DepartureRoute: typeof DepartureRoute
   DevelopersRoute: typeof DevelopersRoute
@@ -704,10 +729,18 @@ export interface RootRouteChildren {
   TwinRoute: typeof TwinRoute
   VaultRoute: typeof VaultRoute
   WaitingRoute: typeof WaitingRoute
+  WorkflowsRoute: typeof WorkflowsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workflows': {
+      id: '/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/waiting': {
       id: '/waiting'
       path: '/waiting'
@@ -981,6 +1014,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DecisionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/creators': {
+      id: '/creators'
+      path: '/creators'
+      fullPath: '/creators'
+      preLoaderRoute: typeof CreatorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/conflicts': {
       id: '/conflicts'
       path: '/conflicts'
@@ -1089,6 +1129,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   ConciergeRoute: ConciergeRoute,
   ConflictsRoute: ConflictsRoute,
+  CreatorsRoute: CreatorsRoute,
   DecisionsRoute: DecisionsRoute,
   DepartureRoute: DepartureRoute,
   DevelopersRoute: DevelopersRoute,
@@ -1128,6 +1169,7 @@ const rootRouteChildren: RootRouteChildren = {
   TwinRoute: TwinRoute,
   VaultRoute: VaultRoute,
   WaitingRoute: WaitingRoute,
+  WorkflowsRoute: WorkflowsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
