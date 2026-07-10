@@ -115,6 +115,66 @@ export type Database = {
           },
         ]
       }
+      documents: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          family_member_id: string | null
+          household_id: string
+          id: string
+          mime_type: string | null
+          notes_enc: string | null
+          size_bytes: number | null
+          storage_path: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          family_member_id?: string | null
+          household_id: string
+          id?: string
+          mime_type?: string | null
+          notes_enc?: string | null
+          size_bytes?: number | null
+          storage_path?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          family_member_id?: string | null
+          household_id?: string
+          id?: string
+          mime_type?: string | null
+          notes_enc?: string | null
+          size_bytes?: number | null
+          storage_path?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           birth_date: string | null
@@ -283,6 +343,69 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medical_records: {
+        Row: {
+          created_at: string
+          created_by: string
+          detail_enc: string | null
+          family_member_id: string | null
+          household_id: string
+          id: string
+          kind: string
+          next_due_on: string | null
+          occurred_on: string | null
+          policy_number_enc: string | null
+          provider: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          detail_enc?: string | null
+          family_member_id?: string | null
+          household_id: string
+          id?: string
+          kind?: string
+          next_due_on?: string | null
+          occurred_on?: string | null
+          policy_number_enc?: string | null
+          provider?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          detail_enc?: string | null
+          family_member_id?: string | null
+          household_id?: string
+          id?: string
+          kind?: string
+          next_due_on?: string | null
+          occurred_on?: string | null
+          policy_number_enc?: string | null
+          provider?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_records_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medical_records_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
             referencedColumns: ["id"]
           },
         ]
