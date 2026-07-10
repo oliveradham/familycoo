@@ -219,3 +219,186 @@ export const memory = [
   { label: "Household — Dietary", value: "Lily: peanut allergy · Basil: low-cholesterol" },
   { label: "Preferred pharmacy", value: "Willowdale on Elm" },
 ];
+
+// ---------- Zero-setup intelligence (detected from email + calendar) ----------
+
+export const detectedProfile = [
+  {
+    id: "oliver",
+    name: "Oliver",
+    detail: "Awty International School · Grade 4",
+    tags: ["Tennis · Riverside Club", "Piano · Ms. Alvarez", "Pediatrician: Dr. Chen"],
+    confidence: 0.94,
+  },
+  {
+    id: "lily",
+    name: "Lily",
+    detail: "Saint Jude's Preschool",
+    tags: ["Gymnastics · Little Stars", "Ballet · Saturdays", "Peanut allergy noted"],
+    confidence: 0.91,
+  },
+  {
+    id: "basil",
+    name: "Basil",
+    detail: "Partner · ANA Star Alliance Gold detected",
+    tags: ["Frequent traveler", "Cardio Rx refills"],
+    confidence: 0.88,
+  },
+];
+
+export const detectedActions = [
+  {
+    id: "a1",
+    title: "Complete Oliver's annual medical form",
+    due: "Due Aug 10",
+    source: "Awty School Nurse · 3 emails",
+    confidence: 0.96,
+    kind: "task" as const,
+  },
+  {
+    id: "a2",
+    title: "Pay Lily's tuition",
+    due: "Due Friday",
+    source: "Saint Jude's Bursar",
+    confidence: 0.99,
+    kind: "task" as const,
+  },
+  {
+    id: "a3",
+    title: "Register Oliver for tennis Fall Classic",
+    due: "Closes Jul 22",
+    source: "Coach Marco · Riverside Club",
+    confidence: 0.93,
+    kind: "task" as const,
+  },
+  {
+    id: "a4",
+    title: "Renew Aimee's passport before Tokyo trip",
+    due: "Trip Oct 24",
+    source: "ANA booking + passport record",
+    confidence: 0.87,
+    kind: "task" as const,
+  },
+  {
+    id: "a5",
+    title: "Volunteer request — book fair",
+    due: "Optional",
+    source: "Saint Jude's PTA",
+    confidence: 0.42,
+    kind: "maybe" as const,
+  },
+  {
+    id: "a6",
+    title: "Weekly school newsletter",
+    due: "—",
+    source: "Awty Communications",
+    confidence: 0.15,
+    kind: "info" as const,
+  },
+];
+
+export type InboxItem = {
+  id: string;
+  from: string;
+  subject: string;
+  preview: string;
+  time: string;
+  assigned: string;
+  confidence: number;
+  category: "School" | "Sports" | "Medical" | "Travel" | "Grocery" | "Finance" | "Home";
+  reason: string;
+  extracted?: { label: string; value: string }[];
+};
+
+export const inbox: InboxItem[] = [
+  {
+    id: "i1",
+    from: "Coach Marco · Riverside Club",
+    subject: "Fall Classic — final roster & check-in",
+    preview: "Please confirm Oliver's entry by Jul 22. Check-in Fri 5 PM at Hotel Marlowe.",
+    time: "8:04 AM",
+    assigned: "oliver",
+    confidence: 0.97,
+    category: "Sports",
+    reason: "Sender is Oliver's tennis coach. Tournament on his calendar. 12 prior emails classified to Oliver.",
+    extracted: [
+      { label: "Deadline", value: "Jul 22" },
+      { label: "Event", value: "Fall Classic · Oct 18–20" },
+      { label: "Location", value: "Hotel Marlowe" },
+    ],
+  },
+  {
+    id: "i2",
+    from: "Awty School Nurse",
+    subject: "Annual medical form — physician signature required",
+    preview: "Attached: 2025 health packet. Return by Aug 10 with physician's signature.",
+    time: "Yesterday",
+    assigned: "oliver",
+    confidence: 0.99,
+    category: "Medical",
+    reason: "School matches Oliver's grade record. Attachment filename contains 'Oliver_Thompson_2025.pdf'.",
+    extracted: [
+      { label: "Deadline", value: "Aug 10" },
+      { label: "Requires", value: "MD signature · Upload to portal" },
+      { label: "Attachment", value: "Oliver_Thompson_2025.pdf" },
+    ],
+  },
+  {
+    id: "i3",
+    from: "ANA All Nippon Airways",
+    subject: "Booking confirmation · HND ⇄ IAH",
+    preview: "Thompson family × 4 · Depart Oct 24 · Return Nov 3. Confirmation 7XKQR2.",
+    time: "2d ago",
+    assigned: "aimee",
+    confidence: 0.98,
+    category: "Travel",
+    reason: "Airline confirmation. 4 travelers match household. Grouped with Aman Tokyo hotel + JR pass emails into one trip.",
+    extracted: [
+      { label: "Confirmation", value: "7XKQR2" },
+      { label: "Dates", value: "Oct 24 → Nov 3" },
+      { label: "Passport check", value: "Aimee expires within 6 months" },
+    ],
+  },
+  {
+    id: "i4",
+    from: "Instacart · H-E-B",
+    subject: "Your order was delivered",
+    preview: "12 items delivered. Whole milk, eggs, blueberries, sourdough, avocados…",
+    time: "3d ago",
+    assigned: "aimee",
+    confidence: 0.94,
+    category: "Grocery",
+    reason: "Recurring receipt from H-E-B. Household reorders milk every ~8 days.",
+    extracted: [
+      { label: "Total", value: "$146.20" },
+      { label: "Reorder likely", value: "Milk · Blueberries" },
+    ],
+  },
+  {
+    id: "i5",
+    from: "Ms. Patel (Grade 4)",
+    subject: "Multiplication quiz Wednesday",
+    preview: "Please have Oliver review tables 6–9. 15 min flashcards should be enough.",
+    time: "3d ago",
+    assigned: "oliver",
+    confidence: 0.72,
+    category: "School",
+    reason: "Teacher of Oliver's classroom. Content references Grade 4 curriculum. Not fully certain — needs confirm.",
+    extracted: [{ label: "Deadline", value: "Wednesday quiz" }],
+  },
+  {
+    id: "i6",
+    from: "Chubb Insurance",
+    subject: "Home policy renewal notice",
+    preview: "Auto-renews Dec 1. Premium increased 6.4%.",
+    time: "4d ago",
+    assigned: "basil",
+    confidence: 0.9,
+    category: "Home",
+    reason: "Sender matches household home policy on file.",
+    extracted: [
+      { label: "Renews", value: "Dec 1" },
+      { label: "Change", value: "+6.4% premium" },
+    ],
+  },
+];
