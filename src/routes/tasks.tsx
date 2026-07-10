@@ -43,7 +43,7 @@ function TasksPage() {
                       <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
                         {t.category}
                       </span>
-                      <span className="text-muted-foreground/40">·</span>
+                      <span className="text-muted-foreground">·</span>
                       <span
                         className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] ${p?.color ?? "bg-secondary"}`}
                       >

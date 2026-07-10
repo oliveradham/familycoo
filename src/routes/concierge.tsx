@@ -152,7 +152,7 @@ function ConciergePage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask your COO…"
-            className="flex-1 bg-transparent py-2 text-sm placeholder:text-muted-foreground/70 focus:outline-none"
+            className="flex-1 bg-transparent py-2 text-sm placeholder:text-muted-foreground focus:outline-none"
           />
           <button
             type="button"

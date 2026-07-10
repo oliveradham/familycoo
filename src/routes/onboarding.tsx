@@ -280,7 +280,7 @@ function ScanStep({ onDone }: { onDone: () => void }) {
               {idx < i ? <Check className="size-3" strokeWidth={2.5} /> : idx + 1}
             </span>
             <span
-              className={`text-sm ${idx <= i ? "text-foreground" : "text-muted-foreground/60"}`}
+              className={`text-sm ${idx <= i ? "text-foreground" : "text-muted-foreground"}`}
             >
               {s}
             </span>
