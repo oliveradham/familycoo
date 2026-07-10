@@ -14,6 +14,151 @@ export type Database = {
   }
   public: {
     Tables: {
+      briefings: {
+        Row: {
+          briefing_date: string
+          content: Json
+          created_at: string
+          generated_at: string
+          household_id: string
+          id: string
+          kind: string
+          updated_at: string
+        }
+        Insert: {
+          briefing_date?: string
+          content: Json
+          created_at?: string
+          generated_at?: string
+          household_id: string
+          id?: string
+          kind?: string
+          updated_at?: string
+        }
+        Update: {
+          briefing_date?: string
+          content?: Json
+          created_at?: string
+          generated_at?: string
+          household_id?: string
+          id?: string
+          kind?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefings_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      calendar_events: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string
+          ends_at: string | null
+          household_id: string
+          id: string
+          location: string | null
+          member_id: string | null
+          notes: string | null
+          starts_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by: string
+          ends_at?: string | null
+          household_id: string
+          id?: string
+          location?: string | null
+          member_id?: string | null
+          notes?: string | null
+          starts_at: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string
+          ends_at?: string | null
+          household_id?: string
+          id?: string
+          location?: string | null
+          member_id?: string | null
+          notes?: string | null
+          starts_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_events_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "calendar_events_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      family_members: {
+        Row: {
+          birth_date: string | null
+          color: string | null
+          created_at: string
+          household_id: string
+          id: string
+          name: string
+          notes: string | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          birth_date?: string | null
+          color?: string | null
+          created_at?: string
+          household_id: string
+          id?: string
+          name: string
+          notes?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          birth_date?: string | null
+          color?: string | null
+          created_at?: string
+          household_id?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_members_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       household_members: {
         Row: {
           created_at: string
@@ -73,6 +218,75 @@ export type Database = {
         }
         Relationships: []
       }
+      inbox_items: {
+        Row: {
+          amount: number | null
+          created_at: string
+          created_by: string | null
+          due_at: string | null
+          household_id: string
+          id: string
+          lane: string
+          member_id: string | null
+          raw_content: string | null
+          sender: string | null
+          source: string
+          status: string
+          subject: string
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          created_by?: string | null
+          due_at?: string | null
+          household_id: string
+          id?: string
+          lane?: string
+          member_id?: string | null
+          raw_content?: string | null
+          sender?: string | null
+          source?: string
+          status?: string
+          subject: string
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          created_by?: string | null
+          due_at?: string | null
+          household_id?: string
+          id?: string
+          lane?: string
+          member_id?: string | null
+          raw_content?: string | null
+          sender?: string | null
+          source?: string
+          status?: string
+          subject?: string
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inbox_items_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inbox_items_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -102,6 +316,72 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      tasks: {
+        Row: {
+          assignee_user_id: string | null
+          category: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string
+          due_at: string | null
+          household_id: string
+          id: string
+          member_id: string | null
+          notes: string | null
+          priority: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_user_id?: string | null
+          category?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by: string
+          due_at?: string | null
+          household_id: string
+          id?: string
+          member_id?: string | null
+          notes?: string | null
+          priority?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_user_id?: string | null
+          category?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string
+          due_at?: string | null
+          household_id?: string
+          id?: string
+          member_id?: string | null
+          notes?: string | null
+          priority?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
