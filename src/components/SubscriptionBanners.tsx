@@ -20,7 +20,8 @@ export function SubscriptionBanners() {
     setBusy(true);
     try {
       const res = await openPortal();
-      const url = res.subscriptionUrls?.[0]?.updatePaymentMethod ?? res.overviewUrl;
+      const first = res.subscriptionUrls?.[0] as { updatePaymentMethod?: string; update_payment_method?: string; cancel?: string } | undefined;
+      const url = first?.updatePaymentMethod ?? first?.update_payment_method ?? res.overviewUrl;
       if (url) window.open(url, "_blank", "noopener");
     } catch (e) {
       console.error(e);
