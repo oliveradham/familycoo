@@ -175,6 +175,75 @@ export type Database = {
           },
         ]
       }
+      expenses: {
+        Row: {
+          amount_cents: number
+          category: string
+          created_at: string
+          created_by: string
+          currency: string
+          family_member_id: string | null
+          household_id: string
+          id: string
+          is_recurring: boolean
+          merchant: string | null
+          notes: string | null
+          receipt_path: string | null
+          spent_on: string
+          subscription_period: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_cents?: number
+          category?: string
+          created_at?: string
+          created_by?: string
+          currency?: string
+          family_member_id?: string | null
+          household_id: string
+          id?: string
+          is_recurring?: boolean
+          merchant?: string | null
+          notes?: string | null
+          receipt_path?: string | null
+          spent_on?: string
+          subscription_period?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number
+          category?: string
+          created_at?: string
+          created_by?: string
+          currency?: string
+          family_member_id?: string | null
+          household_id?: string
+          id?: string
+          is_recurring?: boolean
+          merchant?: string | null
+          notes?: string | null
+          receipt_path?: string | null
+          spent_on?: string
+          subscription_period?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           birth_date: string | null
@@ -212,6 +281,59 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "family_members_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grocery_items: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          household_id: string
+          id: string
+          low_at: number | null
+          name: string
+          notes: string | null
+          qty: number | null
+          status: string
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          household_id: string
+          id?: string
+          low_at?: number | null
+          name: string
+          notes?: string | null
+          qty?: number | null
+          status?: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          household_id?: string
+          id?: string
+          low_at?: number | null
+          name?: string
+          notes?: string | null
+          qty?: number | null
+          status?: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grocery_items_household_id_fkey"
             columns: ["household_id"]
             isOneToOne: false
             referencedRelation: "households"
@@ -343,6 +465,59 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_tasks: {
+        Row: {
+          area: string
+          created_at: string
+          created_by: string
+          frequency_days: number | null
+          household_id: string
+          id: string
+          last_done_on: string | null
+          next_due_on: string | null
+          notes: string | null
+          title: string
+          updated_at: string
+          vendor: string | null
+        }
+        Insert: {
+          area?: string
+          created_at?: string
+          created_by?: string
+          frequency_days?: number | null
+          household_id: string
+          id?: string
+          last_done_on?: string | null
+          next_due_on?: string | null
+          notes?: string | null
+          title: string
+          updated_at?: string
+          vendor?: string | null
+        }
+        Update: {
+          area?: string
+          created_at?: string
+          created_by?: string
+          frequency_days?: number | null
+          household_id?: string
+          id?: string
+          last_done_on?: string | null
+          next_due_on?: string | null
+          notes?: string | null
+          title?: string
+          updated_at?: string
+          vendor?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_tasks_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
             referencedColumns: ["id"]
           },
         ]
@@ -739,6 +914,59 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trips: {
+        Row: {
+          created_at: string
+          created_by: string
+          destination: string | null
+          end_date: string | null
+          household_id: string
+          id: string
+          notes: string | null
+          start_date: string | null
+          status: string
+          title: string
+          travelers: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          destination?: string | null
+          end_date?: string | null
+          household_id: string
+          id?: string
+          notes?: string | null
+          start_date?: string | null
+          status?: string
+          title: string
+          travelers?: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          destination?: string | null
+          end_date?: string | null
+          household_id?: string
+          id?: string
+          notes?: string | null
+          start_date?: string | null
+          status?: string
+          title?: string
+          travelers?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trips_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
             referencedColumns: ["id"]
           },
         ]
