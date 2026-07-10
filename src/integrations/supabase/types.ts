@@ -170,12 +170,16 @@ export type Database = {
           created_at: string
           created_by: string
           ends_at: string | null
+          external_calendar_id: string | null
+          external_id: string | null
           household_id: string
           id: string
           location: string | null
           member_id: string | null
           notes: string | null
+          source: string
           starts_at: string
+          synced_at: string | null
           title: string
           updated_at: string
         }
@@ -184,12 +188,16 @@ export type Database = {
           created_at?: string
           created_by: string
           ends_at?: string | null
+          external_calendar_id?: string | null
+          external_id?: string | null
           household_id: string
           id?: string
           location?: string | null
           member_id?: string | null
           notes?: string | null
+          source?: string
           starts_at: string
+          synced_at?: string | null
           title: string
           updated_at?: string
         }
@@ -198,12 +206,16 @@ export type Database = {
           created_at?: string
           created_by?: string
           ends_at?: string | null
+          external_calendar_id?: string | null
+          external_id?: string | null
           household_id?: string
           id?: string
           location?: string | null
           member_id?: string | null
           notes?: string | null
+          source?: string
           starts_at?: string
+          synced_at?: string | null
           title?: string
           updated_at?: string
         }
@@ -220,6 +232,68 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      calendar_integrations: {
+        Row: {
+          access_token_ciphertext: string | null
+          calendar_ids: string[]
+          created_at: string
+          household_id: string
+          id: string
+          last_error: string | null
+          last_synced_at: string | null
+          provider: string
+          provider_account_email: string | null
+          refresh_token_ciphertext: string | null
+          scopes: string | null
+          sync_status: string
+          token_expires_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token_ciphertext?: string | null
+          calendar_ids?: string[]
+          created_at?: string
+          household_id: string
+          id?: string
+          last_error?: string | null
+          last_synced_at?: string | null
+          provider?: string
+          provider_account_email?: string | null
+          refresh_token_ciphertext?: string | null
+          scopes?: string | null
+          sync_status?: string
+          token_expires_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token_ciphertext?: string | null
+          calendar_ids?: string[]
+          created_at?: string
+          household_id?: string
+          id?: string
+          last_error?: string | null
+          last_synced_at?: string | null
+          provider?: string
+          provider_account_email?: string | null
+          refresh_token_ciphertext?: string | null
+          scopes?: string | null
+          sync_status?: string
+          token_expires_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_integrations_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
             referencedColumns: ["id"]
           },
         ]
@@ -580,6 +654,7 @@ export type Database = {
           created_at: string
           created_by: string
           id: string
+          inbound_email: string | null
           name: string
           updated_at: string
         }
@@ -588,6 +663,7 @@ export type Database = {
           created_at?: string
           created_by: string
           id?: string
+          inbound_email?: string | null
           name?: string
           updated_at?: string
         }
@@ -596,6 +672,7 @@ export type Database = {
           created_at?: string
           created_by?: string
           id?: string
+          inbound_email?: string | null
           name?: string
           updated_at?: string
         }
@@ -839,6 +916,45 @@ export type Database = {
           },
         ]
       }
+      phone_numbers: {
+        Row: {
+          created_at: string
+          e164: string
+          id: string
+          sms_opt_in: boolean
+          updated_at: string
+          user_id: string
+          verification_attempts: number
+          verification_code: string | null
+          verification_expires_at: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          e164: string
+          id?: string
+          sms_opt_in?: boolean
+          updated_at?: string
+          user_id: string
+          verification_attempts?: number
+          verification_code?: string | null
+          verification_expires_at?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          e164?: string
+          id?: string
+          sms_opt_in?: boolean
+          updated_at?: string
+          user_id?: string
+          verification_attempts?: number
+          verification_code?: string | null
+          verification_expires_at?: string | null
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           afternoon_check_in_at: string | null
@@ -846,6 +962,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           display_name: string | null
+          email_notifications_enabled: boolean
           evening_wrap_at: string | null
           id: string
           locale: string | null
@@ -860,6 +977,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
+          email_notifications_enabled?: boolean
           evening_wrap_at?: string | null
           id: string
           locale?: string | null
@@ -874,6 +992,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
+          email_notifications_enabled?: boolean
           evening_wrap_at?: string | null
           id?: string
           locale?: string | null
