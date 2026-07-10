@@ -58,6 +58,71 @@ export type Database = {
           },
         ]
       }
+      approvals: {
+        Row: {
+          action_kind: string
+          created_at: string
+          created_by_agent: string | null
+          error: string | null
+          executed_at: string | null
+          household_id: string
+          id: string
+          payload: Json
+          reversible: boolean
+          status: string
+          steps: Json
+          title: string
+          undo_expires_at: string | null
+          undo_token: Json | null
+          updated_at: string
+          why: string | null
+        }
+        Insert: {
+          action_kind: string
+          created_at?: string
+          created_by_agent?: string | null
+          error?: string | null
+          executed_at?: string | null
+          household_id: string
+          id?: string
+          payload?: Json
+          reversible?: boolean
+          status?: string
+          steps?: Json
+          title: string
+          undo_expires_at?: string | null
+          undo_token?: Json | null
+          updated_at?: string
+          why?: string | null
+        }
+        Update: {
+          action_kind?: string
+          created_at?: string
+          created_by_agent?: string | null
+          error?: string | null
+          executed_at?: string | null
+          household_id?: string
+          id?: string
+          payload?: Json
+          reversible?: boolean
+          status?: string
+          steps?: Json
+          title?: string
+          undo_expires_at?: string | null
+          undo_token?: Json | null
+          updated_at?: string
+          why?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approvals_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       briefings: {
         Row: {
           briefing_date: string
