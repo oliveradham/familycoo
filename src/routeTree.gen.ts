@@ -28,6 +28,7 @@ import { Route as RulesRouteImport } from './routes/rules'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ReadinessRouteImport } from './routes/readiness'
 import { Route as PurchasesRouteImport } from './routes/purchases'
@@ -65,6 +66,7 @@ import { Route as CalmRouteImport } from './routes/calm'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as AutopilotRouteImport } from './routes/autopilot'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
@@ -162,6 +164,11 @@ const ReturnsRoute = ReturnsRouteImport.update({
 const ResponsibilitiesRoute = ResponsibilitiesRouteImport.update({
   id: '/responsibilities',
   path: '/responsibilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RefundPolicyRoute = RefundPolicyRouteImport.update({
@@ -349,6 +356,11 @@ const AutopilotRoute = AutopilotRouteImport.update({
   path: '/autopilot',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApprovalsRoute = ApprovalsRouteImport.update({
   id: '/approvals',
   path: '/approvals',
@@ -369,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
   '/approvals': typeof ApprovalsRoute
+  '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
@@ -406,6 +419,7 @@ export interface FileRoutesByFullPath {
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -430,6 +444,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
   '/approvals': typeof ApprovalsRoute
+  '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
@@ -467,6 +482,7 @@ export interface FileRoutesByTo {
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -492,6 +508,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
   '/approvals': typeof ApprovalsRoute
+  '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
@@ -529,6 +546,7 @@ export interface FileRoutesById {
   '/purchases': typeof PurchasesRoute
   '/readiness': typeof ReadinessRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/responsibilities': typeof ResponsibilitiesRoute
   '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
@@ -555,6 +573,7 @@ export interface FileRouteTypes {
     | '/'
     | '/agents'
     | '/approvals'
+    | '/auth'
     | '/autopilot'
     | '/bookings'
     | '/calendar'
@@ -592,6 +611,7 @@ export interface FileRouteTypes {
     | '/purchases'
     | '/readiness'
     | '/refund-policy'
+    | '/reset-password'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -616,6 +636,7 @@ export interface FileRouteTypes {
     | '/'
     | '/agents'
     | '/approvals'
+    | '/auth'
     | '/autopilot'
     | '/bookings'
     | '/calendar'
@@ -653,6 +674,7 @@ export interface FileRouteTypes {
     | '/purchases'
     | '/readiness'
     | '/refund-policy'
+    | '/reset-password'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -677,6 +699,7 @@ export interface FileRouteTypes {
     | '/'
     | '/agents'
     | '/approvals'
+    | '/auth'
     | '/autopilot'
     | '/bookings'
     | '/calendar'
@@ -714,6 +737,7 @@ export interface FileRouteTypes {
     | '/purchases'
     | '/readiness'
     | '/refund-policy'
+    | '/reset-password'
     | '/responsibilities'
     | '/returns'
     | '/review'
@@ -739,6 +763,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRoute
   ApprovalsRoute: typeof ApprovalsRoute
+  AuthRoute: typeof AuthRoute
   AutopilotRoute: typeof AutopilotRoute
   BookingsRoute: typeof BookingsRoute
   CalendarRoute: typeof CalendarRoute
@@ -776,6 +801,7 @@ export interface RootRouteChildren {
   PurchasesRoute: typeof PurchasesRoute
   ReadinessRoute: typeof ReadinessRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ResponsibilitiesRoute: typeof ResponsibilitiesRoute
   ReturnsRoute: typeof ReturnsRoute
   ReviewRoute: typeof ReviewRoute
@@ -930,6 +956,13 @@ declare module '@tanstack/react-router' {
       path: '/responsibilities'
       fullPath: '/responsibilities'
       preLoaderRoute: typeof ResponsibilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/refund-policy': {
@@ -1191,6 +1224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutopilotRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/approvals': {
       id: '/approvals'
       path: '/approvals'
@@ -1219,6 +1259,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRoute,
   ApprovalsRoute: ApprovalsRoute,
+  AuthRoute: AuthRoute,
   AutopilotRoute: AutopilotRoute,
   BookingsRoute: BookingsRoute,
   CalendarRoute: CalendarRoute,
@@ -1256,6 +1297,7 @@ const rootRouteChildren: RootRouteChildren = {
   PurchasesRoute: PurchasesRoute,
   ReadinessRoute: ReadinessRoute,
   RefundPolicyRoute: RefundPolicyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ResponsibilitiesRoute: ResponsibilitiesRoute,
   ReturnsRoute: ReturnsRoute,
   ReviewRoute: ReviewRoute,
