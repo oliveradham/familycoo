@@ -1,0 +1,17 @@
+{
+  "name": "Family COO — AI Chief of Staff",
+  "short_name": "Family COO",
+  "description": "AI Chief Operating Officer for busy families — proactive coordination across schedules, school, sports, travel, and daily logistics.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fcfcfc",
+  "theme_color": "#fcfcfc",
+  "categories": ["productivity", "lifestyle", "utilities"],
+  "icons": [
+    { "src": "/app-icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/app-icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any" }
+  ]
+}
