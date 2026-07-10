@@ -84,6 +84,6 @@ export async function recallMemories(supabase: any, householdId: string, query: 
     const hits = tokens.filter((t) => f.includes(t)).length;
     return { m, score: hits };
   });
-  scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, limit).map((s) => s.m);
+  scored.sort((a: { score: number }, b: { score: number }) => b.score - a.score);
+  return scored.slice(0, limit).map((s: { m: unknown }) => s.m);
 }
