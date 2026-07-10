@@ -30,7 +30,7 @@ function VaultPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Ask the vault…"
-            className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground/70 focus:outline-none"
+            className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none"
           />
         </div>
       </div>
