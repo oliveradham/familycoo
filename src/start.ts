@@ -22,9 +22,12 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 // cross-origin data exfiltration. CSP is intentionally permissive enough
 // to allow Google Fonts and inline styles used by the app shell.
 const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => {
-  const response = await next();
-  const res = response instanceof Response ? response : new Response(response as any);
-  const h = res.headers;
+  const result = await next();
+  const response = (result && typeof result === "object" && "response" in (result as any)
+    ? (result as any).response
+    : result) as unknown;
+  if (!(response instanceof Response)) return result;
+  const h = response.headers;
 
   const csp = [
     "default-src 'self'",
@@ -59,7 +62,7 @@ const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => 
   set("Cross-Origin-Resource-Policy", "same-origin");
   set("X-DNS-Prefetch-Control", "off");
   set("X-Permitted-Cross-Domain-Policies", "none");
-  return res;
+  return result;
 });
 
 export const startInstance = createStart(() => ({
