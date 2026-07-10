@@ -9,23 +9,47 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WaitingRouteImport } from './routes/waiting'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SportsRouteImport } from './routes/sports'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as SchoolRouteImport } from './routes/school'
+import { Route as ScenariosRouteImport } from './routes/scenarios'
 import { Route as ReviewRouteImport } from './routes/review'
+import { Route as ReturnsRouteImport } from './routes/returns'
+import { Route as ResponsibilitiesRouteImport } from './routes/responsibilities'
+import { Route as ReadinessRouteImport } from './routes/readiness'
+import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as HealthPrepRouteImport } from './routes/health-prep'
+import { Route as HandoffRouteImport } from './routes/handoff'
 import { Route as GroceriesRouteImport } from './routes/groceries'
+import { Route as GiftsRouteImport } from './routes/gifts'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as DepartureRouteImport } from './routes/departure'
+import { Route as DecisionsRouteImport } from './routes/decisions'
+import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ConciergeRouteImport } from './routes/concierge'
+import { Route as ChecklistsRouteImport } from './routes/checklists'
+import { Route as CaptureRouteImport } from './routes/capture'
+import { Route as CalmRouteImport } from './routes/calm'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AutopilotRouteImport } from './routes/autopilot'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WaitingRoute = WaitingRouteImport.update({
+  id: '/waiting',
+  path: '/waiting',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VaultRoute = VaultRouteImport.update({
   id: '/vault',
   path: '/vault',
@@ -46,14 +70,44 @@ const SportsRoute = SportsRouteImport.update({
   path: '/sports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SchoolRoute = SchoolRouteImport.update({
   id: '/school',
   path: '/school',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScenariosRoute = ScenariosRouteImport.update({
+  id: '/scenarios',
+  path: '/scenarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewRoute = ReviewRouteImport.update({
   id: '/review',
   path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnsRoute = ReturnsRouteImport.update({
+  id: '/returns',
+  path: '/returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResponsibilitiesRoute = ResponsibilitiesRouteImport.update({
+  id: '/responsibilities',
+  path: '/responsibilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadinessRoute = ReadinessRouteImport.update({
+  id: '/readiness',
+  path: '/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PurchasesRoute = PurchasesRouteImport.update({
+  id: '/purchases',
+  path: '/purchases',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -76,9 +130,29 @@ const InboxRoute = InboxRouteImport.update({
   path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthPrepRoute = HealthPrepRouteImport.update({
+  id: '/health-prep',
+  path: '/health-prep',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HandoffRoute = HandoffRouteImport.update({
+  id: '/handoff',
+  path: '/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GroceriesRoute = GroceriesRouteImport.update({
   id: '/groceries',
   path: '/groceries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftsRoute = GiftsRouteImport.update({
+  id: '/gifts',
+  path: '/gifts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FamilyRoute = FamilyRouteImport.update({
@@ -91,14 +165,54 @@ const ExpensesRoute = ExpensesRouteImport.update({
   path: '/expenses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmergencyRoute = EmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepartureRoute = DepartureRouteImport.update({
+  id: '/departure',
+  path: '/departure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DecisionsRoute = DecisionsRouteImport.update({
+  id: '/decisions',
+  path: '/decisions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConflictsRoute = ConflictsRouteImport.update({
+  id: '/conflicts',
+  path: '/conflicts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConciergeRoute = ConciergeRouteImport.update({
   id: '/concierge',
   path: '/concierge',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChecklistsRoute = ChecklistsRouteImport.update({
+  id: '/checklists',
+  path: '/checklists',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaptureRoute = CaptureRouteImport.update({
+  id: '/capture',
+  path: '/capture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalmRoute = CalmRouteImport.update({
+  id: '/calm',
+  path: '/calm',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutopilotRoute = AutopilotRouteImport.update({
+  id: '/autopilot',
+  path: '/autopilot',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -109,137 +223,277 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/autopilot': typeof AutopilotRoute
   '/calendar': typeof CalendarRoute
+  '/calm': typeof CalmRoute
+  '/capture': typeof CaptureRoute
+  '/checklists': typeof ChecklistsRoute
   '/concierge': typeof ConciergeRoute
+  '/conflicts': typeof ConflictsRoute
+  '/decisions': typeof DecisionsRoute
+  '/departure': typeof DepartureRoute
+  '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
+  '/handoff': typeof HandoffRoute
+  '/health-prep': typeof HealthPrepRoute
+  '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/purchases': typeof PurchasesRoute
+  '/readiness': typeof ReadinessRoute
+  '/responsibilities': typeof ResponsibilitiesRoute
+  '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
+  '/search': typeof SearchRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
   '/vault': typeof VaultRoute
+  '/waiting': typeof WaitingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/autopilot': typeof AutopilotRoute
   '/calendar': typeof CalendarRoute
+  '/calm': typeof CalmRoute
+  '/capture': typeof CaptureRoute
+  '/checklists': typeof ChecklistsRoute
   '/concierge': typeof ConciergeRoute
+  '/conflicts': typeof ConflictsRoute
+  '/decisions': typeof DecisionsRoute
+  '/departure': typeof DepartureRoute
+  '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
+  '/handoff': typeof HandoffRoute
+  '/health-prep': typeof HealthPrepRoute
+  '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/purchases': typeof PurchasesRoute
+  '/readiness': typeof ReadinessRoute
+  '/responsibilities': typeof ResponsibilitiesRoute
+  '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
+  '/search': typeof SearchRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
   '/vault': typeof VaultRoute
+  '/waiting': typeof WaitingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/autopilot': typeof AutopilotRoute
   '/calendar': typeof CalendarRoute
+  '/calm': typeof CalmRoute
+  '/capture': typeof CaptureRoute
+  '/checklists': typeof ChecklistsRoute
   '/concierge': typeof ConciergeRoute
+  '/conflicts': typeof ConflictsRoute
+  '/decisions': typeof DecisionsRoute
+  '/departure': typeof DepartureRoute
+  '/emergency': typeof EmergencyRoute
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
+  '/gifts': typeof GiftsRoute
   '/groceries': typeof GroceriesRoute
+  '/handoff': typeof HandoffRoute
+  '/health-prep': typeof HealthPrepRoute
+  '/history': typeof HistoryRoute
   '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
   '/onboarding': typeof OnboardingRoute
+  '/purchases': typeof PurchasesRoute
+  '/readiness': typeof ReadinessRoute
+  '/responsibilities': typeof ResponsibilitiesRoute
+  '/returns': typeof ReturnsRoute
   '/review': typeof ReviewRoute
+  '/scenarios': typeof ScenariosRoute
   '/school': typeof SchoolRoute
+  '/search': typeof SearchRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
   '/travel': typeof TravelRoute
   '/vault': typeof VaultRoute
+  '/waiting': typeof WaitingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/autopilot'
     | '/calendar'
+    | '/calm'
+    | '/capture'
+    | '/checklists'
     | '/concierge'
+    | '/conflicts'
+    | '/decisions'
+    | '/departure'
+    | '/emergency'
     | '/expenses'
     | '/family'
+    | '/gifts'
     | '/groceries'
+    | '/handoff'
+    | '/health-prep'
+    | '/history'
     | '/inbox'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/purchases'
+    | '/readiness'
+    | '/responsibilities'
+    | '/returns'
     | '/review'
+    | '/scenarios'
     | '/school'
+    | '/search'
     | '/sports'
     | '/tasks'
     | '/travel'
     | '/vault'
+    | '/waiting'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/autopilot'
     | '/calendar'
+    | '/calm'
+    | '/capture'
+    | '/checklists'
     | '/concierge'
+    | '/conflicts'
+    | '/decisions'
+    | '/departure'
+    | '/emergency'
     | '/expenses'
     | '/family'
+    | '/gifts'
     | '/groceries'
+    | '/handoff'
+    | '/health-prep'
+    | '/history'
     | '/inbox'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/purchases'
+    | '/readiness'
+    | '/responsibilities'
+    | '/returns'
     | '/review'
+    | '/scenarios'
     | '/school'
+    | '/search'
     | '/sports'
     | '/tasks'
     | '/travel'
     | '/vault'
+    | '/waiting'
   id:
     | '__root__'
     | '/'
+    | '/autopilot'
     | '/calendar'
+    | '/calm'
+    | '/capture'
+    | '/checklists'
     | '/concierge'
+    | '/conflicts'
+    | '/decisions'
+    | '/departure'
+    | '/emergency'
     | '/expenses'
     | '/family'
+    | '/gifts'
     | '/groceries'
+    | '/handoff'
+    | '/health-prep'
+    | '/history'
     | '/inbox'
     | '/maintenance'
     | '/medical'
     | '/onboarding'
+    | '/purchases'
+    | '/readiness'
+    | '/responsibilities'
+    | '/returns'
     | '/review'
+    | '/scenarios'
     | '/school'
+    | '/search'
     | '/sports'
     | '/tasks'
     | '/travel'
     | '/vault'
+    | '/waiting'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutopilotRoute: typeof AutopilotRoute
   CalendarRoute: typeof CalendarRoute
+  CalmRoute: typeof CalmRoute
+  CaptureRoute: typeof CaptureRoute
+  ChecklistsRoute: typeof ChecklistsRoute
   ConciergeRoute: typeof ConciergeRoute
+  ConflictsRoute: typeof ConflictsRoute
+  DecisionsRoute: typeof DecisionsRoute
+  DepartureRoute: typeof DepartureRoute
+  EmergencyRoute: typeof EmergencyRoute
   ExpensesRoute: typeof ExpensesRoute
   FamilyRoute: typeof FamilyRoute
+  GiftsRoute: typeof GiftsRoute
   GroceriesRoute: typeof GroceriesRoute
+  HandoffRoute: typeof HandoffRoute
+  HealthPrepRoute: typeof HealthPrepRoute
+  HistoryRoute: typeof HistoryRoute
   InboxRoute: typeof InboxRoute
   MaintenanceRoute: typeof MaintenanceRoute
   MedicalRoute: typeof MedicalRoute
   OnboardingRoute: typeof OnboardingRoute
+  PurchasesRoute: typeof PurchasesRoute
+  ReadinessRoute: typeof ReadinessRoute
+  ResponsibilitiesRoute: typeof ResponsibilitiesRoute
+  ReturnsRoute: typeof ReturnsRoute
   ReviewRoute: typeof ReviewRoute
+  ScenariosRoute: typeof ScenariosRoute
   SchoolRoute: typeof SchoolRoute
+  SearchRoute: typeof SearchRoute
   SportsRoute: typeof SportsRoute
   TasksRoute: typeof TasksRoute
   TravelRoute: typeof TravelRoute
   VaultRoute: typeof VaultRoute
+  WaitingRoute: typeof WaitingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/waiting': {
+      id: '/waiting'
+      path: '/waiting'
+      fullPath: '/waiting'
+      preLoaderRoute: typeof WaitingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vault': {
       id: '/vault'
       path: '/vault'
@@ -268,6 +522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/school': {
       id: '/school'
       path: '/school'
@@ -275,11 +536,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SchoolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scenarios': {
+      id: '/scenarios'
+      path: '/scenarios'
+      fullPath: '/scenarios'
+      preLoaderRoute: typeof ScenariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review': {
       id: '/review'
       path: '/review'
       fullPath: '/review'
       preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/returns': {
+      id: '/returns'
+      path: '/returns'
+      fullPath: '/returns'
+      preLoaderRoute: typeof ReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/responsibilities': {
+      id: '/responsibilities'
+      path: '/responsibilities'
+      fullPath: '/responsibilities'
+      preLoaderRoute: typeof ResponsibilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/readiness': {
+      id: '/readiness'
+      path: '/readiness'
+      fullPath: '/readiness'
+      preLoaderRoute: typeof ReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/purchases': {
+      id: '/purchases'
+      path: '/purchases'
+      fullPath: '/purchases'
+      preLoaderRoute: typeof PurchasesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -310,11 +606,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health-prep': {
+      id: '/health-prep'
+      path: '/health-prep'
+      fullPath: '/health-prep'
+      preLoaderRoute: typeof HealthPrepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/handoff': {
+      id: '/handoff'
+      path: '/handoff'
+      fullPath: '/handoff'
+      preLoaderRoute: typeof HandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/groceries': {
       id: '/groceries'
       path: '/groceries'
       fullPath: '/groceries'
       preLoaderRoute: typeof GroceriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gifts': {
+      id: '/gifts'
+      path: '/gifts'
+      fullPath: '/gifts'
+      preLoaderRoute: typeof GiftsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/family': {
@@ -331,6 +655,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/emergency': {
+      id: '/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof EmergencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/departure': {
+      id: '/departure'
+      path: '/departure'
+      fullPath: '/departure'
+      preLoaderRoute: typeof DepartureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/decisions': {
+      id: '/decisions'
+      path: '/decisions'
+      fullPath: '/decisions'
+      preLoaderRoute: typeof DecisionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conflicts': {
+      id: '/conflicts'
+      path: '/conflicts'
+      fullPath: '/conflicts'
+      preLoaderRoute: typeof ConflictsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/concierge': {
       id: '/concierge'
       path: '/concierge'
@@ -338,11 +690,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConciergeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checklists': {
+      id: '/checklists'
+      path: '/checklists'
+      fullPath: '/checklists'
+      preLoaderRoute: typeof ChecklistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/capture': {
+      id: '/capture'
+      path: '/capture'
+      fullPath: '/capture'
+      preLoaderRoute: typeof CaptureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calm': {
+      id: '/calm'
+      path: '/calm'
+      fullPath: '/calm'
+      preLoaderRoute: typeof CalmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/autopilot': {
+      id: '/autopilot'
+      path: '/autopilot'
+      fullPath: '/autopilot'
+      preLoaderRoute: typeof AutopilotRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -357,21 +737,40 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutopilotRoute: AutopilotRoute,
   CalendarRoute: CalendarRoute,
+  CalmRoute: CalmRoute,
+  CaptureRoute: CaptureRoute,
+  ChecklistsRoute: ChecklistsRoute,
   ConciergeRoute: ConciergeRoute,
+  ConflictsRoute: ConflictsRoute,
+  DecisionsRoute: DecisionsRoute,
+  DepartureRoute: DepartureRoute,
+  EmergencyRoute: EmergencyRoute,
   ExpensesRoute: ExpensesRoute,
   FamilyRoute: FamilyRoute,
+  GiftsRoute: GiftsRoute,
   GroceriesRoute: GroceriesRoute,
+  HandoffRoute: HandoffRoute,
+  HealthPrepRoute: HealthPrepRoute,
+  HistoryRoute: HistoryRoute,
   InboxRoute: InboxRoute,
   MaintenanceRoute: MaintenanceRoute,
   MedicalRoute: MedicalRoute,
   OnboardingRoute: OnboardingRoute,
+  PurchasesRoute: PurchasesRoute,
+  ReadinessRoute: ReadinessRoute,
+  ResponsibilitiesRoute: ResponsibilitiesRoute,
+  ReturnsRoute: ReturnsRoute,
   ReviewRoute: ReviewRoute,
+  ScenariosRoute: ScenariosRoute,
   SchoolRoute: SchoolRoute,
+  SearchRoute: SearchRoute,
   SportsRoute: SportsRoute,
   TasksRoute: TasksRoute,
   TravelRoute: TravelRoute,
   VaultRoute: VaultRoute,
+  WaitingRoute: WaitingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
