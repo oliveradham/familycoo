@@ -52,7 +52,7 @@ export const createExpense = createServerFn({ method: "POST" })
         amount_cents: data.amount_cents,
         currency: data.currency || "USD",
         category: data.category || "other",
-        merchant: data.merchant || null,
+        merchant: data.merchant || undefined,
         spent_on: data.spent_on || null,
         notes: data.notes || null,
         family_member_id: data.family_member_id || null,
