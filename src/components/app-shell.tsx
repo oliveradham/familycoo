@@ -1,8 +1,11 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
+import { Bell, Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth-context";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { unreadCount } from "@/lib/notifications.functions";
 
 const nav: { to: string; key: string; icon: LucideIcon }[] = [
   { to: "/", key: "nav.today", icon: HomeIcon },
@@ -11,6 +14,31 @@ const nav: { to: string; key: string; icon: LucideIcon }[] = [
   { to: "/calendar", key: "nav.week", icon: Calendar },
   { to: "/review", key: "nav.review", icon: CalendarCheck },
 ];
+
+function NotificationBell() {
+  const fn = useServerFn(unreadCount);
+  const { data } = useQuery({
+    queryKey: ["notifications", "unread-count"],
+    queryFn: () => fn(),
+    refetchInterval: 60_000,
+    refetchOnWindowFocus: true,
+  });
+  const count = data?.count ?? 0;
+  return (
+    <Link
+      to="/notifications"
+      aria-label="Notifications"
+      className="fixed right-4 top-4 z-50 grid size-10 place-items-center rounded-full border border-hairline bg-background/90 shadow-sm backdrop-blur-md hover:bg-background"
+    >
+      <Bell className="size-4" strokeWidth={1.75} />
+      {count > 0 && (
+        <span className="absolute -right-0.5 -top-0.5 min-w-[18px] rounded-full bg-red-500 px-1 py-0.5 text-center text-[10px] font-semibold leading-none text-white">
+          {count > 99 ? "99+" : count}
+        </span>
+      )}
+    </Link>
+  );
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -33,7 +61,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <NotificationBell />
       <main className="mx-auto max-w-[520px] pb-32">{children}</main>
+
 
       <nav className="fixed bottom-6 left-1/2 z-40 w-[calc(100%-32px)] max-w-[440px] -translate-x-1/2">
         <div className="flex items-center justify-between rounded-full bg-zinc-900/95 px-3 py-2.5 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] ring-1 ring-white/10 backdrop-blur-xl">

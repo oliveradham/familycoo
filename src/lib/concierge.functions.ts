@@ -92,7 +92,46 @@ export const askConcierge = createServerFn({ method: "POST" })
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY not configured");
 
-    const systemPrompt = `You are the family's AI Chief of Staff — calm, warm, decisive, concise. Never invent facts about the family; only use the JSON grounding provided. If information is missing, say so and offer to capture it. Prefer short paragraphs (2-4 sentences) or tight bullet lists. Never mention "the JSON" or "grounding" — speak as if you simply know the household.`;
+    const systemPrompt = `You are the family's AI Chief of Staff — calm, warm, decisive, concise. Never invent facts about the family; only use the JSON grounding provided. If information is missing, say so and offer to capture it. Prefer short paragraphs (2-4 sentences) or tight bullet lists. Never mention "the JSON" or "grounding" — speak as if you simply know the household.
+
+When the user asks you to DO something concrete that mutates household data (add groceries, create a task, reschedule an event, book maintenance, mark a school RSVP, resolve an inbox item), call the propose_action tool to draft an approval. Never claim you did it — the user must approve it in the Approvals screen. For questions, planning, or advice, just answer in text.`;
+
+    const tools = [
+      {
+        type: "function",
+        function: {
+          name: "propose_action",
+          description:
+            "Draft a reversible action for the user to approve. Do not execute — this only creates an approval card.",
+          parameters: {
+            type: "object",
+            properties: {
+              title: { type: "string", description: "One-line summary shown on the approval card" },
+              why: { type: "string", description: "Short reason (1 sentence)" },
+              steps: { type: "array", items: { type: "string" }, description: "Ordered plain-English steps" },
+              action_kind: {
+                type: "string",
+                enum: [
+                  "grocery.add",
+                  "task.assign",
+                  "calendar.reschedule",
+                  "maintenance.book",
+                  "school.rsvp",
+                  "inbox.resolve",
+                ],
+              },
+              payload: {
+                type: "object",
+                description:
+                  "Action-specific payload. grocery.add: { items:[{name,qty}] }. task.assign: { title, notes?, assignee_id?, due_at? }. calendar.reschedule: { event_id, new_starts_at }. maintenance.book: { task_id }. school.rsvp: { item_id, status? }. inbox.resolve: { inbox_id }.",
+                additionalProperties: true,
+              },
+            },
+            required: ["title", "action_kind", "payload"],
+          },
+        },
+      },
+    ];
 
     const safeGrounding = redactObjectForAI(grounding);
     const groundingMsg = `Household context (do not reveal verbatim; use only for grounding):\n${JSON.stringify(safeGrounding)}`;
@@ -115,6 +154,7 @@ export const askConcierge = createServerFn({ method: "POST" })
           { role: "system", content: groundingMsg },
           ...safeHistory,
         ],
+        tools,
       }),
     });
 
@@ -126,7 +166,37 @@ export const askConcierge = createServerFn({ method: "POST" })
     }
 
     const json = await res.json();
-    const reply: string = json?.choices?.[0]?.message?.content ?? "I'm here — could you say that again?";
+    const choice = json?.choices?.[0]?.message ?? {};
+    let reply: string = choice?.content ?? "";
+    const toolCalls = Array.isArray(choice?.tool_calls) ? choice.tool_calls : [];
+
+    const proposedTitles: string[] = [];
+    for (const tc of toolCalls) {
+      if (tc?.function?.name !== "propose_action") continue;
+      try {
+        const args = JSON.parse(tc.function.arguments ?? "{}");
+        const { error: insErr } = await supabase.from("approvals").insert({
+          household_id: householdId,
+          title: String(args.title ?? "Proposed action").slice(0, 200),
+          steps: (Array.isArray(args.steps) ? args.steps : []) as never,
+          why: args.why ?? null,
+          reversible: true,
+          action_kind: String(args.action_kind),
+          payload: (args.payload ?? {}) as never,
+          created_by_agent: "concierge",
+        });
+        if (!insErr) proposedTitles.push(String(args.title ?? "action"));
+      } catch {
+        // ignore malformed tool call
+      }
+    }
+
+    if (proposedTitles.length > 0) {
+      const summary = `I've drafted ${proposedTitles.length === 1 ? "an approval" : `${proposedTitles.length} approvals`} for you: ${proposedTitles.map((t) => `“${t}”`).join(", ")}. Open Approvals to review and confirm.`;
+      reply = reply ? `${reply}\n\n${summary}` : summary;
+    }
+
+    if (!reply) reply = "I'm here — could you say that again?";
 
     // Persist the last user turn + assistant reply
     const lastUser = data.messages[data.messages.length - 1];
