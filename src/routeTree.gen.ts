@@ -71,6 +71,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
@@ -382,6 +384,17 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/checkout/success',
+  path: '/checkout/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -446,6 +459,8 @@ export interface FileRoutesByFullPath {
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -510,6 +525,8 @@ export interface FileRoutesByTo {
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -575,6 +592,8 @@ export interface FileRoutesById {
   '/vault': typeof VaultRoute
   '/waiting': typeof WaitingRoute
   '/workflows': typeof WorkflowsRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -641,6 +660,8 @@ export interface FileRouteTypes {
     | '/vault'
     | '/waiting'
     | '/workflows'
+    | '/checkout/success'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -705,6 +726,8 @@ export interface FileRouteTypes {
     | '/vault'
     | '/waiting'
     | '/workflows'
+    | '/checkout/success'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -769,6 +792,8 @@ export interface FileRouteTypes {
     | '/vault'
     | '/waiting'
     | '/workflows'
+    | '/checkout/success'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -834,6 +859,8 @@ export interface RootRouteChildren {
   VaultRoute: typeof VaultRoute
   WaitingRoute: typeof WaitingRoute
   WorkflowsRoute: typeof WorkflowsRoute
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1272,6 +1299,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/checkout/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1338,6 +1379,8 @@ const rootRouteChildren: RootRouteChildren = {
   VaultRoute: VaultRoute,
   WaitingRoute: WaitingRoute,
   WorkflowsRoute: WorkflowsRoute,
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
