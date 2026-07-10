@@ -62,7 +62,7 @@ const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => 
   set("Cross-Origin-Resource-Policy", "same-origin");
   set("X-DNS-Prefetch-Control", "off");
   set("X-Permitted-Cross-Domain-Policies", "none");
-  return res;
+  return result;
 });
 
 export const startInstance = createStart(() => ({
