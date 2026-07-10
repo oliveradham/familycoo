@@ -154,6 +154,21 @@ function Page() {
         })}
       </section>
 
+      {nativeAvailable && (
+        <section className="px-6 mt-6">
+          <button
+            onClick={() => restore()}
+            disabled={loading}
+            className="w-full rounded-full border border-hairline bg-surface px-4 py-3 text-[12px] font-medium uppercase tracking-widest inline-flex items-center justify-center gap-2 disabled:opacity-60"
+          >
+            <RotateCcw className="size-3.5" />
+            Restore purchases
+          </button>
+          {nativeError && (
+            <p className="mt-2 text-center text-[12px] text-red-600">{nativeError}</p>
+          )}
+        </section>
+      )}
 
       <section className="px-6 mt-10">
         <SectionLabel>How upgrading feels here</SectionLabel>
@@ -175,9 +190,12 @@ function Page() {
           <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
-          Payments are processed by our reseller Paddle.com, the Merchant of Record for all Family COO orders. Family COO is operated by Aimee Robert.
+          {nativeAvailable
+            ? "Subscriptions are billed through your Apple or Google account and managed in your device settings. Family COO is operated by Aimee Robert."
+            : "Payments are processed by our reseller Paddle.com, the Merchant of Record for all Family COO orders. Family COO is operated by Aimee Robert."}
         </p>
       </footer>
+
     </AppShell>
   );
 }
