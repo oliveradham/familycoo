@@ -369,6 +369,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.97,
     category: "Sports",
+    lane: "Needs Response",
     reason: "Sender is Oliver's tennis coach. Tournament on his calendar. 12 prior emails classified to Oliver.",
     extracted: [
       { label: "Deadline", value: "Jul 22" },
@@ -385,6 +386,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.99,
     category: "Medical",
+    lane: "Needs Signature",
     reason: "School matches Oliver's grade record. Attachment filename contains 'Oliver_Thompson_2025.pdf'.",
     extracted: [
       { label: "Deadline", value: "Aug 10" },
@@ -401,6 +403,7 @@ export const inbox: InboxItem[] = [
     assigned: "aimee",
     confidence: 0.98,
     category: "Travel",
+    lane: "Upcoming Travel",
     reason: "Airline confirmation. 4 travelers match household. Grouped with Aman Tokyo hotel + JR pass emails into one trip.",
     extracted: [
       { label: "Confirmation", value: "7XKQR2" },
@@ -417,6 +420,7 @@ export const inbox: InboxItem[] = [
     assigned: "aimee",
     confidence: 0.94,
     category: "Grocery",
+    lane: "Low Priority",
     reason: "Recurring receipt from H-E-B. Household reorders milk every ~8 days.",
     extracted: [
       { label: "Total", value: "$146.20" },
@@ -432,6 +436,7 @@ export const inbox: InboxItem[] = [
     assigned: "oliver",
     confidence: 0.72,
     category: "School",
+    lane: "Needs Scheduling",
     reason: "Teacher of Oliver's classroom. Content references Grade 4 curriculum. Not fully certain — needs confirm.",
     extracted: [{ label: "Deadline", value: "Wednesday quiz" }],
   },
@@ -444,6 +449,7 @@ export const inbox: InboxItem[] = [
     assigned: "basil",
     confidence: 0.9,
     category: "Home",
+    lane: "Renewals",
     reason: "Sender matches household home policy on file.",
     extracted: [
       { label: "Renews", value: "Dec 1" },
