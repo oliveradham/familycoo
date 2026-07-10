@@ -21,6 +21,7 @@ export const Route = createFileRoute("/")({
 });
 
 const modules = [
+  { to: "/inbox", label: "Inbox Intelligence", eyebrow: "Learning", meta: "47 classified · 6 to review", Icon: Sparkles },
   { to: "/calendar", label: "Calendar", eyebrow: "Unified", meta: "6 events today", Icon: Calendar },
   { to: "/school", label: "School Hub", eyebrow: "Logistics", meta: "3 emails summarized", Icon: GraduationCap },
   { to: "/sports", label: "Sports", eyebrow: "Season", meta: "Tournament Fri–Sun", Icon: Trophy },
@@ -55,6 +56,22 @@ function Today() {
           <span className="size-2 rounded-full bg-foreground" />
         </button>
       </nav>
+
+      {/* Setup nudge */}
+      <div className="mx-6 mb-6 flex items-center justify-between rounded-2xl border border-hairline bg-surface px-4 py-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+            Zero-setup
+          </p>
+          <p className="mt-0.5 text-[13px]">Connect email & calendar. See it all.</p>
+        </div>
+        <Link
+          to="/onboarding"
+          className="rounded-full bg-zinc-900 px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-white"
+        >
+          Set up
+        </Link>
+      </div>
 
       {/* Briefing */}
       <header className="px-6 mb-10">

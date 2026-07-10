@@ -14,8 +14,10 @@ import { Route as TravelRouteImport } from './routes/travel'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SchoolRouteImport } from './routes/school'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MedicalRouteImport } from './routes/medical'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
+import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as GroceriesRouteImport } from './routes/groceries'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as ExpensesRouteImport } from './routes/expenses'
@@ -48,6 +50,11 @@ const SchoolRoute = SchoolRouteImport.update({
   path: '/school',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MedicalRoute = MedicalRouteImport.update({
   id: '/medical',
   path: '/medical',
@@ -56,6 +63,11 @@ const MedicalRoute = MedicalRouteImport.update({
 const MaintenanceRoute = MaintenanceRouteImport.update({
   id: '/maintenance',
   path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InboxRoute = InboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GroceriesRoute = GroceriesRouteImport.update({
@@ -96,8 +108,10 @@ export interface FileRoutesByFullPath {
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
   '/groceries': typeof GroceriesRoute
+  '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
+  '/onboarding': typeof OnboardingRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -111,8 +125,10 @@ export interface FileRoutesByTo {
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
   '/groceries': typeof GroceriesRoute
+  '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
+  '/onboarding': typeof OnboardingRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -127,8 +143,10 @@ export interface FileRoutesById {
   '/expenses': typeof ExpensesRoute
   '/family': typeof FamilyRoute
   '/groceries': typeof GroceriesRoute
+  '/inbox': typeof InboxRoute
   '/maintenance': typeof MaintenanceRoute
   '/medical': typeof MedicalRoute
+  '/onboarding': typeof OnboardingRoute
   '/school': typeof SchoolRoute
   '/sports': typeof SportsRoute
   '/tasks': typeof TasksRoute
@@ -144,8 +162,10 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/family'
     | '/groceries'
+    | '/inbox'
     | '/maintenance'
     | '/medical'
+    | '/onboarding'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -159,8 +179,10 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/family'
     | '/groceries'
+    | '/inbox'
     | '/maintenance'
     | '/medical'
+    | '/onboarding'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -174,8 +196,10 @@ export interface FileRouteTypes {
     | '/expenses'
     | '/family'
     | '/groceries'
+    | '/inbox'
     | '/maintenance'
     | '/medical'
+    | '/onboarding'
     | '/school'
     | '/sports'
     | '/tasks'
@@ -190,8 +214,10 @@ export interface RootRouteChildren {
   ExpensesRoute: typeof ExpensesRoute
   FamilyRoute: typeof FamilyRoute
   GroceriesRoute: typeof GroceriesRoute
+  InboxRoute: typeof InboxRoute
   MaintenanceRoute: typeof MaintenanceRoute
   MedicalRoute: typeof MedicalRoute
+  OnboardingRoute: typeof OnboardingRoute
   SchoolRoute: typeof SchoolRoute
   SportsRoute: typeof SportsRoute
   TasksRoute: typeof TasksRoute
@@ -236,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SchoolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/medical': {
       id: '/medical'
       path: '/medical'
@@ -248,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/maintenance'
       fullPath: '/maintenance'
       preLoaderRoute: typeof MaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inbox': {
+      id: '/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groceries': {
@@ -302,8 +342,10 @@ const rootRouteChildren: RootRouteChildren = {
   ExpensesRoute: ExpensesRoute,
   FamilyRoute: FamilyRoute,
   GroceriesRoute: GroceriesRoute,
+  InboxRoute: InboxRoute,
   MaintenanceRoute: MaintenanceRoute,
   MedicalRoute: MedicalRoute,
+  OnboardingRoute: OnboardingRoute,
   SchoolRoute: SchoolRoute,
   SportsRoute: SportsRoute,
   TasksRoute: TasksRoute,
