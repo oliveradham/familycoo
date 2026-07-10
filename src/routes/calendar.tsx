@@ -3,7 +3,16 @@ import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
 import { today, upcoming, family } from "@/lib/family-data";
 
 export const Route = createFileRoute("/calendar")({
-  head: () => ({ meta: [{ title: "Calendar — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Calendar — Family COO" },
+      { name: "description", content: "One unified household calendar — school, sports, work, medical, and travel reconciled with conflicts flagged before they happen." },
+      { property: "og:title", content: "Family Calendar — Family COO" },
+      { property: "og:description", content: "Your household's unified schedule. Every kid, every activity, every conflict — surfaced early." },
+      { property: "og:url", content: "https://familycoo.lovable.app/calendar" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/calendar" }],
+  }),
   component: CalendarPage,
 });
 

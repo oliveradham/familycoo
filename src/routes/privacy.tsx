@@ -3,7 +3,16 @@ import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell
 import { privacy } from "@/lib/family-data";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({ meta: [{ title: "Privacy Center — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Privacy Center — Family COO" },
+      { name: "description", content: "See every connected account, active AI agent, and recent action — with one-tap pause. Family data controls that are a feature, not a settings page." },
+      { property: "og:title", content: "Privacy Center — Family COO" },
+      { property: "og:description", content: "Transparent family data controls. See what the AI sees, pause any agent, revoke any source — instantly." },
+      { property: "og:url", content: "https://familycoo.lovable.app/privacy" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/privacy" }],
+  }),
   component: Page,
 });
 
