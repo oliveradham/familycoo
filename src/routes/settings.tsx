@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { LANGUAGES, useLanguage } from "@/lib/i18n";
 import { family } from "@/lib/family-data";
@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { useServerFn } from "@tanstack/react-start";
 import { deleteMyAccount } from "@/lib/account.functions";
+import { getPrefs, savePrefs } from "@/lib/prefs.functions";
 import {
   Bell,
   Clock,
@@ -102,6 +103,8 @@ function SettingsPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const deleteFn = useServerFn(deleteMyAccount);
+  const loadPrefs = useServerFn(getPrefs);
+  const persistPrefs = useServerFn(savePrefs);
   const [tz, setTz] = useState("America/Los_Angeles");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
@@ -121,6 +124,25 @@ function SettingsPage() {
   const [proactive, setProactive] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [haptics, setHaptics] = useState(true);
+
+  // Load persisted prefs
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    loadPrefs({}).then((p) => {
+      if (cancelled || !p) return;
+      if (p.timezone) setTz(p.timezone);
+      if (p.morning_briefing_at) setMorning(p.morning_briefing_at.slice(0, 5));
+      if (p.afternoon_check_in_at) setAfternoon(p.afternoon_check_in_at.slice(0, 5));
+      if (p.evening_wrap_at) setEvening(p.evening_wrap_at.slice(0, 5));
+      setAutopilot(!p.autopilot_paused);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user, loadPrefs]);
+
+  const save = (patch: Parameters<typeof persistPrefs>[0]["data"]) => {
+    persistPrefs({ data: patch }).catch(() => {});
+  };
 
   return (
     <AppShell>
