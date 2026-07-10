@@ -4,7 +4,24 @@ import { commandCenter, family, inbox } from "@/lib/family-data";
 import { AlertTriangle, Check, Clock, Mic, Sparkles, Settings as SettingsIcon } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Family COO — AI Command Center for Busy Families" },
+      {
+        name: "description",
+        content:
+          "AI Chief Operating Officer for busy families. Morning briefings, unified calendar, school, sports, travel, groceries, medical, and household in one calm command center.",
+      },
+      { property: "og:title", content: "Family COO — AI Command Center for Busy Families" },
+      {
+        property: "og:description",
+        content:
+          "Not a calendar. A proactive family operating system that removes invisible mental load for dual-career households.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/" }],
+  }),
   component: Today,
 });
 

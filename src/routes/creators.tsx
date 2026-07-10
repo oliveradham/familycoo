@@ -4,7 +4,23 @@ import { creators, creatorProgram } from "@/lib/family-data";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/creators")({
-  head: () => ({ meta: [{ title: "Creator Program — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Creator Program — Sell Family Expertise | Family COO" },
+      {
+        name: "description",
+        content:
+          "For organizers, coaches, dietitians, teachers, and parents. Publish templates and workflows on Family COO with a 70/30 revenue share and monthly payouts.",
+      },
+      { property: "og:title", content: "Family COO Creator Program" },
+      {
+        property: "og:description",
+        content: "Turn what you know about family life into templates and workflows other households can install.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/creators" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/creators" }],
+  }),
   component: Page,
 });
 

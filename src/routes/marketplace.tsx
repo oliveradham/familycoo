@@ -5,7 +5,37 @@ import { useState } from "react";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/marketplace")({
-  head: () => ({ meta: [{ title: "Marketplace — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Family Marketplace — Templates & Itineraries | Family COO" },
+      {
+        name: "description",
+        content:
+          "Curated templates, trip itineraries, and household playbooks reviewed by real parents and family experts. Install with one tap.",
+      },
+      { property: "og:title", content: "Family Marketplace — Family COO" },
+      {
+        property: "og:description",
+        content: "Reviewed templates, itineraries, and playbooks from people who've done this before.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/marketplace" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/marketplace" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Family Marketplace",
+          url: "https://familycoo.lovable.app/marketplace",
+          description:
+            "Curated templates, itineraries, and household playbooks for busy families.",
+          isPartOf: { "@id": "https://familycoo.lovable.app/#website" },
+        }),
+      },
+    ],
+  }),
   component: Page,
 });
 

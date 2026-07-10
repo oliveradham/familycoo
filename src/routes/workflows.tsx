@@ -5,7 +5,23 @@ import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/workflows")({
-  head: () => ({ meta: [{ title: "AI Workflows — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "AI Workflow Store — One-Tap Family Automations | Family COO" },
+      {
+        name: "description",
+        content:
+          "Install AI workflows like New School Year, Trip Prep, and Sports Season in one tap. Your family COO coordinates the specialists for you.",
+      },
+      { property: "og:title", content: "AI Workflow Store — Family COO" },
+      {
+        property: "og:description",
+        content: "One-tap installs that coordinate your AI agents around the moments that usually cost a weekend of mental load.",
+      },
+      { property: "og:url", content: "https://familycoo.lovable.app/workflows" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/workflows" }],
+  }),
   component: Page,
 });
 

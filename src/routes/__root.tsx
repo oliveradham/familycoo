@@ -77,25 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Family COO" },
-      {
-        name: "description",
-        content:
-          "An AI Chief Operating Officer for busy families. Proactively coordinates schedules, school, sports, travel, household, and daily logistics.",
-      },
       { name: "author", content: "Family COO" },
       { name: "theme-color", content: "#fcfcfc" },
-      { property: "og:title", content: "Family COO" },
-      {
-        property: "og:description",
-        content: "An AI Chief Operating Officer for busy families. Proactively coordinates schedules, school, sports, travel, household, and daily logistics.",
-      },
+      { property: "og:site_name", content: "Family COO" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Family COO" },
-      { name: "twitter:description", content: "An AI Chief Operating Officer for busy families. Proactively coordinates schedules, school, sports, travel, household, and daily logistics." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/241851bb-7fea-4567-a366-8377d4015998/id-preview-97549ab2--393bb380-cbb3-4ccb-8c49-57ec7dcb9a12.lovable.app-1783688306861.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/241851bb-7fea-4567-a366-8377d4015998/id-preview-97549ab2--393bb380-cbb3-4ccb-8c49-57ec7dcb9a12.lovable.app-1783688306861.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -105,6 +91,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://familycoo.lovable.app/#organization",
+              name: "Family COO",
+              url: "https://familycoo.lovable.app",
+              founder: { "@type": "Person", name: "Oliver Robert Adham" },
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://familycoo.lovable.app/#website",
+              url: "https://familycoo.lovable.app",
+              name: "Family COO",
+              description:
+                "AI Chief Operating Officer for busy families — proactive coordination across schedules, school, sports, travel, household, and daily logistics.",
+              publisher: { "@id": "https://familycoo.lovable.app/#organization" },
+            },
+          ],
+        }),
       },
     ],
   }),

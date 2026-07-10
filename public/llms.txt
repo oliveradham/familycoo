@@ -1,0 +1,26 @@
+# Family COO
+
+> AI Chief Operating Officer for busy families — a proactive family operating system that reduces invisible mental load across schedules, school, sports, travel, household, medical, and daily logistics.
+
+Family COO is not a calendar. It is a "chief of staff" for dual-career households: it reads the family inbox, coordinates specialist AI agents, drafts approvals, tracks handoffs, and produces morning, afternoon, and evening briefings.
+
+## Pages
+
+- [Today](/): AI Command Center — briefings, alerts, and the operational grid.
+- [AI Concierge](/concierge): Natural-language assistant for household questions.
+- [Weekly Review](/review): Weekly Family Review across all domains.
+- [Plans](/plans): Free, Pro ($49.99/mo), and Pro Max ($99.99/mo).
+- [Marketplace](/marketplace): Curated templates, itineraries, and household playbooks.
+- [AI Workflows](/workflows): One-tap installs like "New School Year" and "Trip Prep".
+- [Creator Program](/creators): Sell family expertise as templates and workflows.
+- [AI Agents](/agents): Ten specialist agents (School, Travel, Health, and more).
+- [Terms & Conditions](/terms): Legal terms for Family COO.
+- [Privacy Policy](/privacy-policy): How we collect and protect data.
+- [Refund Policy](/refund-policy): 30-day money-back guarantee via Paddle.
+
+## Optional
+
+- [Inbox](/inbox): Universal Family Inbox lanes (Needs Signature, Needs Payment, …).
+- [Calendar](/calendar): Unified family calendar.
+- [Approvals](/approvals): Draft replies awaiting your yes.
+- [Emergency](/emergency): One-tap essentials.
