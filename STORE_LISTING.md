@@ -96,7 +96,21 @@ Run locally after `bun dev`:
 node scripts/capture-store-screenshots.mjs
 ```
 
-See `scripts/capture-store-screenshots.mjs` (generated below).
+See `scripts/capture-store-screenshots.mjs`. Output lands in `store-screenshots/`.
+
+### Seed demo data first (empty app = ugly screenshots)
+
+```bash
+DEMO_HOUSEHOLD_ID=<your-household-uuid> \
+SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... \
+bun run scripts/seed-demo.ts
+```
+
+### Brand assets shipped
+
+- App icon: `public/app-icon.png` (1024×1024, used for 512/192/180 via manifest + apple-touch-icon)
+- OG / Twitter card: `public/og-image.jpg` (1200×630) — wired into `/` and `/plans` leaf routes
+- Favicon: `public/favicon.ico` + PNG fallback
 
 ---
 
