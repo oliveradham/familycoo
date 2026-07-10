@@ -136,16 +136,20 @@ function Today() {
 
       {/* Decisions needing approval */}
       <section className="px-6 mb-6">
-        <SectionLabel>Needs your approval</SectionLabel>
+        <SectionLabel action={<Link to="/approvals">All</Link>}>Needs your approval</SectionLabel>
         <div className="space-y-2">
           {commandCenter.approvals.map((a) => (
-            <div key={a.id} className="flex items-start gap-3 rounded-2xl bg-zinc-900 px-4 py-3.5 text-white">
+            <Link
+              key={a.id}
+              to="/approvals"
+              className="flex items-start gap-3 rounded-2xl bg-zinc-900 px-4 py-3.5 text-white"
+            >
               <Sparkles className="mt-0.5 size-3.5 shrink-0 opacity-70" strokeWidth={1.5} />
               <p className="flex-1 text-sm leading-snug">{a.text}</p>
-              <button className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-zinc-900">
+              <span className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-zinc-900">
                 {a.cta}
-              </button>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </section>
