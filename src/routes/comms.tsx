@@ -3,7 +3,16 @@ import { AppShell, Card, PageHeader } from "@/components/app-shell";
 import { commsIntake } from "@/lib/family-data";
 
 export const Route = createFileRoute("/comms")({
-  head: () => ({ meta: [{ title: "Communication Hub — Family COO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Communication Hub — Family COO" },
+      { name: "description", content: "Texts, emails, flyers, and coach notes turned into structured events, checklists, and tasks — you confirm, the family AI handles the rest." },
+      { property: "og:title", content: "Communication Hub — Family COO" },
+      { property: "og:description", content: "Messy family messages, structured meaning. Parsed into actions you can approve in seconds." },
+      { property: "og:url", content: "https://familycoo.lovable.app/comms" },
+    ],
+    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/comms" }],
+  }),
   component: Page,
 });
 
