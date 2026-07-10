@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 const features: { to: string; label: string; hint: string }[] = [
-  { to: "/marketplace", label: "Marketplace", hint: "Curated templates & itineraries" },
+  { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
   { to: "/workflows", label: "AI workflows", hint: "One-tap installs" },
   { to: "/plans", label: "Plans", hint: "Free · Pro · Pro Max" },
   { to: "/creators", label: "Creator program", hint: "Sell your family expertise" },
@@ -253,20 +253,8 @@ function Today() {
         </Link>
       </section>
 
-      {/* Marketplace + Plans */}
+      {/* Plans */}
       <section className="px-6 mb-6 space-y-2">
-        <Link
-          to="/marketplace"
-          className="flex items-center justify-between rounded-3xl border border-hairline bg-surface p-5"
-        >
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Family Marketplace
-            </p>
-            <p className="mt-1 font-serif text-xl italic">Curated templates, itineraries, and AI workflows.</p>
-          </div>
-          <span className="text-lg opacity-60">→</span>
-        </Link>
         <Link
           to="/plans"
           className="flex items-center justify-between rounded-3xl border border-hairline bg-surface p-5"
