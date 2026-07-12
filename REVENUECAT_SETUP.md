@@ -39,7 +39,7 @@ Public SDK keys are safe to embed in the client bundle (RevenueCat's design).
 
 RevenueCat → Project settings → Integrations → Webhooks:
 
-- **URL**: `https://familycoo.lovable.app/api/public/revenuecat-webhook`
+- **URL**: `https://family-coo.com/api/public/revenuecat-webhook`
 - **Authorization header**: `Bearer <REVENUECAT_WEBHOOK_SECRET>`
 
 Then add the secret to Lovable Cloud:

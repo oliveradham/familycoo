@@ -7,7 +7,7 @@ function configure() {
   if (configured) return;
   const pub = process.env.VAPID_PUBLIC_KEY;
   const priv = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT ?? "mailto:support@familycoo.lovable.app";
+  const subject = process.env.VAPID_SUBJECT ?? "mailto:support@family-coo.com";
   if (!pub || !priv) throw new Error("VAPID keys not configured");
   webpush.setVapidDetails(subject, pub, priv);
   configured = true;

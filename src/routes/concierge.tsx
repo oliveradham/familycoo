@@ -15,9 +15,9 @@ export const Route = createFileRoute("/concierge")({
       { name: "description", content: "Natural-language concierge for your household. Ask about pickups, plans, packing, groceries, or bookings — grounded in your family's context." },
       { property: "og:title", content: "AI Concierge — Family COO" },
       { property: "og:description", content: "A conversational chief of staff for the family, available anytime." },
-      { property: "og:url", content: "https://familycoo.lovable.app/concierge" },
+      { property: "og:url", content: "https://family-coo.com/concierge" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/concierge" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/concierge" }],
   }),
   component: ConciergePage,
 });

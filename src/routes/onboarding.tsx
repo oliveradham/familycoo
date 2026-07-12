@@ -13,9 +13,9 @@ export const Route = createFileRoute("/onboarding")({
       { name: "description", content: "Set up your family in five quiet steps — connect calendar and email, add household members, and let the AI learn your routine from the last 60 days." },
       { property: "og:title", content: "Set up Family COO" },
       { property: "og:description", content: "Zero-setup onboarding. Connect once, confirm briefly, and your family's AI chief of staff learns the rest." },
-      { property: "og:url", content: "https://familycoo.lovable.app/onboarding" },
+      { property: "og:url", content: "https://family-coo.com/onboarding" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/onboarding" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/onboarding" }],
   }),
   component: OnboardingPage,
 });

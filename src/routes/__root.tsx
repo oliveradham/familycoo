@@ -114,19 +114,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "Organization",
-              "@id": "https://familycoo.lovable.app/#organization",
+              "@id": "https://family-coo.com/#organization",
               name: "Family COO",
-              url: "https://familycoo.lovable.app",
+              url: "https://family-coo.com",
               founder: { "@type": "Person", name: "Oliver Robert Adham" },
             },
             {
               "@type": "WebSite",
-              "@id": "https://familycoo.lovable.app/#website",
-              url: "https://familycoo.lovable.app",
+              "@id": "https://family-coo.com/#website",
+              url: "https://family-coo.com",
               name: "Family COO",
               description:
                 "AI Chief Operating Officer for busy families — proactive coordination across schedules, school, sports, travel, household, and daily logistics.",
-              publisher: { "@id": "https://familycoo.lovable.app/#organization" },
+              publisher: { "@id": "https://family-coo.com/#organization" },
             },
           ],
         }),

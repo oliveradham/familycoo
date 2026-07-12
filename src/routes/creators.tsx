@@ -17,9 +17,9 @@ export const Route = createFileRoute("/creators")({
         property: "og:description",
         content: "Turn what you know about family life into templates and workflows other households can install.",
       },
-      { property: "og:url", content: "https://familycoo.lovable.app/creators" },
+      { property: "og:url", content: "https://family-coo.com/creators" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/creators" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/creators" }],
   }),
   component: Page,
 });

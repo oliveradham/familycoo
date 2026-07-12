@@ -19,9 +19,9 @@ export const Route = createFileRoute("/workflows")({
         property: "og:description",
         content: "One-tap installs that coordinate your AI agents around the moments that usually cost a weekend of mental load.",
       },
-      { property: "og:url", content: "https://familycoo.lovable.app/workflows" },
+      { property: "og:url", content: "https://family-coo.com/workflows" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/workflows" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/workflows" }],
   }),
   component: Page,
 });

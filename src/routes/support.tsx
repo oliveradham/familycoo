@@ -16,9 +16,9 @@ export const Route = createFileRoute("/support")({
         property: "og:description",
         content: "Contact support and find help resources for Family COO.",
       },
-      { property: "og:url", content: "https://familycoo.lovable.app/support" },
+      { property: "og:url", content: "https://family-coo.com/support" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/support" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/support" }],
   }),
   component: SupportPage,
 });
