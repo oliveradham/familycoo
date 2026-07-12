@@ -76,7 +76,7 @@ Follow `REVENUECAT_SETUP.md` in the repo. Summary:
 4. Create an Offering with these packages.
 5. Grab the **public SDK keys** (one for iOS, one for Android) and add them to the app.
 6. Set the webhook URL in RC → **Integrations → Webhooks**:
-   `https://familycoo.lovable.app/api/public/revenuecat-webhook`
+   `https://family-coo.com/api/public/revenuecat-webhook`
    Copy the webhook auth header token; ask me to save it as a Lovable secret.
 
 ---
@@ -97,7 +97,7 @@ Follow `REVENUECAT_SETUP.md` in the repo. Summary:
 1. Create app → Fill from `STORE_LISTING.md`.
 2. **Monetize → Products → Subscriptions** → add same two IDs.
 3. **Policy → App content → Data safety** → paste answers from `STORE_COMPLIANCE.md`.
-4. **Policy → App content → Privacy Policy** → `https://familycoo.lovable.app/privacy-policy`.
+4. **Policy → App content → Privacy Policy** → `https://family-coo.com/privacy-policy`.
 5. **Content rating** → complete questionnaire → Everyone.
 
 ---

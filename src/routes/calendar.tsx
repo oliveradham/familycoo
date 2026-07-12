@@ -13,9 +13,9 @@ export const Route = createFileRoute("/calendar")({
       { name: "description", content: "One unified household calendar — school, sports, work, medical, and travel." },
       { property: "og:title", content: "Family Calendar — Family COO" },
       { property: "og:description", content: "Your household's unified schedule." },
-      { property: "og:url", content: "https://familycoo.lovable.app/calendar" },
+      { property: "og:url", content: "https://family-coo.com/calendar" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/calendar" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/calendar" }],
   }),
   component: CalendarPage,
 });

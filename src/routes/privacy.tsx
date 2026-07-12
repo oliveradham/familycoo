@@ -9,9 +9,9 @@ export const Route = createFileRoute("/privacy")({
       { name: "description", content: "See every connected account, active AI agent, and recent action — with one-tap pause. Family data controls that are a feature, not a settings page." },
       { property: "og:title", content: "Privacy Center — Family COO" },
       { property: "og:description", content: "Transparent family data controls. See what the AI sees, pause any agent, revoke any source — instantly." },
-      { property: "og:url", content: "https://familycoo.lovable.app/privacy" },
+      { property: "og:url", content: "https://family-coo.com/privacy" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/privacy" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/privacy" }],
   }),
   component: Page,
 });

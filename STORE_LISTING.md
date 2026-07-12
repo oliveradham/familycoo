@@ -47,9 +47,9 @@ PREMIUM (optional)
 WHY FAMILY COO
 Traditional apps make you the operator. Family COO makes you the executive.
 
-Support: https://familycoo.lovable.app/support
-Privacy: https://familycoo.lovable.app/privacy
-Terms: https://familycoo.lovable.app/terms
+Support: https://family-coo.com/support
+Privacy: https://family-coo.com/privacy
+Terms: https://family-coo.com/terms
 
 ## Keywords (iOS, 100 char comma-sep, no spaces after commas)
 `family,calendar,household,AI,assistant,kids,school,sports,nanny,parents,planner,concierge,chores`
@@ -62,13 +62,13 @@ Terms: https://familycoo.lovable.app/terms
 - 4+ (iOS) / Everyone (Play)
 
 ## Support URL
-https://familycoo.lovable.app/support
+https://family-coo.com/support
 
 ## Marketing URL
-https://familycoo.lovable.app
+https://family-coo.com
 
 ## Privacy Policy URL
-https://familycoo.lovable.app/privacy
+https://family-coo.com/privacy
 
 ---
 

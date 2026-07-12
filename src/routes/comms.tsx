@@ -9,9 +9,9 @@ export const Route = createFileRoute("/comms")({
       { name: "description", content: "Texts, emails, flyers, and coach notes turned into structured events, checklists, and tasks — you confirm, the family AI handles the rest." },
       { property: "og:title", content: "Communication Hub — Family COO" },
       { property: "og:description", content: "Messy family messages, structured meaning. Parsed into actions you can approve in seconds." },
-      { property: "og:url", content: "https://familycoo.lovable.app/comms" },
+      { property: "og:url", content: "https://family-coo.com/comms" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/comms" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/comms" }],
   }),
   component: Page,
 });

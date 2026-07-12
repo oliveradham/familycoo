@@ -21,7 +21,7 @@ function getEnv(name: string): string {
 export function getRedirectUri(requestOrigin?: string): string {
   const override = process.env.GOOGLE_OAUTH_REDIRECT_URI;
   if (override) return override;
-  const origin = requestOrigin ?? "https://familycoo.lovable.app";
+  const origin = requestOrigin ?? "https://family-coo.com";
   return `${origin.replace(/\/$/, "")}/api/public/oauth/google/callback`;
 }
 

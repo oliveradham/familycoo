@@ -32,8 +32,8 @@ Path in App Store Connect: **App → App Privacy → Get Started**.
 **Do you or your third-party partners use data for tracking?** No.
 
 ### Contact info
-- Privacy policy URL: `https://familycoo.lovable.app/privacy-policy`
-- Support URL: `https://familycoo.lovable.app` (add a dedicated `/support` before submitting)
+- Privacy policy URL: `https://family-coo.com/privacy-policy`
+- Support URL: `https://family-coo.com` (add a dedicated `/support` before submitting)
 
 ### Account deletion
 - **Account deletion is available in-app.** Path: `More → Settings → Delete account`.
@@ -92,11 +92,11 @@ Path in Play Console: **Policy → App content → Data safety**.
 
 | Purpose | URL |
 | --- | --- |
-| Marketing / homepage | `https://familycoo.lovable.app` |
-| Privacy notice | `https://familycoo.lovable.app/privacy-policy` |
-| Terms & conditions | `https://familycoo.lovable.app/terms` |
-| Refund policy | `https://familycoo.lovable.app/refund-policy` |
-| Support | `https://familycoo.lovable.app/support` *(create before submission)* |
+| Marketing / homepage | `https://family-coo.com` |
+| Privacy notice | `https://family-coo.com/privacy-policy` |
+| Terms & conditions | `https://family-coo.com/terms` |
+| Refund policy | `https://family-coo.com/refund-policy` |
+| Support | `https://family-coo.com/support` *(create before submission)* |
 
 ---
 

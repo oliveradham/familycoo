@@ -10,9 +10,9 @@ export const Route = createFileRoute("/emergency")({
       { name: "description", content: "One-tap access to emergency contacts, medical info, allergies, and insurance — encrypted, role-gated, with temporary caregiver passes." },
       { property: "og:title", content: "Emergency Mode — Family COO" },
       { property: "og:description", content: "Essential family info, one tap away. Encrypted, role-gated, and shareable via temporary caregiver access." },
-      { property: "og:url", content: "https://familycoo.lovable.app/emergency" },
+      { property: "og:url", content: "https://family-coo.com/emergency" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/emergency" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/emergency" }],
   }),
   component: Page,
 });

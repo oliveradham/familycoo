@@ -10,9 +10,9 @@ export const Route = createFileRoute("/agents")({
       { name: "description", content: "Ten specialist AI agents for school, sports, travel, health, and household — one coordinated operations team quietly working for your family." },
       { property: "og:title", content: "AI Agents — Family COO" },
       { property: "og:description", content: "Ten specialist agents. One family. A coordinated AI operations team, not ten disconnected bots." },
-      { property: "og:url", content: "https://familycoo.lovable.app/agents" },
+      { property: "og:url", content: "https://family-coo.com/agents" },
     ],
-    links: [{ rel: "canonical", href: "https://familycoo.lovable.app/agents" }],
+    links: [{ rel: "canonical", href: "https://family-coo.com/agents" }],
   }),
   component: Page,
 });

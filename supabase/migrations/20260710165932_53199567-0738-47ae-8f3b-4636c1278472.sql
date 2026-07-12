@@ -4,7 +4,7 @@ select cron.schedule(
   '*/30 * * * *',
   $$
   select net.http_post(
-    url := 'https://familycoo.lovable.app/api/public/hooks/sync-calendars',
+    url := 'https://family-coo.com/api/public/hooks/sync-calendars',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'apikey', (select decrypted_secret from vault.decrypted_secrets where name = 'SUPABASE_PUBLISHABLE_KEY' limit 1)
