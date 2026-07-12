@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import { listMaintenance, createMaintenance, markMaintenanceDone, deleteMaintenance } from "@/lib/maintenance.functions";
 import { Plus, Check, Trash2 } from "lucide-react";
 
@@ -16,8 +17,13 @@ function MaintenancePage() {
   const create = useServerFn(createMaintenance);
   const markDone = useServerFn(markMaintenanceDone);
   const del = useServerFn(deleteMaintenance);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
-  const { data } = useSuspenseQuery({ queryKey: ["maintenance"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["maintenance"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
 
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", area: "home", frequency_days: "", next_due_on: "", vendor: "" });

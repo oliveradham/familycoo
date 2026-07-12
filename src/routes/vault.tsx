@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
 import { Search, Upload, Trash2, ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useAuth } from "@/lib/auth-context";
 import {
   listDocuments,
   createDocument,
@@ -23,9 +24,14 @@ function VaultPage() {
   const uploadUrl = useServerFn(createDocumentUploadUrl);
   const signedUrl = useServerFn(getDocumentSignedUrl);
   const del = useServerFn(deleteDocument);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
-  const { data } = useSuspenseQuery({ queryKey: ["documents"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["documents"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
 
