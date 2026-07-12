@@ -53,6 +53,8 @@ async function handleSubscriptionUpdated(data: any, env: PaddleEnv) {
       current_period_start: currentBillingPeriod?.startsAt,
       current_period_end: currentBillingPeriod?.endsAt,
       cancel_at_period_end: scheduledChange?.action === "cancel",
+      scheduled_change_action: scheduledChange?.action ?? null,
+      scheduled_change_at: scheduledChange?.effectiveAt ?? null,
       updated_at: new Date().toISOString(),
     })
     .eq("paddle_subscription_id", id)
@@ -62,9 +64,30 @@ async function handleSubscriptionUpdated(data: any, env: PaddleEnv) {
 async function handleSubscriptionCanceled(data: any, env: PaddleEnv) {
   await getSupabase()
     .from("subscriptions")
-    .update({ status: "canceled", updated_at: new Date().toISOString() })
+    .update({
+      status: "canceled",
+      scheduled_change_action: null,
+      scheduled_change_at: null,
+      updated_at: new Date().toISOString(),
+    })
     .eq("paddle_subscription_id", data.id)
     .eq("environment", env);
+}
+
+async function handleCustomerUpsert(data: any, env: PaddleEnv) {
+  const { id, email } = data ?? {};
+  if (!id) return;
+  await getSupabase()
+    .from("paddle_customers")
+    .upsert(
+      {
+        customer_id: id,
+        email: email ?? null,
+        environment: env,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "customer_id" },
+    );
 }
 
 async function logBillingEvent(userId: string, kind: string, subject: string, body: string) {
@@ -122,6 +145,10 @@ async function handleWebhook(req: Request, env: PaddleEnv) {
     case EventName.SubscriptionCanceled:
       await handleSubscriptionCanceled(event.data, env);
       break;
+    case EventName.CustomerCreated:
+    case EventName.CustomerUpdated:
+      await handleCustomerUpsert(event.data, env);
+      break;
     case EventName.TransactionCompleted:
       await handleTransactionEvent(event.data, "completed");
       break;
@@ -129,6 +156,7 @@ async function handleWebhook(req: Request, env: PaddleEnv) {
       await handleTransactionEvent(event.data, "payment_failed");
       break;
     default:
+      // Any other verified event is safely ignored.
       console.log("Unhandled event:", event.eventType);
   }
 }
