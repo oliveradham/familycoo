@@ -1,0 +1,50 @@
+workflows:
+  ios-capacitor:
+    name: iOS Capacitor Build & Submit
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: FamilyCOO_ASC
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.familycoo.app
+      vars:
+        APP_STORE_APPLE_ID: 6790180298
+        BUNDLE_ID: com.familycoo.app
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install -g bun
+          bun install
+      - name: Build web assets
+        script: bun run build
+      - name: Add iOS platform (first run only)
+        script: |
+          if [ ! -d "ios" ]; then
+            bunx cap add ios
+          fi
+          bunx cap sync ios
+      - name: Set up code signing
+        script: xcode-project use-profiles
+      - name: Increment build number
+        script: |
+          cd ios/App
+          agvtool new-version -all $(($BUILD_NUMBER + 1))
+      - name: Build ipa
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
