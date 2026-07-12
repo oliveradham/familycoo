@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import {
   listMedicalRecords,
   createMedicalRecord,
@@ -21,9 +22,14 @@ function MedicalPage() {
   const create = useServerFn(createMedicalRecord);
   const del = useServerFn(deleteMedicalRecord);
   const reveal = useServerFn(revealMedicalRecord);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
-  const { data } = useSuspenseQuery({ queryKey: ["medical"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["medical"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", kind: "note", provider: "", occurred_on: "", detail: "", policy_number: "" });
   const [revealed, setRevealed] = useState<Record<string, { detail: string | null; policy_number: string | null }>>({});

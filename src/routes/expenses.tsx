@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import { listExpenses, createExpense, deleteExpense } from "@/lib/expenses.functions";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -19,8 +20,13 @@ function ExpensesPage() {
   const list = useServerFn(listExpenses);
   const create = useServerFn(createExpense);
   const del = useServerFn(deleteExpense);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
-  const { data } = useSuspenseQuery({ queryKey: ["expenses"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
 
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ amount: "", category: "groceries", merchant: "", spent_on: new Date().toISOString().slice(0, 10) });

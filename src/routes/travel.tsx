@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import { listTrips, createTrip, updateTripStatus, deleteTrip } from "@/lib/trips.functions";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -16,8 +17,13 @@ function TravelPage() {
   const create = useServerFn(createTrip);
   const status = useServerFn(updateTripStatus);
   const del = useServerFn(deleteTrip);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
-  const { data } = useSuspenseQuery({ queryKey: ["trips"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["trips"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
 
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", destination: "", start_date: "", end_date: "" });

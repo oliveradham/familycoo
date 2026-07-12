@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageHeader, Card } from "@/components/app-shell";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import { listGroceries, createGrocery, setGroceryStatus, deleteGrocery } from "@/lib/groceries.functions";
 import { Plus, Check, Trash2 } from "lucide-react";
 
@@ -16,8 +17,13 @@ function GroceriesPage() {
   const create = useServerFn(createGrocery);
   const setStatus = useServerFn(setGroceryStatus);
   const del = useServerFn(deleteGrocery);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
-  const { data } = useSuspenseQuery({ queryKey: ["groceries"], queryFn: () => list() });
+  const { data = [] } = useQuery({
+    queryKey: ["groceries"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
   const [name, setName] = useState("");
 
   const mCreate = useMutation({
