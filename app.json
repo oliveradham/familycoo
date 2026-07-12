@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Family COO",
+    "slug": "family-coo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.familycoo.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.familycoo.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8920deee-42e8-41d9-b1b5-4fd2d58c56e3"
+      }
+    },
+    "owner": null
+  }
+}
