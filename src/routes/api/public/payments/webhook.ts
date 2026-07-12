@@ -139,14 +139,23 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
       POST: async ({ request }) => {
         const url = new URL(request.url);
         const rawEnv = url.searchParams.get("env");
-        // Require an explicit env — a missing param used to silently default
-        // to "sandbox" which would corrupt live subs if the live webhook were
-        // ever misconfigured.
         if (rawEnv !== "sandbox" && rawEnv !== "live") {
           console.error("Webhook missing/invalid env param:", rawEnv);
           return new Response("Missing env query param", { status: 400 });
         }
         const env = rawEnv as PaddleEnv;
+
+        // Live: reject non-Paddle IPs. Sandbox has no stable public IP list,
+        // so signature verification is the sole gate there.
+        if (env === "live") {
+          const { callerIp, isPaddleIp } = await import("@/lib/paddle-ips.server");
+          const ip = callerIp(request);
+          if (ip && !(await isPaddleIp(ip))) {
+            console.warn("Rejecting webhook from non-Paddle IP", ip);
+            return new Response("Forbidden", { status: 403 });
+          }
+        }
+
         try {
           await handleWebhook(request, env);
           return Response.json({ received: true });
