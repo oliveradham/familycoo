@@ -916,6 +916,33 @@ export type Database = {
           },
         ]
       }
+      paddle_customers: {
+        Row: {
+          created_at: string
+          customer_id: string
+          email: string | null
+          environment: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          email?: string | null
+          environment?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          email?: string | null
+          environment?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       phone_numbers: {
         Row: {
           created_at: string
@@ -1240,6 +1267,8 @@ export type Database = {
           paddle_subscription_id: string
           price_id: string
           product_id: string
+          scheduled_change_action: string | null
+          scheduled_change_at: string | null
           status: string
           updated_at: string | null
           user_id: string
@@ -1255,6 +1284,8 @@ export type Database = {
           paddle_subscription_id: string
           price_id: string
           product_id: string
+          scheduled_change_action?: string | null
+          scheduled_change_at?: string | null
           status?: string
           updated_at?: string | null
           user_id: string
@@ -1270,6 +1301,8 @@ export type Database = {
           paddle_subscription_id?: string
           price_id?: string
           product_id?: string
+          scheduled_change_action?: string | null
+          scheduled_change_at?: string | null
           status?: string
           updated_at?: string | null
           user_id?: string
