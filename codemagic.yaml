@@ -26,19 +26,39 @@ workflows:
           set -e
           rm -rf www
 
-          if [ -f "dist/index.html" ]; then
-            cp -R dist www
-          elif [ -f "dist/client/index.html" ]; then
-            cp -R dist/client www
-          elif [ -f ".output/public/index.html" ]; then
-            cp -R .output/public www
-          else
-            echo "Could not find built web assets. Checked dist/, dist/client/, and .output/public/."
+          # Try common output locations for Vite / TanStack Start / Nitro
+          CANDIDATES=(
+            "dist"
+            "dist/client"
+            ".output/public"
+            "build/client"
+            ".vinxi/build/client"
+            ".nitro/output/public"
+            ".output/client"
+          )
+
+          FOUND=""
+          for dir in "${CANDIDATES[@]}"; do
+            if [ -f "$dir/index.html" ]; then
+              FOUND="$dir"
+              break
+            fi
+          done
+
+          if [ -z "$FOUND" ]; then
+            echo "Could not find built web assets. Searching for any index.html..."
+            find . -name "index.html" -not -path "./node_modules/*" -not -path "./ios/*" 2>/dev/null | head -20
+            echo "--- Top-level dirs ---"
             ls -la
+            echo "--- .output tree (if exists) ---"
+            [ -d .output ] && find .output -maxdepth 3 -type d
             exit 1
           fi
 
+          echo "Using web assets from: $FOUND"
+          cp -R "$FOUND" www
           test -f www/index.html
+
       - name: Add iOS platform (first run only)
         script: |
           set -e
