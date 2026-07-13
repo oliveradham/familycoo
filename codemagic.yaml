@@ -54,6 +54,9 @@ workflows:
           echo "--- ios/App contents ---"
           ls -la ios/App || true
           test -d "$XCODE_PROJECT"
+          # Mark app as exempt from export compliance (uses only standard HTTPS/OS crypto).
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" ios/App/App/Info.plist \
+            || /usr/libexec/PlistBuddy -c "Set :ITSAppUsesNonExemptEncryption false" ios/App/App/Info.plist
       - name: Set up signing files
         script: |
           set -e
