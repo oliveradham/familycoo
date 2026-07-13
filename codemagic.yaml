@@ -9,11 +9,10 @@ workflows:
       vars:
         APP_STORE_APPLE_ID: 6790180298
         BUNDLE_ID: com.familycoo.ios
-        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_PROJECT: "ios/App/App.xcodeproj"
         XCODE_SCHEME: "App"
       node: 22
       xcode: latest
-      cocoapods: default
     scripts:
       - name: Install dependencies
         script: |
@@ -54,11 +53,7 @@ workflows:
           npx --yes @capacitor/cli sync ios
           echo "--- ios/App contents ---"
           ls -la ios/App || true
-          if [ ! -d "ios/App/App.xcworkspace" ]; then
-            echo "Workspace missing — running pod install manually"
-            cd ios/App && pod install --repo-update
-          fi
-          ls -la ios/App
+          test -d "$XCODE_PROJECT"
       - name: Set up signing files
         script: |
           keychain initialize
@@ -74,7 +69,7 @@ workflows:
       - name: Build ipa
         script: |
           xcode-project build-ipa \
-            --workspace "$XCODE_WORKSPACE" \
+            --project "$XCODE_PROJECT" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
