@@ -4,6 +4,10 @@ const config: CapacitorConfig = {
   appId: "com.familycoo.ios",
   appName: "Family COO",
   webDir: "www",
+  server: {
+    url: "https://familycoo.lovable.app",
+    cleartext: false,
+  },
   ios: {
     scheme: "FamilyCOO",
     contentInset: "always",
