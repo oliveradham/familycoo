@@ -58,8 +58,16 @@ workflows:
         script: |
           set -e
           keychain initialize
+          CERTIFICATE_KEY_PATH="$CM_BUILD_DIR/codemagic_certificate_private_key.pem"
+          openssl genrsa -out "$CERTIFICATE_KEY_PATH" 2048
+          app-store-connect certificates create \
+            --type IOS_DISTRIBUTION \
+            --certificate-key @file:"$CERTIFICATE_KEY_PATH" \
+            --save || true
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
+            --certificate-key @file:"$CERTIFICATE_KEY_PATH" \
+            --delete-stale-profiles \
             --create
           keychain add-certificates
           echo "--- downloaded provisioning profiles ---"
