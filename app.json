@@ -13,14 +13,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.familycoo.app"
+      "bundleIdentifier": "com.familycoo.ios"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.familycoo.app"
+      "package": "com.familycoo.ios"
     },
     "extra": {
       "eas": {
