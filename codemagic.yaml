@@ -46,13 +46,19 @@ workflows:
           EOF
           test -f www/index.html
 
-      - name: Add iOS platform (first run only)
+      - name: Add iOS platform
         script: |
           set -e
-          if [ ! -d "ios" ]; then
-            npx --yes @capacitor/cli add ios
-          fi
+          rm -rf ios
+          npx --yes @capacitor/cli add ios
           npx --yes @capacitor/cli sync ios
+          echo "--- ios/App contents ---"
+          ls -la ios/App || true
+          if [ ! -d "ios/App/App.xcworkspace" ]; then
+            echo "Workspace missing — running pod install manually"
+            cd ios/App && pod install --repo-update
+          fi
+          ls -la ios/App
       - name: Set up signing files
         script: |
           keychain initialize
