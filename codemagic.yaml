@@ -58,8 +58,13 @@ workflows:
         script: |
           set -e
           keychain initialize
+          app-store-connect certificates list || true
+          app-store-connect certificates create \
+            --type IOS_DISTRIBUTION \
+            --save
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
+            --certificate-key @file:$HOME/.app-store-connect/private_keys/*.p8 \
             --create
           keychain add-certificates
           echo "--- downloaded provisioning profiles ---"
