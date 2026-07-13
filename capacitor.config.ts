@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "app.lovable.familycoo",
+  appId: "com.familycoo.app",
   appName: "Family COO",
   webDir: "dist",
   ios: {
