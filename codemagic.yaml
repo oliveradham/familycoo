@@ -8,10 +8,10 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.familycoo.app
+        bundle_identifier: com.familycoo.ios
       vars:
         APP_STORE_APPLE_ID: 6790180298
-        BUNDLE_ID: com.familycoo.app
+        BUNDLE_ID: com.familycoo.ios
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
       node: 20

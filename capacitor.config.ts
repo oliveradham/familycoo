@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.familycoo.app",
+  appId: "com.familycoo.ios",
   appName: "Family COO",
   webDir: "dist",
   ios: {
