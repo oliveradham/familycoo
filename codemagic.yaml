@@ -23,10 +23,11 @@ workflows:
         script: bun run build
       - name: Add iOS platform (first run only)
         script: |
+          set -e
           if [ ! -d "ios" ]; then
-            bunx cap add ios
+            npx --yes @capacitor/cli add ios
           fi
-          bunx cap sync ios
+          npx --yes @capacitor/cli sync ios
       - name: Set up signing files
         script: |
           keychain initialize
