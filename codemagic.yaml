@@ -6,9 +6,6 @@ workflows:
     integrations:
       app_store_connect: FamilyCOO_ASC
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.familycoo.ios
       vars:
         APP_STORE_APPLE_ID: 6790180298
         BUNDLE_ID: com.familycoo.ios
@@ -30,14 +27,12 @@ workflows:
             bunx cap add ios
           fi
           bunx cap sync ios
-      - name: Fetch signing files (auto-create if missing)
+      - name: Set up signing files
         script: |
+          keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --create
-      - name: Set up code signing
-        script: |
-          keychain initialize
           keychain add-certificates
           xcode-project use-profiles
       - name: Increment build number
