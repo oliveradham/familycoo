@@ -3,7 +3,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "com.familycoo.ios",
   appName: "Family COO",
-  webDir: "dist",
+  webDir: "www",
   ios: {
     scheme: "FamilyCOO",
     contentInset: "always",
