@@ -26,37 +26,24 @@ workflows:
           set -e
           rm -rf www
 
-          # Try common output locations for Vite / TanStack Start / Nitro
-          CANDIDATES=(
-            "dist"
-            "dist/client"
-            ".output/public"
-            "build/client"
-            ".vinxi/build/client"
-            ".nitro/output/public"
-            ".output/client"
-          )
-
-          FOUND=""
-          for dir in "${CANDIDATES[@]}"; do
-            if [ -f "$dir/index.html" ]; then
-              FOUND="$dir"
-              break
-            fi
-          done
-
-          if [ -z "$FOUND" ]; then
-            echo "Could not find built web assets. Searching for any index.html..."
-            find . -name "index.html" -not -path "./node_modules/*" -not -path "./ios/*" 2>/dev/null | head -20
-            echo "--- Top-level dirs ---"
-            ls -la
-            echo "--- .output tree (if exists) ---"
-            [ -d .output ] && find .output -maxdepth 3 -type d
-            exit 1
-          fi
-
-          echo "Using web assets from: $FOUND"
-          cp -R "$FOUND" www
+          # TanStack Start is server-rendered, so it does not produce a static
+          # index.html for Capacitor. The native shell loads the published app
+          # URL from capacitor.config.ts; this local file only satisfies the
+          # Capacitor/Xcode packaging requirement.
+          mkdir -p www
+          cat > www/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Family COO</title>
+            </head>
+            <body>
+              <script>window.location.replace('https://familycoo.lovable.app');</script>
+            </body>
+          </html>
+          EOF
           test -f www/index.html
 
       - name: Add iOS platform (first run only)
