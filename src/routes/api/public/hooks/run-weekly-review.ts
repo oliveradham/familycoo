@@ -8,11 +8,9 @@ export const Route = createFileRoute("/api/public/hooks/run-weekly-review")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const anonKey = process.env.SUPABASE_PUBLISHABLE_KEY;
-        const apiKey = request.headers.get("apikey");
-        if (!anonKey || apiKey !== anonKey) {
-          return new Response("Unauthorized", { status: 401 });
-        }
+        const { verifyCronRequest } = await import("@/lib/cron-auth.server");
+        const unauthorized = verifyCronRequest(request);
+        if (unauthorized) return unauthorized;
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { generateWeeklyReview, currentWeekStartIso } = await import(
