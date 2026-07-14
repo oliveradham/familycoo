@@ -118,10 +118,17 @@ function SettingsPage() {
   const queryClient = useQueryClient();
   const deleteFn = useServerFn(deleteMyAccount);
   const openPortalFn = useServerFn(createBillingPortalSession);
+  const listFamilyFn = useServerFn(listFamilyMembers);
+  const loadSampleFn = useServerFn(loadSampleFamily);
   const { isActive, tier } = useSubscription();
   const [portalBusy, setPortalBusy] = useState(false);
+  const [sampleBusy, setSampleBusy] = useState(false);
   const loadPrefs = useServerFn(getPrefs);
   const persistPrefs = useServerFn(savePrefs);
+  const { data: familyMembers } = useQuery({
+    queryKey: ["family", "members"],
+    queryFn: () => listFamilyFn(),
+  });
   const [tz, setTz] = useState("America/Los_Angeles");
   const [clock24, setClock24] = useState(false);
   const [weekStart, setWeekStart] = useState<"Sun" | "Mon">("Mon");
