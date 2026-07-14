@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/lib/auth-context";
 import { AppShell, Card, SectionLabel } from "@/components/app-shell";
 import { listEvents } from "@/lib/events.functions";
 import { listTasks } from "@/lib/tasks.functions";
@@ -14,22 +14,6 @@ import {
   Plus,
 } from "lucide-react";
 
-const profileQuery = queryOptions({
-  queryKey: ["profile", "me"],
-  queryFn: () => getMyProfile(),
-});
-const eventsQuery = queryOptions({
-  queryKey: ["events", "upcoming"],
-  queryFn: () => listEvents(),
-});
-const tasksQuery = queryOptions({
-  queryKey: ["tasks", "list"],
-  queryFn: () => listTasks(),
-});
-const inboxQuery = queryOptions({
-  queryKey: ["inbox", "list"],
-  queryFn: () => listInbox(),
-});
 
 export const Route = createFileRoute("/")({
   head: () => ({
