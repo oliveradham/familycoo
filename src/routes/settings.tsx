@@ -214,12 +214,12 @@ function SettingsPage() {
         <Card>
           <div className="flex items-center gap-4">
             <div className="grid size-12 place-items-center rounded-full bg-zinc-900 text-white text-sm font-medium">
-              T
+              {(user?.email?.[0] ?? "?").toUpperCase()}
             </div>
             <div className="flex-1">
-              <p className="font-serif italic text-lg leading-tight">The Thompsons</p>
+              <p className="font-serif italic text-lg leading-tight">Your household</p>
               <p className="text-[12px] text-muted-foreground">
-                {family.length} members · Palo Alto, CA
+                {familyMembers ? `${familyMembers.length} member${familyMembers.length === 1 ? "" : "s"}` : "Loading…"}
               </p>
             </div>
             <Link
@@ -229,6 +229,36 @@ function SettingsPage() {
               {t("settings.manage")}
             </Link>
           </div>
+        </Card>
+      </section>
+
+      {/* Sample data */}
+      <section className="px-6 mb-6">
+        <SectionLabel>Sample data</SectionLabel>
+        <Card>
+          <p className="mb-3 text-[12px] text-muted-foreground">
+            Load a demo family (Emma, Liam, Sofia) with events, tasks, and groceries so you can explore the app quickly. Idempotent — safe to tap once.
+          </p>
+          <button
+            type="button"
+            disabled={sampleBusy}
+            onClick={async () => {
+              if (sampleBusy) return;
+              setSampleBusy(true);
+              try {
+                const res = await loadSampleFn();
+                await queryClient.invalidateQueries();
+                window.alert(res?.skipped ? "You already have data — sample not added." : "Sample family loaded.");
+              } catch (e) {
+                window.alert(e instanceof Error ? e.message : "Could not load sample data");
+              } finally {
+                setSampleBusy(false);
+              }
+            }}
+            className="w-full rounded-full border border-hairline bg-white px-4 py-2.5 text-[12px] font-medium uppercase tracking-widest text-foreground disabled:opacity-60"
+          >
+            {sampleBusy ? "Loading…" : "Load sample family"}
+          </button>
         </Card>
       </section>
 
