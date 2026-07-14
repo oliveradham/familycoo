@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/lib/auth-context";
 import { AppShell, Card, SectionLabel } from "@/components/app-shell";
 import { listEvents } from "@/lib/events.functions";
 import { listTasks } from "@/lib/tasks.functions";
@@ -14,22 +14,6 @@ import {
   Plus,
 } from "lucide-react";
 
-const profileQuery = queryOptions({
-  queryKey: ["profile", "me"],
-  queryFn: () => getMyProfile(),
-});
-const eventsQuery = queryOptions({
-  queryKey: ["events", "upcoming"],
-  queryFn: () => listEvents(),
-});
-const tasksQuery = queryOptions({
-  queryKey: ["tasks", "list"],
-  queryFn: () => listTasks(),
-});
-const inboxQuery = queryOptions({
-  queryKey: ["inbox", "list"],
-  queryFn: () => listInbox(),
-});
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -120,10 +104,29 @@ function relativeDay(iso: string) {
 }
 
 function Today() {
-  const { data: profile } = useSuspenseQuery(profileQuery);
-  const { data: events } = useSuspenseQuery(eventsQuery);
-  const { data: tasks } = useSuspenseQuery(tasksQuery);
-  const { data: inbox } = useSuspenseQuery(inboxQuery);
+  const { user } = useAuth();
+  const enabled = !!user;
+  const { data: profile } = useQuery({
+    queryKey: ["profile", "me"],
+    queryFn: () => getMyProfile(),
+    enabled,
+  });
+  const { data: events = [] } = useQuery({
+    queryKey: ["events", "upcoming"],
+    queryFn: () => listEvents(),
+    enabled,
+  });
+  const { data: tasks = [] } = useQuery({
+    queryKey: ["tasks", "list"],
+    queryFn: () => listTasks(),
+    enabled,
+  });
+  const { data: inbox = [] } = useQuery({
+    queryKey: ["inbox", "list"],
+    queryFn: () => listInbox(),
+    enabled,
+  });
+
 
   const now = new Date();
   const todayEnd = new Date();
@@ -142,8 +145,9 @@ function Today() {
 
   const openInbox = inbox.filter((i: any) => i.status === "open");
 
-  const firstName = profile.display_name?.split(" ")[0] ?? "there";
-  const initial = (profile.display_name?.[0] ?? "?").toUpperCase();
+  const firstName = profile?.display_name?.split(" ")[0] ?? "there";
+  const initial = (profile?.display_name?.[0] ?? "?").toUpperCase();
+
   const dateLabel = now.toLocaleDateString(undefined, {
     weekday: "long",
     month: "short",
@@ -166,7 +170,7 @@ function Today() {
               {dateLabel}
             </p>
             <p className="text-sm font-medium text-foreground">
-              {profile.display_name ?? "Your household"}
+              {profile?.display_name ?? "Your household"}
             </p>
           </div>
         </Link>
