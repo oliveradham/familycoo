@@ -1,8 +1,9 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
 import { listTasks, createTask, setTaskStatus, deleteTask } from "@/lib/tasks.functions";
+import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
 import { Check, Plus, Trash2 } from "lucide-react";
 
@@ -16,11 +17,13 @@ function TasksPage() {
   const create = useServerFn(createTask);
   const setStatus = useServerFn(setTaskStatus);
   const remove = useServerFn(deleteTask);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data: tasks = [], isLoading, error } = useQuery({
     queryKey: ["tasks"],
     queryFn: () => list({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ["tasks"] });

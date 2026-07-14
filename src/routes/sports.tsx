@@ -10,6 +10,7 @@ import {
   createSportEvent,
   deleteSportEvent,
 } from "@/lib/sports.functions";
+import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -27,15 +28,18 @@ function SportsPage() {
   const listEvents = useServerFn(listSportEvents);
   const createEvent = useServerFn(createSportEvent);
   const delEvent = useServerFn(deleteSportEvent);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data: teams = [], isLoading: teamsLoading } = useQuery({
     queryKey: ["sport_teams"],
     queryFn: () => listTeams({}),
+    enabled: !authLoading && Boolean(session),
   });
   const { data: events = [] } = useQuery({
     queryKey: ["sport_events"],
     queryFn: () => listEvents({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const invTeams = () => qc.invalidateQueries({ queryKey: ["sport_teams"] });

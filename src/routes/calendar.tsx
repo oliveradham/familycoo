@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
 import { listEvents, createEvent, deleteEvent } from "@/lib/events.functions";
+import { useAuth } from "@/lib/auth-context";
 import { Plus, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/calendar")({
@@ -37,11 +38,13 @@ function CalendarPage() {
   const list = useServerFn(listEvents);
   const create = useServerFn(createEvent);
   const del = useServerFn(deleteEvent);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data: events = [], isLoading } = useQuery({
     queryKey: ["events"],
     queryFn: () => list({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const inv = () => qc.invalidateQueries({ queryKey: ["events"] });

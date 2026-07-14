@@ -5,6 +5,7 @@ import { AppShell, PageHeader, Card, SectionLabel } from "@/components/app-shell
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/auth-context";
 import {
   listFamilyMembers,
   createFamilyMember,
@@ -48,10 +49,12 @@ function FamilyPage() {
   const list = useServerFn(listFamilyMembers);
   const create = useServerFn(createFamilyMember);
   const remove = useServerFn(deleteFamilyMember);
+  const { session, loading: authLoading } = useAuth();
 
   const { data: members = [], isLoading } = useQuery({
     queryKey: ["family-members"],
     queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
   });
 
   const addMut = useMutation({

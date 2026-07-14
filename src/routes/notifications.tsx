@@ -7,6 +7,7 @@ import {
   markNotificationRead,
   markAllNotificationsRead,
 } from "@/lib/notifications.functions";
+import { useAuth } from "@/lib/auth-context";
 import { Bell, CheckCheck } from "lucide-react";
 
 export const Route = createFileRoute("/notifications")({
@@ -18,11 +19,13 @@ function NotificationsPage() {
   const list = useServerFn(listNotifications);
   const markRead = useServerFn(markNotificationRead);
   const markAll = useServerFn(markAllNotificationsRead);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
   });
 
   const markOne = useMutation({

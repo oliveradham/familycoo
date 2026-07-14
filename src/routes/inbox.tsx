@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
 import { listInbox, createInboxItem, setInboxStatus, LANES } from "@/lib/inbox.functions";
+import { useAuth } from "@/lib/auth-context";
 import { Check, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/inbox")({
@@ -26,11 +27,13 @@ function InboxPage() {
   const list = useServerFn(listInbox);
   const create = useServerFn(createInboxItem);
   const setStatus = useServerFn(setInboxStatus);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["inbox"],
     queryFn: () => list({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const inv = () => qc.invalidateQueries({ queryKey: ["inbox"] });

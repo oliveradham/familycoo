@@ -8,6 +8,7 @@ import {
   setSchoolItemStatus,
   deleteSchoolItem,
 } from "@/lib/school.functions";
+import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
 import { Plus, Trash2, Check } from "lucide-react";
 
@@ -32,11 +33,13 @@ function SchoolPage() {
   const create = useServerFn(createSchoolItem);
   const setStatus = useServerFn(setSchoolItemStatus);
   const remove = useServerFn(deleteSchoolItem);
+  const { session, loading: authLoading } = useAuth();
   const qc = useQueryClient();
 
   const { data: items = [], isLoading, error } = useQuery({
     queryKey: ["school_items"],
     queryFn: () => list({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ["school_items"] });

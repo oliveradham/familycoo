@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Mic, ArrowUp, Sparkles, Brain, Plus, X, Trash2 } from "lucide-react";
 import { askConcierge, listConciergeHistory, clearConciergeHistory } from "@/lib/concierge.functions";
 import { listMemories, addMemory, deleteMemory } from "@/lib/memory.functions";
+import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/concierge")({
@@ -53,8 +54,10 @@ function ConciergePage() {
   const ask = useServerFn(askConcierge);
   const loadHistory = useServerFn(listConciergeHistory);
   const clearHistory = useServerFn(clearConciergeHistory);
+  const { session, loading: authLoading } = useAuth();
 
   useEffect(() => {
+    if (authLoading || !session) return;
     loadHistory({})
       .then((rows) => {
         if (rows && rows.length > 0) {
@@ -68,7 +71,7 @@ function ConciergePage() {
         }
       })
       .catch(() => {});
-  }, [loadHistory]);
+  }, [authLoading, loadHistory, session]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -250,12 +253,14 @@ function MemoryDrawer({ onClose }: { onClose: () => void }) {
   const list = useServerFn(listMemories);
   const add = useServerFn(addMemory);
   const del = useServerFn(deleteMemory);
+  const { session, loading: authLoading } = useAuth();
   const [fact, setFact] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("preference");
 
   const { data: memories = [] } = useQuery({
     queryKey: ["memories"],
     queryFn: () => list({}),
+    enabled: !authLoading && Boolean(session),
   });
 
   const addMut = useMutation({
