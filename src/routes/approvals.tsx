@@ -8,6 +8,7 @@ import {
   rejectApproval,
   undoApproval,
 } from "@/lib/approvals.functions";
+import { useAuth } from "@/lib/auth-context";
 import { Check, Info, RotateCcw, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -20,7 +21,12 @@ type Approval = Awaited<ReturnType<typeof listApprovals>>["items"][number];
 
 function Page() {
   const list = useServerFn(listApprovals);
-  const { data } = useQuery({ queryKey: ["approvals"], queryFn: () => list() });
+  const { session, loading: authLoading } = useAuth();
+  const { data } = useQuery({
+    queryKey: ["approvals"],
+    queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
+  });
   const [tab, setTab] = useState<"pending" | "executed" | "rejected">("pending");
 
   const items = data?.items ?? [];

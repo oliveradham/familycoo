@@ -12,6 +12,7 @@ import {
 import { Calendar, Check, Copy, Mail, RefreshCw, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PremiumRoute } from "@/components/PremiumRoute";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/integrations")({
   head: () => ({ meta: [{ title: "Integrations — Family COO" }] }),
@@ -28,15 +29,18 @@ function Page() {
   const startConnect = useServerFn(startGoogleCalendarConnect);
   const disconnect = useServerFn(disconnectCalendarIntegration);
   const syncNow = useServerFn(syncCalendarNow);
+  const { session, loading: authLoading } = useAuth();
 
   const qc = useQueryClient();
   const { data: intData } = useQuery({
     queryKey: ["calendar-integrations"],
     queryFn: () => list(),
+    enabled: !authLoading && Boolean(session),
   });
   const { data: inboundData } = useQuery({
     queryKey: ["inbound-email"],
     queryFn: () => inbound(),
+    enabled: !authLoading && Boolean(session),
   });
 
   const [banner, setBanner] = useState<string | null>(null);

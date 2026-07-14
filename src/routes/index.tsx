@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/lib/auth-context";
 import { AppShell, Card, SectionLabel } from "@/components/app-shell";
 import { listEvents } from "@/lib/events.functions";
@@ -106,24 +107,28 @@ function relativeDay(iso: string) {
 function Today() {
   const { user } = useAuth();
   const enabled = !!user;
+  const fetchProfile = useServerFn(getMyProfile);
+  const fetchEvents = useServerFn(listEvents);
+  const fetchTasks = useServerFn(listTasks);
+  const fetchInbox = useServerFn(listInbox);
   const { data: profile } = useQuery({
     queryKey: ["profile", "me"],
-    queryFn: () => getMyProfile(),
+    queryFn: () => fetchProfile(),
     enabled,
   });
   const { data: events = [] } = useQuery({
     queryKey: ["events", "upcoming"],
-    queryFn: () => listEvents(),
+    queryFn: () => fetchEvents(),
     enabled,
   });
   const { data: tasks = [] } = useQuery({
     queryKey: ["tasks", "list"],
-    queryFn: () => listTasks(),
+    queryFn: () => fetchTasks(),
     enabled,
   });
   const { data: inbox = [] } = useQuery({
     queryKey: ["inbox", "list"],
-    queryFn: () => listInbox(),
+    queryFn: () => fetchInbox(),
     enabled,
   });
 

@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell, PageHeader, SectionLabel, Card } from "@/components/app-shell";
 import { getLatestWeeklyReview } from "@/lib/weekly-review.functions";
+import { useAuth } from "@/lib/auth-context";
 import { Check, Calendar } from "lucide-react";
 import { PremiumRoute } from "@/components/PremiumRoute";
 
@@ -16,9 +17,11 @@ type UpcomingItem = { title: string; when: string };
 
 function ReviewPage() {
   const fetchReview = useServerFn(getLatestWeeklyReview);
+  const { session, loading: authLoading } = useAuth();
   const { data, isLoading } = useQuery({
     queryKey: ["weekly-review"],
     queryFn: () => fetchReview(),
+    enabled: !authLoading && Boolean(session),
   });
 
   const review = data?.review;
