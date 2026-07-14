@@ -18,9 +18,11 @@ const nav: { to: string; key: string; icon: LucideIcon }[] = [
 
 function NotificationBell() {
   const fn = useServerFn(unreadCount);
+  const { user } = useAuth();
   const { data } = useQuery({
     queryKey: ["notifications", "unread-count"],
     queryFn: () => fn(),
+    enabled: !!user,
     refetchInterval: 60_000,
     refetchOnWindowFocus: true,
   });
