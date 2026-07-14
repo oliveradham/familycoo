@@ -170,7 +170,7 @@ function Today() {
               {dateLabel}
             </p>
             <p className="text-sm font-medium text-foreground">
-              {profile.display_name ?? "Your household"}
+              {profile?.display_name ?? "Your household"}
             </p>
           </div>
         </Link>
