@@ -145,8 +145,9 @@ function Today() {
 
   const openInbox = inbox.filter((i: any) => i.status === "open");
 
-  const firstName = profile.display_name?.split(" ")[0] ?? "there";
-  const initial = (profile.display_name?.[0] ?? "?").toUpperCase();
+  const firstName = profile?.display_name?.split(" ")[0] ?? "there";
+  const initial = (profile?.display_name?.[0] ?? "?").toUpperCase();
+
   const dateLabel = now.toLocaleDateString(undefined, {
     weekday: "long",
     month: "short",
