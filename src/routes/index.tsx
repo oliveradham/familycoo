@@ -104,10 +104,29 @@ function relativeDay(iso: string) {
 }
 
 function Today() {
-  const { data: profile } = useSuspenseQuery(profileQuery);
-  const { data: events } = useSuspenseQuery(eventsQuery);
-  const { data: tasks } = useSuspenseQuery(tasksQuery);
-  const { data: inbox } = useSuspenseQuery(inboxQuery);
+  const { user } = useAuth();
+  const enabled = !!user;
+  const { data: profile } = useQuery({
+    queryKey: ["profile", "me"],
+    queryFn: () => getMyProfile(),
+    enabled,
+  });
+  const { data: events = [] } = useQuery({
+    queryKey: ["events", "upcoming"],
+    queryFn: () => listEvents(),
+    enabled,
+  });
+  const { data: tasks = [] } = useQuery({
+    queryKey: ["tasks", "list"],
+    queryFn: () => listTasks(),
+    enabled,
+  });
+  const { data: inbox = [] } = useQuery({
+    queryKey: ["inbox", "list"],
+    queryFn: () => listInbox(),
+    enabled,
+  });
+
 
   const now = new Date();
   const todayEnd = new Date();
