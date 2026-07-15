@@ -1,17 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-
-export const LANES = [
-  "needs_signature",
-  "needs_payment",
-  "needs_response",
-  "needs_scheduling",
-  "waiting",
-  "upcoming_travel",
-  "renewals",
-  "fyi",
-] as const;
+import { LANES } from "./inbox-lanes";
 
 export const listInbox = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

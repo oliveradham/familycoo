@@ -3,7 +3,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { AppShell, PageHeader, SectionLabel } from "@/components/app-shell";
-import { listInbox, createInboxItem, setInboxStatus, LANES } from "@/lib/inbox.functions";
+import { listInbox, createInboxItem, setInboxStatus } from "@/lib/inbox.functions";
+import { LANES } from "@/lib/inbox-lanes";
 import { useAuth } from "@/lib/auth-context";
 import { Check, Plus } from "lucide-react";
 
