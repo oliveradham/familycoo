@@ -20,6 +20,7 @@ export function useSubscription() {
   const { user } = useAuth();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
+  const [now, setNow] = useState<number | null>(null);
 
   const load = async () => {
     if (!user) {
@@ -40,6 +41,7 @@ export function useSubscription() {
   };
 
   useEffect(() => {
+    setNow(Date.now());
     load();
     if (!user) return;
     const channel = supabase
@@ -56,9 +58,8 @@ export function useSubscription() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
-  const now = Date.now();
   const end = subscription?.current_period_end ? new Date(subscription.current_period_end).getTime() : null;
-  const withinPeriod = end == null || end > now;
+  const withinPeriod = now == null || end == null || end > now;
   const isActive = !!subscription && (
     (["active", "trialing", "past_due"].includes(subscription.status) && withinPeriod) ||
     (subscription.status === "canceled" && !!end && end > now)

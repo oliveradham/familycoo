@@ -16,18 +16,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+    let settled = false;
+
+    const finish = (nextSession: Session | null) => {
+      if (!mounted) return;
+      settled = true;
+      setSession(nextSession);
+      setLoading(false);
+      setSentryUser(nextSession?.user?.id ?? null);
+    };
+
     initSentry();
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
-      setLoading(false);
-      setSentryUser(s?.user?.id ?? null);
+      finish(s);
     });
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-      setSentryUser(data.session?.user?.id ?? null);
-    });
-    return () => sub.subscription.unsubscribe();
+
+    supabase.auth
+      .getSession()
+      .then(({ data }) => finish(data.session))
+      .catch(() => finish(null));
+
+    const fallback = window.setTimeout(() => {
+      if (!settled) finish(null);
+    }, 2500);
+
+    return () => {
+      mounted = false;
+      window.clearTimeout(fallback);
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
 
