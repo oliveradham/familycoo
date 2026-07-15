@@ -38,14 +38,12 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error("ROOT_ERROR_BOUNDARY:", error?.message, error?.stack);
-  if (typeof window !== "undefined") {
-    (window as any).__lastRootError = { message: error?.message, stack: error?.stack };
-  }
+  console.error(error);
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
+
 
 
   return (
