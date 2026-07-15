@@ -112,6 +112,14 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 }
 
 function SettingsPage() {
+  return (
+    <AppShell>
+      <SettingsContent />
+    </AppShell>
+  );
+}
+
+function SettingsContent() {
   const { lang: language, setLang: setLanguage, t } = useLanguage();
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -201,7 +209,7 @@ function SettingsPage() {
   };
 
   return (
-    <AppShell>
+    <>
       <PageHeader
         eyebrow={t("settings.eyebrow")}
         title={t("settings.title")}
@@ -599,6 +607,6 @@ function SettingsPage() {
           </p>
         </Card>
       </section>
-    </AppShell>
+    </>
   );
 }
