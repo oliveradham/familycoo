@@ -62,7 +62,7 @@ export function useSubscription() {
   const withinPeriod = now == null || end == null || end > now;
   const isActive = !!subscription && (
     (["active", "trialing", "past_due"].includes(subscription.status) && withinPeriod) ||
-    (subscription.status === "canceled" && !!end && end > now)
+    (subscription.status === "canceled" && !!end && (now == null || end > now))
   );
   const isTrialing = !!subscription && subscription.status === "trialing" && withinPeriod;
   const isPastDue = !!subscription && subscription.status === "past_due" && withinPeriod;
