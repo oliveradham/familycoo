@@ -1,22 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function resolveHousehold(supabase: any, userId: string) {
-  const { data } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 export const listExpenses = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const householdId = await resolveHousehold(context.supabase, context.userId);
+    const { data: membership, error: membershipError } = await context.supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) return [];
+    const householdId = membership.household_id as string;
     const { data, error } = await context.supabase
       .from("expenses")
       .select("id, family_member_id, amount_cents, currency, category, merchant, spent_on, notes, is_recurring, subscription_period, created_at")
@@ -44,7 +41,16 @@ export const createExpense = createServerFn({ method: "POST" })
     return input;
   })
   .handler(async ({ data, context }) => {
-    const householdId = await resolveHousehold(context.supabase, context.userId);
+    const { data: membership, error: membershipError } = await context.supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household");
+    const householdId = membership.household_id as string;
     const { data: row, error } = await context.supabase
       .from("expenses")
       .insert({

@@ -2,19 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
-async function resolveHouseholdId(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (error) throw error;
-  if (!data) throw new Error("No household found for user");
-  return data.household_id as string;
-}
-
 export const LANES = [
   "needs_signature",
   "needs_payment",
@@ -30,7 +17,16 @@ export const listInbox = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) return [];
+    const householdId = membership.household_id as string;
     const { data, error } = await supabase
       .from("inbox_items")
       .select("*")
@@ -60,7 +56,16 @@ export const createInboxItem = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household found for user");
+    const householdId = membership.household_id as string;
     const { data: row, error } = await supabase
       .from("inbox_items")
       .insert({
