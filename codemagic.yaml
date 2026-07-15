@@ -39,7 +39,7 @@ workflows:
               <title>Family COO</title>
             </head>
             <body>
-              <script>window.location.replace('https://familycoo.lovable.app');</script>
+              <script>window.location.replace('https://family-coo.com');</script>
             </body>
           </html>
           EOF
