@@ -2,25 +2,12 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
 import { LANGUAGES, useLanguage } from "@/lib/i18n";
-import { listFamilyMembers } from "@/lib/family.functions";
-import { loadSampleFamily } from "@/lib/sample-data.functions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { useServerFn } from "@tanstack/react-start";
 import { useQueryClient } from "@tanstack/react-query";
-import { deleteMyAccount } from "@/lib/account.functions";
-import { createBillingPortalSession } from "@/lib/billing.functions";
 import { useSubscription } from "@/hooks/useSubscription";
-import { getPrefs, savePrefs } from "@/lib/prefs.functions";
 import { isNative, isIOS, openExternal } from "@/lib/platform";
-
-import {
-  pushSupported,
-  subscribeToPush,
-  unsubscribeFromPush,
-  isCurrentlySubscribed,
-} from "@/lib/push";
 import {
   Bell,
   Clock,
@@ -54,6 +41,15 @@ const TIMEZONES = [
   "Asia/Singapore",
   "Australia/Sydney",
 ];
+
+type PrefPatch = {
+  timezone?: string;
+  autopilot_paused?: boolean;
+  morning_briefing_at?: string | null;
+  afternoon_check_in_at?: string | null;
+  evening_wrap_at?: string | null;
+  notification_channel?: string;
+};
 
 
 function Row({
@@ -124,18 +120,29 @@ function SettingsContent() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const deleteFn = useServerFn(deleteMyAccount);
-  const openPortalFn = useServerFn(createBillingPortalSession);
-  const listFamilyFn = useServerFn(listFamilyMembers);
-  const loadSampleFn = useServerFn(loadSampleFamily);
   const { isActive, tier } = useSubscription();
   const [portalBusy, setPortalBusy] = useState(false);
   const [sampleBusy, setSampleBusy] = useState(false);
-  const loadPrefs = useServerFn(getPrefs);
-  const persistPrefs = useServerFn(savePrefs);
-  const { data: familyMembers } = useQuery({
-    queryKey: ["family", "members"],
-    queryFn: () => listFamilyFn(),
+  const { data: familyCount } = useQuery({
+    queryKey: ["family", "members", "count", user?.id],
+    queryFn: async () => {
+      if (!user) return 0;
+      const { data: membership, error: membershipError } = await supabase
+        .from("household_members")
+        .select("household_id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (membershipError) throw membershipError;
+      if (!membership) return 0;
+      const { count, error } = await supabase
+        .from("family_members")
+        .select("id", { count: "exact", head: true })
+        .eq("household_id", membership.household_id);
+      if (error) throw error;
+      return count ?? 0;
+    },
     enabled: !authLoading && Boolean(user),
   });
   const [tz, setTz] = useState("America/Los_Angeles");
@@ -161,17 +168,28 @@ function SettingsContent() {
   const [pushEnabled, setPushEnabled] = useState(false);
   const [pushBusy, setPushBusy] = useState(false);
   const [pushError, setPushError] = useState<string | null>(null);
-  const canPush = typeof window !== "undefined" && pushSupported();
+  const [canPush, setCanPush] = useState(false);
 
   useEffect(() => {
-    if (!canPush) return;
-    isCurrentlySubscribed().then(setPushEnabled).catch(() => {});
-  }, [canPush]);
+    let cancelled = false;
+    import("@/lib/push")
+      .then(({ pushSupported, isCurrentlySubscribed }) => {
+        if (cancelled) return;
+        const supported = pushSupported();
+        setCanPush(supported);
+        if (supported) isCurrentlySubscribed().then(setPushEnabled).catch(() => {});
+      })
+      .catch(() => setCanPush(false));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function togglePush(next: boolean) {
     setPushBusy(true);
     setPushError(null);
     try {
+      const { subscribeToPush, unsubscribeFromPush } = await import("@/lib/push");
       if (next) {
         const res = await subscribeToPush();
         if (!res.ok) {
@@ -193,7 +211,12 @@ function SettingsContent() {
   useEffect(() => {
     if (!user) return;
     let cancelled = false;
-    loadPrefs({}).then((p) => {
+    supabase
+      .from("profiles")
+      .select("timezone, autopilot_paused, morning_briefing_at, afternoon_check_in_at, evening_wrap_at, notification_channel")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data: p }) => {
       if (cancelled || !p) return;
       if (p.timezone) setTz(p.timezone);
       if (p.morning_briefing_at) setMorning(p.morning_briefing_at.slice(0, 5));
@@ -204,8 +227,9 @@ function SettingsContent() {
     return () => { cancelled = true; };
   }, [user?.id]);
 
-  const save = (patch: Parameters<typeof persistPrefs>[0]["data"]) => {
-    persistPrefs({ data: patch }).catch(() => {});
+  const save = (patch: PrefPatch) => {
+    if (!user) return;
+    supabase.from("profiles").update(patch).eq("id", user.id).then(() => {}).catch(() => {});
   };
 
   return (
@@ -228,7 +252,7 @@ function SettingsContent() {
             <div className="flex-1">
               <p className="font-serif italic text-lg leading-tight">Your household</p>
               <p className="text-[12px] text-muted-foreground">
-                {familyMembers ? `${familyMembers.length} member${familyMembers.length === 1 ? "" : "s"}` : "Loading…"}
+                {familyCount == null ? "Loading…" : `${familyCount} member${familyCount === 1 ? "" : "s"}`}
               </p>
             </div>
             <Link
@@ -255,7 +279,8 @@ function SettingsContent() {
               if (sampleBusy) return;
               setSampleBusy(true);
               try {
-                const res = await loadSampleFn();
+                const { loadSampleFamily } = await import("@/lib/sample-data.functions");
+                const res = await loadSampleFamily();
                 await queryClient.invalidateQueries();
                 window.alert(res?.skipped ? "You already have data — sample not added." : "Sample family loaded.");
               } catch (e) {
@@ -534,7 +559,8 @@ function SettingsContent() {
                 if (portalBusy) return;
                 setPortalBusy(true);
                 try {
-                  const res = await openPortalFn();
+                  const { createBillingPortalSession } = await import("@/lib/billing.functions");
+                  const res = await createBillingPortalSession();
                   const url = res.overviewUrl;
                   if (url) window.open(url, "_blank", "noopener");
                   else window.alert("Could not open billing portal.");
@@ -590,7 +616,8 @@ function SettingsContent() {
               );
               if (!confirmed) return;
               try {
-                await deleteFn({});
+                const { deleteMyAccount } = await import("@/lib/account.functions");
+                await deleteMyAccount({});
                 await supabase.auth.signOut();
                 queryClient.clear();
                 navigate({ to: "/auth", replace: true });
