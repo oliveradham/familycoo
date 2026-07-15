@@ -5,8 +5,9 @@ const config: CapacitorConfig = {
   appName: "Family COO",
   webDir: "www",
   server: {
-    url: "https://familycoo.lovable.app",
+    url: "https://family-coo.com",
     cleartext: false,
+    allowNavigation: ["family-coo.com", "www.family-coo.com"],
   },
   ios: {
     scheme: "FamilyCOO",
