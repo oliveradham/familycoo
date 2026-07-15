@@ -2,26 +2,20 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
-async function resolveHouseholdId(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (error) throw error;
-  if (!data) throw new Error("No household found for user");
-  return data.household_id as string;
-}
-
-const KIND = z.enum(["tuition", "homework", "event", "email_summary", "permission_slip", "other"]);
-
 export const listSchoolItems = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) return [];
+    const householdId = membership.household_id as string;
     const { data, error } = await supabase
       .from("school_items")
       .select("*")
@@ -39,7 +33,7 @@ export const createSchoolItem = createServerFn({ method: "POST" })
     z
       .object({
         title: z.string().min(1).max(280),
-        kind: KIND.default("other"),
+        kind: z.enum(["tuition", "homework", "event", "email_summary", "permission_slip", "other"]).default("other"),
         detail: z.string().max(4000).optional(),
         due_at: z.string().datetime().optional().nullable(),
         amount_cents: z.number().int().nonnegative().optional().nullable(),
@@ -49,7 +43,16 @@ export const createSchoolItem = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household found for user");
+    const householdId = membership.household_id as string;
     const { data: row, error } = await supabase
       .from("school_items")
       .insert({

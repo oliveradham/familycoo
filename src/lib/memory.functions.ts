@@ -3,23 +3,20 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export type MemoryCategory = "preference" | "allergy" | "routine" | "contact" | "logistics" | "other";
 
-async function householdIdFor(supabase: any, userId: string): Promise<string> {
-  const { data } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 export const listMemories = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const hh = await householdIdFor(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) return [];
+    const hh = membership.household_id as string;
     const { data, error } = await supabase
       .from("family_memory")
       .select("id, category, fact, subject_id, source, confidence, expires_at, created_at")
@@ -38,7 +35,16 @@ export const addMemory = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const hh = await householdIdFor(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const hh = membership.household_id as string;
     const { data: row, error } = await supabase
       .from("family_memory")
       .insert({
