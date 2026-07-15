@@ -63,10 +63,16 @@ workflows:
           keychain initialize
           CERTIFICATE_KEY_PATH="$CM_BUILD_DIR/codemagic_certificate_private_key.pem"
           openssl genrsa -out "$CERTIFICATE_KEY_PATH" 2048
-          app-store-connect certificates create \
-            --type IOS_DISTRIBUTION \
-            --certificate-key @file:"$CERTIFICATE_KEY_PATH" \
-            --save || true
+          # Revoke ALL existing distribution certificates so we can mint a fresh one
+          # tied to the private key we just generated. Apple limits distribution
+          # certificates to 2, and we already have 5 stale ones from prior builds.
+          echo "--- revoking existing distribution certificates ---"
+          for TYPE in IOS_DISTRIBUTION DISTRIBUTION; do
+            for CERT_ID in $(app-store-connect certificates list --type "$TYPE" --json 2>/dev/null | jq -r '.[].id'); do
+              echo "revoking $TYPE cert $CERT_ID"
+              app-store-connect certificates delete "$CERT_ID" --ignore-not-found || true
+            done
+          done
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --certificate-key @file:"$CERTIFICATE_KEY_PATH" \
