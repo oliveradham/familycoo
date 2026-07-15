@@ -7,6 +7,10 @@ const SESSION_LOOKUP_TIMEOUT_MS = 2_000;
 
 const attachTimeoutSafeSupabaseAuth = createMiddleware({ type: "function" }).client(
   async ({ next }) => {
+    if (typeof window === "undefined") {
+      return next();
+    }
+
     const sessionPromise = supabase.auth
       .getSession()
       .then(({ data }) => data.session?.access_token ?? null)
