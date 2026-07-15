@@ -211,25 +211,31 @@ function SettingsContent() {
   useEffect(() => {
     if (!user) return;
     let cancelled = false;
-    supabase
-      .from("profiles")
-      .select("timezone, autopilot_paused, morning_briefing_at, afternoon_check_in_at, evening_wrap_at, notification_channel")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data: p }) => {
-      if (cancelled || !p) return;
-      if (p.timezone) setTz(p.timezone);
-      if (p.morning_briefing_at) setMorning(p.morning_briefing_at.slice(0, 5));
-      if (p.afternoon_check_in_at) setAfternoon(p.afternoon_check_in_at.slice(0, 5));
-      if (p.evening_wrap_at) setEvening(p.evening_wrap_at.slice(0, 5));
-      setAutopilot(!p.autopilot_paused);
-    }).catch(() => {});
+    void (async () => {
+      try {
+        const { data: p } = await supabase
+          .from("profiles")
+          .select("timezone, autopilot_paused, morning_briefing_at, afternoon_check_in_at, evening_wrap_at, notification_channel")
+          .eq("id", user.id)
+          .maybeSingle();
+        if (cancelled || !p) return;
+        if (p.timezone) setTz(p.timezone);
+        if (p.morning_briefing_at) setMorning(p.morning_briefing_at.slice(0, 5));
+        if (p.afternoon_check_in_at) setAfternoon(p.afternoon_check_in_at.slice(0, 5));
+        if (p.evening_wrap_at) setEvening(p.evening_wrap_at.slice(0, 5));
+        setAutopilot(!p.autopilot_paused);
+      } catch {
+        // Keep settings usable if preferences fail to load.
+      }
+    })();
     return () => { cancelled = true; };
   }, [user?.id]);
 
   const save = (patch: PrefPatch) => {
     if (!user) return;
-    supabase.from("profiles").update(patch).eq("id", user.id).then(() => {}).catch(() => {});
+    void (async () => {
+      await supabase.from("profiles").update(patch).eq("id", user.id);
+    })();
   };
 
   return (
