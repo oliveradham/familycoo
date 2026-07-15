@@ -112,8 +112,16 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
 }
 
 function SettingsPage() {
+  return (
+    <AppShell>
+      <SettingsContent />
+    </AppShell>
+  );
+}
+
+function SettingsContent() {
   const { lang: language, setLang: setLanguage, t } = useLanguage();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const deleteFn = useServerFn(deleteMyAccount);
@@ -128,6 +136,7 @@ function SettingsPage() {
   const { data: familyMembers } = useQuery({
     queryKey: ["family", "members"],
     queryFn: () => listFamilyFn(),
+    enabled: !authLoading && Boolean(user),
   });
   const [tz, setTz] = useState("America/Los_Angeles");
   const [clock24, setClock24] = useState(false);
@@ -193,14 +202,14 @@ function SettingsPage() {
       setAutopilot(!p.autopilot_paused);
     }).catch(() => {});
     return () => { cancelled = true; };
-  }, [user, loadPrefs]);
+  }, [user?.id]);
 
   const save = (patch: Parameters<typeof persistPrefs>[0]["data"]) => {
     persistPrefs({ data: patch }).catch(() => {});
   };
 
   return (
-    <AppShell>
+    <>
       <PageHeader
         eyebrow={t("settings.eyebrow")}
         title={t("settings.title")}
@@ -598,6 +607,6 @@ function SettingsPage() {
           </p>
         </Card>
       </section>
-    </AppShell>
+    </>
   );
 }

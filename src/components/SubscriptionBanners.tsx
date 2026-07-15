@@ -2,7 +2,7 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { useServerFn } from "@tanstack/react-start";
 import { createBillingPortalSession } from "@/lib/billing.functions";
 import { AlertTriangle, Clock } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function daysUntil(iso: string | null): number | null {
   if (!iso) return null;
@@ -14,6 +14,11 @@ export function SubscriptionBanners() {
   const { isTrialing, isPastDue, trialEndsAt } = useSubscription();
   const openPortal = useServerFn(createBillingPortalSession);
   const [busy, setBusy] = useState(false);
+  const [trialDays, setTrialDays] = useState<number | null>(null);
+
+  useEffect(() => {
+    setTrialDays(daysUntil(trialEndsAt));
+  }, [trialEndsAt]);
 
   async function handleUpdatePayment() {
     if (busy) return;
@@ -49,15 +54,14 @@ export function SubscriptionBanners() {
   }
 
   if (isTrialing) {
-    const days = daysUntil(trialEndsAt);
     return (
       <div className="w-full bg-amber-50 border-b border-amber-200 px-4 py-2 text-center text-[12px] text-amber-900">
         <div className="mx-auto flex max-w-[520px] items-center justify-center gap-2">
           <Clock className="size-3.5 shrink-0" strokeWidth={2} />
           <span>
-            {days === 0
+            {trialDays === 0
               ? "Trial ends today."
-              : `Trial ends in ${days} day${days === 1 ? "" : "s"}.`}
+              : `Trial ends in ${trialDays ?? "a few"} day${trialDays === 1 ? "" : "s"}.`}
           </span>
         </div>
       </div>

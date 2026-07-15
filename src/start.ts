@@ -1,7 +1,27 @@
 import { createStart, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
-import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+import { supabase } from "@/integrations/supabase/client";
+
+const SESSION_LOOKUP_TIMEOUT_MS = 2_000;
+
+const attachTimeoutSafeSupabaseAuth = createMiddleware({ type: "function" }).client(
+  async ({ next }) => {
+    const sessionPromise = supabase.auth
+      .getSession()
+      .then(({ data }) => data.session?.access_token ?? null)
+      .catch(() => null);
+
+    const timeoutPromise = new Promise<null>((resolve) => {
+      window.setTimeout(() => resolve(null), SESSION_LOOKUP_TIMEOUT_MS);
+    });
+
+    const token = await Promise.race([sessionPromise, timeoutPromise]);
+    return next({
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+  },
+);
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -68,6 +88,6 @@ const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => 
 });
 
 export const startInstance = createStart(() => ({
-  functionMiddleware: [attachSupabaseAuth],
+  functionMiddleware: [attachTimeoutSafeSupabaseAuth],
   requestMiddleware: [securityHeadersMiddleware, errorMiddleware],
 }));
