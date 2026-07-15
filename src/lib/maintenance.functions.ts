@@ -1,28 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function resolveHousehold(supabase: any, userId: string) {
-  const { data } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
-function addDays(date: string, days: number) {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
-}
-
 export const listMaintenance = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const householdId = await resolveHousehold(context.supabase, context.userId);
+    const { data: membership, error: membershipError } = await context.supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) return [];
+    const householdId = membership.household_id as string;
     const { data, error } = await context.supabase
       .from("maintenance_tasks")
       .select("id, title, area, frequency_days, last_done_on, next_due_on, vendor, notes, created_at")
@@ -39,7 +30,16 @@ export const createMaintenance = createServerFn({ method: "POST" })
     return input;
   })
   .handler(async ({ data, context }) => {
-    const householdId = await resolveHousehold(context.supabase, context.userId);
+    const { data: membership, error: membershipError } = await context.supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household");
+    const householdId = membership.household_id as string;
     const { data: row, error } = await context.supabase
       .from("maintenance_tasks")
       .insert({
@@ -71,7 +71,13 @@ export const markMaintenanceDone = createServerFn({ method: "POST" })
       .single();
     if (readErr) throw readErr;
     const today = new Date().toISOString().slice(0, 10);
-    const next = row?.frequency_days ? addDays(today, row.frequency_days) : null;
+    const next = row?.frequency_days
+      ? (() => {
+          const d = new Date(today);
+          d.setDate(d.getDate() + row.frequency_days);
+          return d.toISOString().slice(0, 10);
+        })()
+      : null;
     const { error } = await context.supabase
       .from("maintenance_tasks")
       .update({ last_done_on: today, next_due_on: next })
