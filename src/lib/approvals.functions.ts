@@ -1,24 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function getHouseholdId(supabase: any, userId: string): Promise<string> {
-  const { data, error } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 export const listApprovals = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) return { items: [] };
+    const household_id = membership.household_id as string;
     const { data, error } = await supabase
       .from("approvals")
       .select(
@@ -36,7 +32,16 @@ export const approveAction = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
 
     const { data: approval, error: fErr } = await supabase
       .from("approvals")
@@ -86,7 +91,16 @@ export const rejectApproval = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
     const { error } = await supabase
       .from("approvals")
       .update({ status: "rejected" })
@@ -102,7 +116,16 @@ export const undoApproval = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
 
     const { data: approval } = await supabase
       .from("approvals")
@@ -140,7 +163,16 @@ export const createApproval = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
     const { data: row, error } = await supabase
       .from("approvals")
       .insert({

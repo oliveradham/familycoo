@@ -1,23 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function resolveHousehold(supabase: any, userId: string) {
-  const { data } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 export const listDocuments = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHousehold(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) return [];
+    const householdId = membership.household_id as string;
     const { data, error } = await supabase
       .from("documents")
       .select("id, family_member_id, category, title, storage_path, mime_type, size_bytes, created_at")
@@ -43,7 +40,16 @@ export const createDocument = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHousehold(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household");
+    const householdId = membership.household_id as string;
     const { encryptField } = await import("./field-crypto.server");
     const { data: row, error } = await supabase
       .from("documents")
@@ -93,7 +99,16 @@ export const createDocumentUploadUrl = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const householdId = await resolveHousehold(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw membershipError;
+    if (!membership) throw new Error("No household");
+    const householdId = membership.household_id as string;
     const path = `${householdId}/${crypto.randomUUID()}-${data.filename.replace(/[^\w.\-]/g, "_")}`;
     const { data: signed, error } = await supabase.storage
       .from("vault")

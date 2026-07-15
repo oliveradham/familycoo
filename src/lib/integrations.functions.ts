@@ -1,26 +1,22 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-async function getHouseholdId(supabase: any, userId: string): Promise<string> {
-  const { data, error } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 /** Return the Google OAuth authorization URL for the current user. */
 export const startGoogleCalendarConnect = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { origin?: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
     const { signState, buildAuthUrl } = await import("./google-oauth.server");
     const state = await signState({ user_id: userId, household_id });
     const url = buildAuthUrl(state, data.origin);
@@ -77,7 +73,16 @@ export const getHouseholdInbound = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const household_id = await getHouseholdId(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const household_id = membership.household_id as string;
     let { data: h } = await supabase
       .from("households")
       .select("id, inbound_email")

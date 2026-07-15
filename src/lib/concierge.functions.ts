@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { redactForAI, redactObjectForAI } from "./ai-redact";
-import { recallMemories } from "./memory.functions";
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 
@@ -56,6 +55,7 @@ export const askConcierge = createServerFn({ method: "POST" })
     const now = new Date();
     const in7d = new Date(now.getTime() + 7 * 24 * 3600 * 1000).toISOString();
     const latestUser = [...data.messages].reverse().find((m) => m.role === "user")?.content ?? "";
+    const { recallMemories } = await import("./memory.server");
 
     const [{ data: events }, { data: tasks }, { data: members }, memories] = await Promise.all([
       supabase

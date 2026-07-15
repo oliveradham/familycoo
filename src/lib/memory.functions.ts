@@ -3,23 +3,20 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export type MemoryCategory = "preference" | "allergy" | "routine" | "contact" | "logistics" | "other";
 
-async function householdIdFor(supabase: any, userId: string): Promise<string> {
-  const { data } = await supabase
-    .from("household_members")
-    .select("household_id")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (!data) throw new Error("No household");
-  return data.household_id as string;
-}
-
 export const listMemories = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
-    const hh = await householdIdFor(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) return [];
+    const hh = membership.household_id as string;
     const { data, error } = await supabase
       .from("family_memory")
       .select("id, category, fact, subject_id, source, confidence, expires_at, created_at")
@@ -38,7 +35,16 @@ export const addMemory = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const hh = await householdIdFor(supabase, userId);
+    const { data: membership, error: membershipError } = await supabase
+      .from("household_members")
+      .select("household_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (membershipError) throw new Error(membershipError.message);
+    if (!membership) throw new Error("No household");
+    const hh = membership.household_id as string;
     const { data: row, error } = await supabase
       .from("family_memory")
       .insert({
@@ -66,24 +72,3 @@ export const deleteMemory = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
-
-/** Recall memories whose fact text overlaps the query — cheap keyword match. */
-export async function recallMemories(supabase: any, householdId: string, query: string, limit = 12) {
-  const { data } = await supabase
-    .from("family_memory")
-    .select("category, fact, subject_id, confidence")
-    .eq("household_id", householdId)
-    .not("category", "in", "(medical,financial)")
-    .order("created_at", { ascending: false })
-    .limit(80);
-  if (!data) return [];
-  const q = (query || "").toLowerCase();
-  const tokens = q.split(/\s+/).filter((t) => t.length > 3);
-  const scored = data.map((m: any) => {
-    const f = (m.fact ?? "").toLowerCase();
-    const hits = tokens.filter((t) => f.includes(t)).length;
-    return { m, score: hits };
-  });
-  scored.sort((a: { score: number }, b: { score: number }) => b.score - a.score);
-  return scored.slice(0, limit).map((s: { m: unknown }) => s.m);
-}
