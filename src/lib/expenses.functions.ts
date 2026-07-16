@@ -26,7 +26,7 @@ export const listExpenses = createServerFn({ method: "GET" })
 
 export const createExpense = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: {
+  .validator((input: {
     amount_cents: number;
     currency?: string;
     category?: string;
@@ -73,7 +73,7 @@ export const createExpense = createServerFn({ method: "POST" })
 
 export const deleteExpense = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

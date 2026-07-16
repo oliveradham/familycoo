@@ -29,7 +29,7 @@ export const listMemories = createServerFn({ method: "GET" })
 
 export const addMemory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { fact: string; category?: MemoryCategory; subject_id?: string | null }) => {
+  .validator((input: { fact: string; category?: MemoryCategory; subject_id?: string | null }) => {
     if (!input?.fact || input.fact.trim().length < 2) throw new Error("fact required");
     return input;
   })
@@ -63,7 +63,7 @@ export const addMemory = createServerFn({ method: "POST" })
 
 export const deleteMemory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

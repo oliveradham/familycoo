@@ -29,7 +29,7 @@ export const listSchoolItems = createServerFn({ method: "GET" })
 
 export const createSchoolItem = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         title: z.string().min(1).max(280),
@@ -73,7 +73,7 @@ export const createSchoolItem = createServerFn({ method: "POST" })
 
 export const setSchoolItemStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z.object({ id: z.string().uuid(), status: z.enum(["open", "done", "archived"]) }).parse(raw),
   )
   .handler(async ({ data, context }) => {
@@ -89,7 +89,7 @@ export const setSchoolItemStatus = createServerFn({ method: "POST" })
 
 export const deleteSchoolItem = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.from("school_items").delete().eq("id", data.id);
     if (error) throw error;

@@ -25,7 +25,7 @@ export const listMaintenance = createServerFn({ method: "GET" })
 
 export const createMaintenance = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { title: string; area?: string; frequency_days?: number | null; next_due_on?: string | null; vendor?: string | null; notes?: string | null }) => {
+  .validator((input: { title: string; area?: string; frequency_days?: number | null; next_due_on?: string | null; vendor?: string | null; notes?: string | null }) => {
     if (!input?.title?.trim()) throw new Error("title required");
     return input;
   })
@@ -59,7 +59,7 @@ export const createMaintenance = createServerFn({ method: "POST" })
 
 export const markMaintenanceDone = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })
@@ -88,7 +88,7 @@ export const markMaintenanceDone = createServerFn({ method: "POST" })
 
 export const deleteMaintenance = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

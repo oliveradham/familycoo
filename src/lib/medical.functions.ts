@@ -27,7 +27,7 @@ export const listMedicalRecords = createServerFn({ method: "GET" })
 
 export const createMedicalRecord = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: {
+  .validator((input: {
     title: string;
     kind?: string;
     family_member_id?: string | null;
@@ -74,7 +74,7 @@ export const createMedicalRecord = createServerFn({ method: "POST" })
 
 export const revealMedicalRecord = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })
@@ -106,7 +106,7 @@ export const revealMedicalRecord = createServerFn({ method: "POST" })
 
 export const deleteMedicalRecord = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

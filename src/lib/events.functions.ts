@@ -32,7 +32,7 @@ export const listEvents = createServerFn({ method: "GET" })
 
 export const createEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         title: z.string().min(1).max(280),
@@ -76,7 +76,7 @@ export const createEvent = createServerFn({ method: "POST" })
 
 export const deleteEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.from("calendar_events").delete().eq("id", data.id);
     if (error) throw error;

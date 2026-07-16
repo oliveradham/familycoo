@@ -44,7 +44,7 @@ export const createBillingPortalSession = createServerFn({ method: "POST" })
  */
 export const cancelMySubscription = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { immediate?: boolean } | undefined) => data ?? {})
+  .validator((data: { immediate?: boolean } | undefined) => data ?? {})
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

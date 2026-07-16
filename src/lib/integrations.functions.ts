@@ -4,7 +4,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 /** Return the Google OAuth authorization URL for the current user. */
 export const startGoogleCalendarConnect = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { origin?: string }) => data)
+  .validator((data: { origin?: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: membership, error: membershipError } = await supabase
@@ -39,7 +39,7 @@ export const listCalendarIntegrations = createServerFn({ method: "GET" })
 
 export const disconnectCalendarIntegration = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => data)
+  .validator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { error } = await supabase
@@ -53,7 +53,7 @@ export const disconnectCalendarIntegration = createServerFn({ method: "POST" })
 
 export const syncCalendarNow = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => data)
+  .validator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     // Verify ownership via RLS-scoped read first.
