@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSubscription } from "@/hooks/useSubscription";
 import { isNative, isIOS, openExternal } from "@/lib/platform";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Bell,
   Clock,
