@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useSubscription } from "@/hooks/useSubscription";
 import { isNative, isIOS, openExternal } from "@/lib/platform";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { PreviewFeatures } from "@/components/PreviewFeatures";
 import {
   Bell,
   Clock,
@@ -594,6 +595,8 @@ function SettingsContent() {
           )}
         </Card>
       </section>
+
+      <PreviewFeatures />
 
       {/* Account */}
       <section className="px-6 mb-10">
