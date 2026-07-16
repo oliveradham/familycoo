@@ -72,7 +72,7 @@ export function CommandPalette() {
   const groups = Array.from(new Set(items.map((i) => i.group)));
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen} title="Command palette" description="Jump anywhere">
+    <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Search or jump to…" />
       <CommandList>
         <CommandEmpty>No results.</CommandEmpty>
