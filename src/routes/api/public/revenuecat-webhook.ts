@@ -93,7 +93,6 @@ export const Route = createFileRoute("/api/public/revenuecat-webhook")({
             // cancel_at_period_end means "will not renew" — true for CANCELLATION
             // (user turned off auto-renew, still has access until expiration).
             // EXPIRATION means access has already ended; leave the flag false.
-            // EXPIRATION means access has already ended; leave the flag false.
             cancel_at_period_end: ev.type === "CANCELLATION",
             // Detect sandbox (TestFlight / Play internal / App Store sandbox)
             // so those purchases don't pollute live entitlement data. RevenueCat
