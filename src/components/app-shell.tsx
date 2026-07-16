@@ -63,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <SubscriptionBanners />
       <NotificationBell />
       <main id="main-content" className="mx-auto max-w-[520px] pb-32">{children}</main>
