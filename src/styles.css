@@ -107,6 +107,23 @@
     -webkit-font-smoothing: antialiased;
     font-feature-settings: "cv11", "ss01", "ss03";
   }
+  body {
+    position: relative;
+    background-image:
+      radial-gradient(at 12% 8%, oklch(0.94 0.06 250 / 0.55) 0px, transparent 45%),
+      radial-gradient(at 88% 14%, oklch(0.92 0.07 320 / 0.45) 0px, transparent 50%),
+      radial-gradient(at 82% 92%, oklch(0.93 0.08 200 / 0.5) 0px, transparent 45%),
+      radial-gradient(at 18% 88%, oklch(0.94 0.06 60 / 0.4) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  .dark body {
+    background-image:
+      radial-gradient(at 12% 8%, oklch(0.32 0.09 260 / 0.65) 0px, transparent 45%),
+      radial-gradient(at 88% 14%, oklch(0.3 0.1 310 / 0.55) 0px, transparent 50%),
+      radial-gradient(at 82% 92%, oklch(0.28 0.09 200 / 0.6) 0px, transparent 45%),
+      radial-gradient(at 18% 88%, oklch(0.3 0.08 40 / 0.45) 0px, transparent 50%);
+  }
   .font-serif {
     font-family: var(--font-serif);
     font-feature-settings: "liga", "dlig";
@@ -116,3 +133,4 @@
 @utility hairline {
   border-color: var(--color-hairline);
 }
+
