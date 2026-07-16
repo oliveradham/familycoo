@@ -42,6 +42,10 @@ export const askConcierge = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
 
+    // Server-side entitlement gate — Concierge is a Pro+ feature.
+    const { assertPaidTier } = await import("./entitlement.server");
+    await assertPaidTier(userId, "pro");
+
     const { data: membership } = await supabase
       .from("household_members")
       .select("household_id")

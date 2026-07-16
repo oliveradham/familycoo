@@ -57,7 +57,11 @@ export const ocrExtract = createServerFn({ method: "POST" })
     if (!input?.image_data_url?.startsWith("data:image/")) throw new Error("image_data_url required");
     return input;
   })
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // OCR / document AI is a Pro+ feature.
+    const { assertPaidTier } = await import("./entitlement.server");
+    await assertPaidTier(context.userId, "pro");
+
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY not configured");
     const { schema, hint } = SCHEMAS[data.kind];
