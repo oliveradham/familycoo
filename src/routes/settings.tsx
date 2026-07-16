@@ -10,6 +10,7 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { isNative, isIOS, openExternal } from "@/lib/platform";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { PreviewFeatures } from "@/components/PreviewFeatures";
+import { ChangePasswordForm } from "@/components/ChangePasswordForm";
 import {
   Bell,
   Clock,
@@ -619,6 +620,7 @@ function SettingsContent() {
           >
             Sign out
           </button>
+          <ChangePasswordForm />
           <button
             onClick={async () => {
               const confirmed = window.confirm(

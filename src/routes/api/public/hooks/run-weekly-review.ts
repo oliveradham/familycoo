@@ -21,10 +21,27 @@ export const Route = createFileRoute("/api/public/hooks/run-weekly-review")({
         const week_start = currentWeekStartIso();
         const { data: households } = await supabaseAdmin.from("households").select("id");
 
-        const results: { household_id: string; ok: boolean }[] = [];
+        const results: { household_id: string; ok: boolean; skipped?: string }[] = [];
         for (const h of households ?? []) {
           const householdId = h.id as string;
           try {
+            // Gate weekly review to paying households — it's a Pro+ feature per the plan copy.
+            const { data: owner } = await supabaseAdmin
+              .from("household_members")
+              .select("user_id")
+              .eq("household_id", householdId)
+              .eq("member_role", "owner")
+              .limit(1)
+              .maybeSingle();
+            if (owner?.user_id) {
+              const { data: hasActive } = await supabaseAdmin.rpc("has_active_subscription", {
+                user_uuid: owner.user_id as string,
+              });
+              if (!hasActive) {
+                results.push({ household_id: householdId, ok: false, skipped: "free_tier" });
+                continue;
+              }
+            }
             const content = await generateWeeklyReview(supabaseAdmin, householdId);
             if (!content) {
               results.push({ household_id: householdId, ok: false });

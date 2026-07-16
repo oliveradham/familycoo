@@ -31,6 +31,8 @@ export const Route = createFileRoute("/api/public/revenuecat-webhook")({
             purchased_at_ms?: number;
             store?: string;
             original_transaction_id?: string;
+            environment?: string;
+            is_sandbox?: boolean;
           };
         };
         try {
@@ -92,7 +94,14 @@ export const Route = createFileRoute("/api/public/revenuecat-webhook")({
             // (user turned off auto-renew, still has access until expiration).
             // EXPIRATION means access has already ended; leave the flag false.
             cancel_at_period_end: ev.type === "CANCELLATION",
-            environment: "live",
+            // Detect sandbox (TestFlight / Play internal / App Store sandbox)
+            // so those purchases don't pollute live entitlement data. RevenueCat
+            // sends either `is_sandbox: true` or `environment: "SANDBOX"`.
+            environment:
+              ev.is_sandbox === true ||
+              (typeof ev.environment === "string" && ev.environment.toUpperCase() === "SANDBOX")
+                ? "sandbox"
+                : "live",
           },
           { onConflict: "paddle_subscription_id" },
         );

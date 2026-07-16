@@ -13,6 +13,11 @@ export const generateMorningBriefing = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
 
+    // Server-side entitlement gate — on-demand AI briefing generation is Pro+.
+    // (Cached briefings from cron remain readable for free users via getTodaysBriefing.)
+    const { assertPaidTier } = await import("./entitlement.server");
+    await assertPaidTier(userId, "pro");
+
     // Resolve household
     const { data: membership } = await supabase
       .from("household_members")
