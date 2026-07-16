@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSubscription } from "@/hooks/useSubscription";
 import { isNative, isIOS, openExternal } from "@/lib/platform";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Bell,
   Clock,
@@ -162,7 +163,7 @@ function SettingsContent() {
   const [voice, setVoice] = useState(true);
   const [autopilot, setAutopilot] = useState(true);
   const [proactive, setProactive] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [, ] = [null, null] as const;
   const [haptics, setHaptics] = useState(true);
 
   const [pushEnabled, setPushEnabled] = useState(false);
@@ -494,9 +495,9 @@ function SettingsContent() {
           <div className="divide-y divide-hairline">
             <Row
               icon={Moon}
-              label="Dark mode"
-              hint="Follows briefing time by default"
-              right={<Toggle label="Dark mode" on={darkMode} onChange={setDarkMode} />}
+              label="Theme"
+              hint="Light, system, or dark"
+              right={<ThemeToggle />}
             />
             <Row icon={Palette} label="Accent" right={
               <div className="flex gap-2">

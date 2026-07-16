@@ -66,7 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-background text-foreground">
       <SubscriptionBanners />
       <NotificationBell />
-      <main className="mx-auto max-w-[520px] pb-32">{children}</main>
+      <main id="main-content" className="mx-auto max-w-[520px] pb-32">{children}</main>
 
 
       <nav className="fixed bottom-6 left-1/2 z-40 w-[calc(100%-32px)] max-w-[440px] -translate-x-1/2">

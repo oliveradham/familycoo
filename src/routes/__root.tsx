@@ -14,6 +14,10 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "../lib/i18n";
 import { AuthProvider } from "../lib/auth-context";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { ThemeProvider } from "../lib/theme";
+import { CommandPalette } from "@/components/CommandPalette";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 function NotFoundComponent() {
   return (
@@ -161,13 +165,24 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <LanguageProvider>
-          <PaymentTestModeBanner />
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </LanguageProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-foreground focus:px-3 focus:py-2 focus:text-background"
+            >
+              Skip to content
+            </a>
+            <PaymentTestModeBanner />
+            <OfflineIndicator />
+            <CommandPalette />
+            <InstallPrompt />
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </LanguageProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
