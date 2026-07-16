@@ -29,7 +29,7 @@ export const listApprovals = createServerFn({ method: "GET" })
 
 export const approveAction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => data)
+  .validator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: membership, error: membershipError } = await supabase
@@ -88,7 +88,7 @@ export const approveAction = createServerFn({ method: "POST" })
 
 export const rejectApproval = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => data)
+  .validator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: membership, error: membershipError } = await supabase
@@ -113,7 +113,7 @@ export const rejectApproval = createServerFn({ method: "POST" })
 
 export const undoApproval = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => data)
+  .validator((data: { id: string }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: membership, error: membershipError } = await supabase
@@ -151,7 +151,7 @@ export const undoApproval = createServerFn({ method: "POST" })
 
 export const createApproval = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(
+  .validator(
     (data: {
       title: string;
       steps?: string[];

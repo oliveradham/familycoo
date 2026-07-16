@@ -17,7 +17,7 @@ export const getPrefs = createServerFn({ method: "GET" })
 
 export const savePrefs = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(
+  .validator(
     (input: {
       timezone?: string;
       autopilot_paused?: boolean;

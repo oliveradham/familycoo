@@ -26,7 +26,7 @@ export const listFamilyMembers = createServerFn({ method: "GET" })
 
 export const createFamilyMember = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { name: string; role: string; birth_date?: string | null; color?: string | null; notes?: string | null }) => {
+  .validator((input: { name: string; role: string; birth_date?: string | null; color?: string | null; notes?: string | null }) => {
     if (!input?.name?.trim()) throw new Error("Name required");
     if (!input?.role?.trim()) throw new Error("Role required");
     return input;
@@ -61,7 +61,7 @@ export const createFamilyMember = createServerFn({ method: "POST" })
 
 export const updateFamilyMember = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string; name?: string; role?: string; birth_date?: string | null; color?: string | null; notes?: string | null }) => {
+  .validator((input: { id: string; name?: string; role?: string; birth_date?: string | null; color?: string | null; notes?: string | null }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })
@@ -91,7 +91,7 @@ export const updateFamilyMember = createServerFn({ method: "POST" })
 
 export const deleteFamilyMember = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

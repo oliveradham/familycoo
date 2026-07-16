@@ -52,7 +52,7 @@ const SCHEMAS: Record<OcrKind, { schema: object; hint: string }> = {
 
 export const ocrExtract = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { kind: OcrKind; image_data_url: string }) => {
+  .validator((input: { kind: OcrKind; image_data_url: string }) => {
     if (!input?.kind || !SCHEMAS[input.kind]) throw new Error("Invalid kind");
     if (!input?.image_data_url?.startsWith("data:image/")) throw new Error("image_data_url required");
     return input;

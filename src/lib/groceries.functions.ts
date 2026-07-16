@@ -25,7 +25,7 @@ export const listGroceries = createServerFn({ method: "GET" })
 
 export const createGrocery = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { name: string; qty?: number | null; unit?: string | null; category?: string; status?: string }) => {
+  .validator((input: { name: string; qty?: number | null; unit?: string | null; category?: string; status?: string }) => {
     if (!input?.name?.trim()) throw new Error("name required");
     return input;
   })
@@ -58,7 +58,7 @@ export const createGrocery = createServerFn({ method: "POST" })
 
 export const setGroceryStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string; status: string }) => {
+  .validator((input: { id: string; status: string }) => {
     if (!input?.id || !input?.status) throw new Error("id + status required");
     return input;
   })
@@ -73,7 +73,7 @@ export const setGroceryStatus = createServerFn({ method: "POST" })
 
 export const deleteGrocery = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

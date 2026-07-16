@@ -25,7 +25,7 @@ export const listTrips = createServerFn({ method: "GET" })
 
 export const createTrip = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { title: string; destination?: string | null; start_date?: string | null; end_date?: string | null; travelers?: string[]; status?: string; notes?: string | null }) => {
+  .validator((input: { title: string; destination?: string | null; start_date?: string | null; end_date?: string | null; travelers?: string[]; status?: string; notes?: string | null }) => {
     if (!input?.title?.trim()) throw new Error("title required");
     return input;
   })
@@ -60,7 +60,7 @@ export const createTrip = createServerFn({ method: "POST" })
 
 export const updateTripStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string; status: string }) => {
+  .validator((input: { id: string; status: string }) => {
     if (!input?.id || !input?.status) throw new Error("id + status required");
     return input;
   })
@@ -72,7 +72,7 @@ export const updateTripStatus = createServerFn({ method: "POST" })
 
 export const deleteTrip = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

@@ -33,7 +33,7 @@ export const clearConciergeHistory = createServerFn({ method: "POST" })
  */
 export const askConcierge = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(
+  .validator(
     (input: { messages: ChatMsg[] }) => {
       if (!Array.isArray(input?.messages)) throw new Error("messages required");
       return input;

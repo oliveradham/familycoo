@@ -26,7 +26,7 @@ export const listDocuments = createServerFn({ method: "GET" })
 
 export const createDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: {
+  .validator((input: {
     title: string;
     category?: string;
     family_member_id?: string | null;
@@ -71,7 +71,7 @@ export const createDocument = createServerFn({ method: "POST" })
 
 export const getDocumentSignedUrl = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })
@@ -93,7 +93,7 @@ export const getDocumentSignedUrl = createServerFn({ method: "POST" })
 
 export const createDocumentUploadUrl = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { filename: string }) => {
+  .validator((input: { filename: string }) => {
     if (!input?.filename?.trim()) throw new Error("filename required");
     return input;
   })
@@ -119,7 +119,7 @@ export const createDocumentUploadUrl = createServerFn({ method: "POST" })
 
 export const deleteDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => {
+  .validator((input: { id: string }) => {
     if (!input?.id) throw new Error("id required");
     return input;
   })

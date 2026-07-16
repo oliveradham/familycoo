@@ -31,7 +31,7 @@ export const listInbox = createServerFn({ method: "GET" })
 
 export const createInboxItem = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         subject: z.string().min(1).max(280),
@@ -77,7 +77,7 @@ export const createInboxItem = createServerFn({ method: "POST" })
 
 export const setInboxStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         id: z.string().uuid(),

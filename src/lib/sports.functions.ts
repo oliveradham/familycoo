@@ -27,7 +27,7 @@ export const listSportTeams = createServerFn({ method: "GET" })
 
 export const createSportTeam = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         sport: z.string().min(1).max(80),
@@ -71,7 +71,7 @@ export const createSportTeam = createServerFn({ method: "POST" })
 
 export const deleteSportTeam = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.from("sport_teams").delete().eq("id", data.id);
     if (error) throw error;
@@ -108,7 +108,7 @@ export const listSportEvents = createServerFn({ method: "GET" })
 
 export const createSportEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) =>
+  .validator((raw) =>
     z
       .object({
         team_id: z.string().uuid(),
@@ -154,7 +154,7 @@ export const createSportEvent = createServerFn({ method: "POST" })
 
 export const deleteSportEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.from("sport_events").delete().eq("id", data.id);
     if (error) throw error;
