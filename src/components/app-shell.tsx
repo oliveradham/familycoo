@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Bell, Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth-context";
 import { useServerFn } from "@tanstack/react-start";
@@ -49,14 +49,34 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { session, loading } = useAuth();
   const navigate = useNavigate();
 
+  const [stalled, setStalled] = useState(false);
+
   useEffect(() => {
     if (!loading && !session) navigate({ to: "/auth", replace: true });
   }, [loading, session, navigate]);
 
+  useEffect(() => {
+    if (!loading && session) {
+      setStalled(false);
+      return;
+    }
+    const id = window.setTimeout(() => setStalled(true), 4000);
+    return () => window.clearTimeout(id);
+  }, [loading, session]);
+
   if (loading || !session) {
     return (
-      <div className="grid min-h-screen place-items-center bg-background">
+      <div className="grid min-h-screen place-items-center gap-3 bg-background px-6 text-center">
         <p className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">Loading…</p>
+        {stalled && (
+          <Link
+            to="/auth"
+            replace
+            className="text-[11px] uppercase tracking-[0.18em] text-foreground underline underline-offset-4"
+          >
+            Sign in to continue
+          </Link>
+        )}
       </div>
     );
   }
