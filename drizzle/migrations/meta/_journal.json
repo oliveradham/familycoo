@@ -8,6 +8,13 @@
       "when": 1791137019926,
       "tag": "0000_family_tools_meals_homework_packing_birthdays_chores",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791137752020,
+      "tag": "0001_family_invites",
+      "breakpoints": true
     }
   ]
 }
