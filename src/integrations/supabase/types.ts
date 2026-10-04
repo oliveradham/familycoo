@@ -600,6 +600,47 @@ export type Database = {
           },
         ]
       }
+      family_invites: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string
+          expires_at: string
+          household_id: string
+          id: string
+          max_uses: number
+          use_count: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by: string
+          expires_at?: string
+          household_id: string
+          id?: string
+          max_uses?: number
+          use_count?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          household_id?: string
+          id?: string
+          max_uses?: number
+          use_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_invites_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           birth_date: string | null
@@ -1861,6 +1902,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_family_invite: { Args: never; Returns: Json }
+      get_family_invite: { Args: never; Returns: Json }
       get_user_tier: {
         Args: { check_env?: string; user_uuid: string }
         Returns: string
@@ -1879,6 +1922,10 @@ export type Database = {
       is_household_member: {
         Args: { _household_id: string; _user_id: string }
         Returns: boolean
+      }
+      join_family: {
+        Args: { _code: string; _leave_current?: boolean }
+        Returns: Json
       }
       queue_birthday_reminders: { Args: never; Returns: undefined }
     }

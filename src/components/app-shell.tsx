@@ -1,3 +1,4 @@
+import { ConnectButton } from "@/components/ConnectDialog";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   Bell, Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, Menu,
@@ -67,6 +68,7 @@ function ModuleMenu() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="left" className="w-[290px] overflow-y-auto">
           <SheetTitle className="font-serif text-2xl italic">Family COO</SheetTitle>
+          <div className="mt-4"><ConnectButton className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90" /></div>
           {moduleGroups.map((g) => (
             <div key={g.label} className="mt-6">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{g.label}</p>

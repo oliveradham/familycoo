@@ -1,3 +1,4 @@
+import { ConnectButton } from "@/components/ConnectDialog";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -87,6 +88,10 @@ function FamilyPage() {
         title="The household."
         subtitle="Parents, kids, caregivers, grandparents — each with their own role."
       />
+
+      <section className="px-6 mb-4">
+        <ConnectButton label="Connect — invite or join" />
+      </section>
 
       <section className="px-6 mb-6">
         <form
