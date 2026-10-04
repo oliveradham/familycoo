@@ -50,7 +50,7 @@ function OnboardingPage() {
 
         <div className="mt-8 space-y-2">
           <ChoiceRow icon={<Users className="size-4" />} label="Start with my family" detail="Add the people in your household" onClick={() => navigate({ to: "/family" })} />
-          <ChoiceRow icon={<Mail className="size-4" />} label="Connect Google Calendar" detail="Bring your events in automatically" onClick={() => navigate({ to: "/integrations" })} />
+          <ChoiceRow icon={<Mail className="size-4" />} label="Connect Google Calendar" detail="Bring your events in automatically" onClick={() => navigate({ to: "/integrations", search: { connect: undefined } })} />
           <ChoiceRow icon={<Calendar className="size-4" />} label="Start empty" detail="Go straight to Today" onClick={() => navigate({ to: "/" })} />
         </div>
 
