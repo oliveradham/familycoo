@@ -129,13 +129,13 @@ export const sendMealsToGrocery = createServerFn({ method: "POST" })
       .eq("household_id", hid);
     if (gErr) throw gErr;
     const have = new Set(
-      (existing ?? []).filter((g: any) => g.status !== "bought").map((g: any) => String(g.name).toLowerCase()),
+      (existing ?? []).filter((g: any) => g.status === "need").map((g: any) => String(g.name).toLowerCase()),
     );
     const toAdd = [...wanted.entries()].filter(([k]) => !have.has(k)).map(([, name]) => ({
       household_id: hid,
       name,
       category: "meal plan",
-      status: "needed",
+      status: "need",
       created_by: context.userId,
     }));
     if (toAdd.length) {
