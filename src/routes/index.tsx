@@ -181,12 +181,6 @@ function Today() {
         </Link>
         <div className="flex items-center gap-2">
           <Link
-            to="/calm"
-            className="rounded-full border border-hairline bg-surface px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-muted-foreground"
-          >
-            Calm mode
-          </Link>
-          <Link
             to="/settings"
             aria-label="Settings"
             className="grid size-9 place-items-center rounded-full border border-hairline bg-surface text-muted-foreground"

@@ -28,12 +28,22 @@ import {
   Bell,
   Sparkles,
   ClipboardList,
+  UtensilsCrossed,
+  BookOpen,
+  Luggage,
+  Cake,
+  Star,
   type LucideIcon,
 } from "lucide-react";
 
 type Item = { to: string; label: string; icon: LucideIcon; group: string };
 
 const items: Item[] = [
+  { to: "/meals", label: "Meal Planner", icon: UtensilsCrossed, group: "Family tools" },
+  { to: "/homework", label: "Homework", icon: BookOpen, group: "Family tools" },
+  { to: "/packing", label: "Packing Lists", icon: Luggage, group: "Family tools" },
+  { to: "/birthdays", label: "Birthdays & Gifts", icon: Cake, group: "Family tools" },
+  { to: "/chores", label: "Chore Chart", icon: Star, group: "Family tools" },
   { to: "/", label: "Today", icon: Home, group: "Navigate" },
   { to: "/inbox", label: "Inbox", icon: Inbox, group: "Navigate" },
   { to: "/calendar", label: "Calendar", icon: Calendar, group: "Navigate" },

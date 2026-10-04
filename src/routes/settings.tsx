@@ -11,6 +11,8 @@ import { isNative, isIOS, openExternal } from "@/lib/platform";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { PreviewFeatures } from "@/components/PreviewFeatures";
 import { ChangePasswordForm } from "@/components/ChangePasswordForm";
+import { useServerFn } from "@tanstack/react-start";
+import { loadSampleFamily } from "@/lib/sample-data.functions";
 import {
   Bell,
   Clock,
@@ -126,6 +128,7 @@ function SettingsContent() {
   const { isActive, tier } = useSubscription();
   const [portalBusy, setPortalBusy] = useState(false);
   const [sampleBusy, setSampleBusy] = useState(false);
+  const seedSample = useServerFn(loadSampleFamily);
   const { data: familyCount } = useQuery({
     queryKey: ["family", "members", "count", user?.id],
     queryFn: async () => {
@@ -288,8 +291,7 @@ function SettingsContent() {
               if (sampleBusy) return;
               setSampleBusy(true);
               try {
-                const { loadSampleFamily } = await import("@/lib/sample-data.functions");
-                const res = await loadSampleFamily();
+                const res = await seedSample();
                 await queryClient.invalidateQueries();
                 window.alert(res?.skipped ? "You already have data — sample not added." : "Sample family loaded.");
               } catch (e) {
