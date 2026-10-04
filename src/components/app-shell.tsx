@@ -166,6 +166,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen text-foreground">
       <SubscriptionBanners />
       <NotificationBell />
+      <ModuleMenu />
       <main id="main-content" className="mx-auto max-w-[520px] pb-32">{children}</main>
 
 
