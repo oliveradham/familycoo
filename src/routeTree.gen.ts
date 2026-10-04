@@ -38,13 +38,16 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PredictionsRouteImport } from './routes/predictions'
 import { Route as PlansRouteImport } from './routes/plans'
+import { Route as PackingRouteImport } from './routes/packing'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MedicalRouteImport } from './routes/medical'
+import { Route as MealsRouteImport } from './routes/meals'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as HomeworkRouteImport } from './routes/homework'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as HealthPrepRouteImport } from './routes/health-prep'
 import { Route as HandoffRouteImport } from './routes/handoff'
@@ -62,11 +65,13 @@ import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as CommsRouteImport } from './routes/comms'
+import { Route as ChoresRouteImport } from './routes/chores'
 import { Route as ChecklistsRouteImport } from './routes/checklists'
 import { Route as CaptureRouteImport } from './routes/capture'
 import { Route as CalmRouteImport } from './routes/calm'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as BookingsRouteImport } from './routes/bookings'
+import { Route as BirthdaysRouteImport } from './routes/birthdays'
 import { Route as AutopilotRouteImport } from './routes/autopilot'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprovalsRouteImport } from './routes/approvals'
@@ -226,6 +231,11 @@ const PlansRoute = PlansRouteImport.update({
   path: '/plans',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PackingRoute = PackingRouteImport.update({
+  id: '/packing',
+  path: '/packing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -239,6 +249,11 @@ const NotificationsRoute = NotificationsRouteImport.update({
 const MedicalRoute = MedicalRouteImport.update({
   id: '/medical',
   path: '/medical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MealsRoute = MealsRouteImport.update({
+  id: '/meals',
+  path: '/meals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarketplaceRoute = MarketplaceRouteImport.update({
@@ -259,6 +274,11 @@ const IntegrationsRoute = IntegrationsRouteImport.update({
 const InboxRoute = InboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeworkRoute = HomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -346,6 +366,11 @@ const CommsRoute = CommsRouteImport.update({
   path: '/comms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChoresRoute = ChoresRouteImport.update({
+  id: '/chores',
+  path: '/chores',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChecklistsRoute = ChecklistsRouteImport.update({
   id: '/checklists',
   path: '/checklists',
@@ -369,6 +394,11 @@ const CalendarRoute = CalendarRouteImport.update({
 const BookingsRoute = BookingsRouteImport.update({
   id: '/bookings',
   path: '/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BirthdaysRoute = BirthdaysRouteImport.update({
+  id: '/birthdays',
+  path: '/birthdays',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutopilotRoute = AutopilotRouteImport.update({
@@ -450,11 +480,13 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof ApprovalsRoute
   '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
+  '/birthdays': typeof BirthdaysRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/chores': typeof ChoresRoute
   '/comms': typeof CommsRoute
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
@@ -472,13 +504,16 @@ export interface FileRoutesByFullPath {
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
+  '/homework': typeof HomeworkRoute
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
+  '/meals': typeof MealsRoute
   '/medical': typeof MedicalRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
+  '/packing': typeof PackingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
@@ -523,11 +558,13 @@ export interface FileRoutesByTo {
   '/approvals': typeof ApprovalsRoute
   '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
+  '/birthdays': typeof BirthdaysRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/chores': typeof ChoresRoute
   '/comms': typeof CommsRoute
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
@@ -545,13 +582,16 @@ export interface FileRoutesByTo {
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
+  '/homework': typeof HomeworkRoute
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
+  '/meals': typeof MealsRoute
   '/medical': typeof MedicalRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
+  '/packing': typeof PackingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
@@ -597,11 +637,13 @@ export interface FileRoutesById {
   '/approvals': typeof ApprovalsRoute
   '/auth': typeof AuthRoute
   '/autopilot': typeof AutopilotRoute
+  '/birthdays': typeof BirthdaysRoute
   '/bookings': typeof BookingsRoute
   '/calendar': typeof CalendarRoute
   '/calm': typeof CalmRoute
   '/capture': typeof CaptureRoute
   '/checklists': typeof ChecklistsRoute
+  '/chores': typeof ChoresRoute
   '/comms': typeof CommsRoute
   '/compare': typeof CompareRoute
   '/concierge': typeof ConciergeRoute
@@ -619,13 +661,16 @@ export interface FileRoutesById {
   '/handoff': typeof HandoffRoute
   '/health-prep': typeof HealthPrepRoute
   '/history': typeof HistoryRoute
+  '/homework': typeof HomeworkRoute
   '/inbox': typeof InboxRoute
   '/integrations': typeof IntegrationsRoute
   '/maintenance': typeof MaintenanceRoute
   '/marketplace': typeof MarketplaceRoute
+  '/meals': typeof MealsRoute
   '/medical': typeof MedicalRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
+  '/packing': typeof PackingRoute
   '/plans': typeof PlansRoute
   '/predictions': typeof PredictionsRoute
   '/privacy': typeof PrivacyRoute
@@ -672,11 +717,13 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/auth'
     | '/autopilot'
+    | '/birthdays'
     | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/chores'
     | '/comms'
     | '/compare'
     | '/concierge'
@@ -694,13 +741,16 @@ export interface FileRouteTypes {
     | '/handoff'
     | '/health-prep'
     | '/history'
+    | '/homework'
     | '/inbox'
     | '/integrations'
     | '/maintenance'
     | '/marketplace'
+    | '/meals'
     | '/medical'
     | '/notifications'
     | '/onboarding'
+    | '/packing'
     | '/plans'
     | '/predictions'
     | '/privacy'
@@ -745,11 +795,13 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/auth'
     | '/autopilot'
+    | '/birthdays'
     | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/chores'
     | '/comms'
     | '/compare'
     | '/concierge'
@@ -767,13 +819,16 @@ export interface FileRouteTypes {
     | '/handoff'
     | '/health-prep'
     | '/history'
+    | '/homework'
     | '/inbox'
     | '/integrations'
     | '/maintenance'
     | '/marketplace'
+    | '/meals'
     | '/medical'
     | '/notifications'
     | '/onboarding'
+    | '/packing'
     | '/plans'
     | '/predictions'
     | '/privacy'
@@ -818,11 +873,13 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/auth'
     | '/autopilot'
+    | '/birthdays'
     | '/bookings'
     | '/calendar'
     | '/calm'
     | '/capture'
     | '/checklists'
+    | '/chores'
     | '/comms'
     | '/compare'
     | '/concierge'
@@ -840,13 +897,16 @@ export interface FileRouteTypes {
     | '/handoff'
     | '/health-prep'
     | '/history'
+    | '/homework'
     | '/inbox'
     | '/integrations'
     | '/maintenance'
     | '/marketplace'
+    | '/meals'
     | '/medical'
     | '/notifications'
     | '/onboarding'
+    | '/packing'
     | '/plans'
     | '/predictions'
     | '/privacy'
@@ -892,11 +952,13 @@ export interface RootRouteChildren {
   ApprovalsRoute: typeof ApprovalsRoute
   AuthRoute: typeof AuthRoute
   AutopilotRoute: typeof AutopilotRoute
+  BirthdaysRoute: typeof BirthdaysRoute
   BookingsRoute: typeof BookingsRoute
   CalendarRoute: typeof CalendarRoute
   CalmRoute: typeof CalmRoute
   CaptureRoute: typeof CaptureRoute
   ChecklistsRoute: typeof ChecklistsRoute
+  ChoresRoute: typeof ChoresRoute
   CommsRoute: typeof CommsRoute
   CompareRoute: typeof CompareRoute
   ConciergeRoute: typeof ConciergeRoute
@@ -914,13 +976,16 @@ export interface RootRouteChildren {
   HandoffRoute: typeof HandoffRoute
   HealthPrepRoute: typeof HealthPrepRoute
   HistoryRoute: typeof HistoryRoute
+  HomeworkRoute: typeof HomeworkRoute
   InboxRoute: typeof InboxRoute
   IntegrationsRoute: typeof IntegrationsRoute
   MaintenanceRoute: typeof MaintenanceRoute
   MarketplaceRoute: typeof MarketplaceRoute
+  MealsRoute: typeof MealsRoute
   MedicalRoute: typeof MedicalRoute
   NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
+  PackingRoute: typeof PackingRoute
   PlansRoute: typeof PlansRoute
   PredictionsRoute: typeof PredictionsRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -1165,6 +1230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlansRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/packing': {
+      id: '/packing'
+      path: '/packing'
+      fullPath: '/packing'
+      preLoaderRoute: typeof PackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
@@ -1184,6 +1256,13 @@ declare module '@tanstack/react-router' {
       path: '/medical'
       fullPath: '/medical'
       preLoaderRoute: typeof MedicalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meals': {
+      id: '/meals'
+      path: '/meals'
+      fullPath: '/meals'
+      preLoaderRoute: typeof MealsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/marketplace': {
@@ -1212,6 +1291,13 @@ declare module '@tanstack/react-router' {
       path: '/inbox'
       fullPath: '/inbox'
       preLoaderRoute: typeof InboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/homework': {
+      id: '/homework'
+      path: '/homework'
+      fullPath: '/homework'
+      preLoaderRoute: typeof HomeworkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/history': {
@@ -1333,6 +1419,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chores': {
+      id: '/chores'
+      path: '/chores'
+      fullPath: '/chores'
+      preLoaderRoute: typeof ChoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checklists': {
       id: '/checklists'
       path: '/checklists'
@@ -1366,6 +1459,13 @@ declare module '@tanstack/react-router' {
       path: '/bookings'
       fullPath: '/bookings'
       preLoaderRoute: typeof BookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/birthdays': {
+      id: '/birthdays'
+      path: '/birthdays'
+      fullPath: '/birthdays'
+      preLoaderRoute: typeof BirthdaysRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/autopilot': {
@@ -1468,11 +1568,13 @@ const rootRouteChildren: RootRouteChildren = {
   ApprovalsRoute: ApprovalsRoute,
   AuthRoute: AuthRoute,
   AutopilotRoute: AutopilotRoute,
+  BirthdaysRoute: BirthdaysRoute,
   BookingsRoute: BookingsRoute,
   CalendarRoute: CalendarRoute,
   CalmRoute: CalmRoute,
   CaptureRoute: CaptureRoute,
   ChecklistsRoute: ChecklistsRoute,
+  ChoresRoute: ChoresRoute,
   CommsRoute: CommsRoute,
   CompareRoute: CompareRoute,
   ConciergeRoute: ConciergeRoute,
@@ -1490,13 +1592,16 @@ const rootRouteChildren: RootRouteChildren = {
   HandoffRoute: HandoffRoute,
   HealthPrepRoute: HealthPrepRoute,
   HistoryRoute: HistoryRoute,
+  HomeworkRoute: HomeworkRoute,
   InboxRoute: InboxRoute,
   IntegrationsRoute: IntegrationsRoute,
   MaintenanceRoute: MaintenanceRoute,
   MarketplaceRoute: MarketplaceRoute,
+  MealsRoute: MealsRoute,
   MedicalRoute: MedicalRoute,
   NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
+  PackingRoute: PackingRoute,
   PlansRoute: PlansRoute,
   PredictionsRoute: PredictionsRoute,
   PrivacyRoute: PrivacyRoute,

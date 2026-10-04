@@ -1,36 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell, Card, PageHeader } from "@/components/app-shell";
-import { providerPortal } from "@/lib/family-data";
+import { AppShell, PageHeader } from "@/components/app-shell";
+import { ComingSoon } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/providers")({
-  head: () => ({ meta: [{ title: "Provider Portal — Family COO" }] }),
-  component: Page,
+  head: () => ({
+    meta: [
+      { title: "Providers — Coming soon | Family COO" },
+      { name: "description", content: "Providers is coming soon to Family COO." },
+      { property: "og:title", content: "Providers — Family COO" },
+      { property: "og:description", content: "Providers is coming soon to Family COO." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: ProvidersPage,
 });
 
-function Page() {
+function ProvidersPage() {
   return (
     <AppShell>
-      <PageHeader
-        back
-        eyebrow="Provider portal"
-        title="The people who help — connected, safely."
-        subtitle="Nannies, coaches, tutors, doctors — each with a role-based view. They only see what they need."
+      <PageHeader back eyebrow="Coming soon" title="Providers" />
+      <ComingSoon
+        title="We're still building this."
+        description="Providers will work from your own family's data once it's ready. Nothing here yet."
       />
-      <section className="px-6 space-y-3 pb-8">
-        {providerPortal.map((p) => (
-          <Card key={p.role}>
-            <p className="font-serif text-[17px] italic leading-tight">{p.role}</p>
-            <div className="mt-3 rounded-2xl bg-secondary/40 p-3 text-[13px]">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Can see</p>
-              <p className="mt-1">{p.sees}</p>
-            </div>
-            <div className="mt-2 rounded-2xl border border-dashed border-hairline p-3 text-[13px]">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Cannot see</p>
-              <p className="mt-1 text-foreground/80">{p.cannotSee}</p>
-            </div>
-          </Card>
-        ))}
-      </section>
     </AppShell>
   );
 }

@@ -123,6 +123,47 @@ export type Database = {
           },
         ]
       }
+      birthdays: {
+        Row: {
+          birth_date: string
+          created_at: string
+          gift_ideas: string[]
+          gift_status: string
+          household_id: string
+          id: string
+          name: string
+          relation: string | null
+        }
+        Insert: {
+          birth_date: string
+          created_at?: string
+          gift_ideas?: string[]
+          gift_status?: string
+          household_id: string
+          id?: string
+          name: string
+          relation?: string | null
+        }
+        Update: {
+          birth_date?: string
+          created_at?: string
+          gift_ideas?: string[]
+          gift_status?: string
+          household_id?: string
+          id?: string
+          name?: string
+          relation?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "birthdays_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       briefings: {
         Row: {
           briefing_date: string
@@ -294,6 +335,103 @@ export type Database = {
             columns: ["household_id"]
             isOneToOne: false
             referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chore_completions: {
+        Row: {
+          approved_at: string | null
+          chore_id: string
+          completed_at: string
+          household_id: string
+          id: string
+          member_id: string
+          stars: number
+          status: string
+        }
+        Insert: {
+          approved_at?: string | null
+          chore_id: string
+          completed_at?: string
+          household_id: string
+          id?: string
+          member_id: string
+          stars?: number
+          status?: string
+        }
+        Update: {
+          approved_at?: string | null
+          chore_id?: string
+          completed_at?: string
+          household_id?: string
+          id?: string
+          member_id?: string
+          stars?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chore_completions_chore_id_fkey"
+            columns: ["chore_id"]
+            isOneToOne: false
+            referencedRelation: "chores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chore_completions_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chore_completions_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chores: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          member_id: string
+          stars: number
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          member_id: string
+          stars?: number
+          title: string
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          member_id?: string
+          stars?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chores_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chores_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
             referencedColumns: ["id"]
           },
         ]
@@ -616,6 +754,54 @@ export type Database = {
           },
         ]
       }
+      homework: {
+        Row: {
+          created_at: string
+          done: boolean
+          due_date: string
+          household_id: string
+          id: string
+          member_id: string | null
+          subject: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          done?: boolean
+          due_date: string
+          household_id: string
+          id?: string
+          member_id?: string | null
+          subject?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          done?: boolean
+          due_date?: string
+          household_id?: string
+          id?: string
+          member_id?: string | null
+          subject?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "homework_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       household_members: {
         Row: {
           created_at: string
@@ -800,6 +986,83 @@ export type Database = {
           },
         ]
       }
+      meal_plan_entries: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          meal_id: string
+          plan_date: string
+          slot: string
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          meal_id: string
+          plan_date: string
+          slot: string
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          meal_id?: string
+          plan_date?: string
+          slot?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_plan_entries_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meal_plan_entries_meal_id_fkey"
+            columns: ["meal_id"]
+            isOneToOne: false
+            referencedRelation: "meals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meals: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          ingredients: string[]
+          is_favorite: boolean
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          ingredients?: string[]
+          is_favorite?: boolean
+          name: string
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          ingredients?: string[]
+          is_favorite?: boolean
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meals_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_records: {
         Row: {
           created_at: string
@@ -912,6 +1175,100 @@ export type Database = {
             columns: ["household_id"]
             isOneToOne: false
             referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packing_items: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          list_id: string
+          name: string
+          packed: boolean
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          list_id: string
+          name: string
+          packed?: boolean
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          list_id?: string
+          name?: string
+          packed?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "packing_items_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "packing_items_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: false
+            referencedRelation: "packing_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packing_lists: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          member_id: string | null
+          person_label: string
+          template: string
+          trip_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          member_id?: string | null
+          person_label?: string
+          template?: string
+          trip_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          member_id?: string | null
+          person_label?: string
+          template?: string
+          trip_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "packing_lists_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "packing_lists_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "packing_lists_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
             referencedColumns: ["id"]
           },
         ]
@@ -1523,6 +1880,7 @@ export type Database = {
         Args: { _household_id: string; _user_id: string }
         Returns: boolean
       }
+      queue_birthday_reminders: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
