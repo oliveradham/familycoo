@@ -1,59 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
-import { twin } from "@/lib/family-data";
-import { PremiumRoute } from "@/components/PremiumRoute";
+import { AppShell, PageHeader } from "@/components/app-shell";
+import { ComingSoon } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/twin")({
-  head: () => ({ meta: [{ title: "Family Digital Twin — Family COO" }] }),
-  component: Page,
+  head: () => ({
+    meta: [
+      { title: "Twin — Coming soon | Family COO" },
+      { name: "description", content: "Twin is coming soon to Family COO." },
+      { property: "og:title", content: "Twin — Family COO" },
+      { property: "og:description", content: "Twin is coming soon to Family COO." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: TwinPage,
 });
 
-function Page() {
+function TwinPage() {
   return (
-    <PremiumRoute min="max" feature="Family Digital Twin">
     <AppShell>
-      <PageHeader
-        back
-        eyebrow="Your family, structured"
-        title="A private model of how you actually operate."
-        subtitle="Editable. Transparent. Never shared. This is what lets me simulate before I act."
+      <PageHeader back eyebrow="Coming soon" title="Twin" />
+      <ComingSoon
+        title="We're still building this."
+        description="Twin will work from your own family's data once it's ready. Nothing here yet."
       />
-      <section className="px-6 mb-6">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Household</p>
-          <p className="mt-1 font-serif text-[18px] italic">{twin.household}</p>
-        </Card>
-      </section>
-
-      <Group title="Routines" items={twin.routines} />
-      <Group title="Preferences" items={twin.preferences} />
-      <Group title="Trusted circle" items={twin.trusted} />
-
-      <section className="px-6 pb-8">
-        <SectionLabel>Simulate before you commit</SectionLabel>
-        <Card className="bg-zinc-900 text-white">
-          <p className="font-serif text-[17px] italic leading-snug">{twin.simulate}</p>
-          <p className="mt-3 text-[11px] uppercase tracking-widest text-white/60">
-            Try more in Scenarios →
-          </p>
-        </Card>
-      </section>
     </AppShell>
-      </PremiumRoute>
-  );
-}
-
-function Group({ title, items }: { title: string; items: readonly string[] }) {
-  return (
-    <section className="px-6 mb-6">
-      <SectionLabel>{title}</SectionLabel>
-      <div className="space-y-2">
-        {items.map((t, i) => (
-          <div key={i} className="rounded-2xl border border-hairline bg-surface p-4 text-[14px] leading-snug">
-            {t}
-          </div>
-        ))}
-      </div>
-    </section>
   );
 }

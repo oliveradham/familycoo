@@ -1,51 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell, Card, PageHeader } from "@/components/app-shell";
-import { calm } from "@/lib/family-data";
+import { AppShell, PageHeader } from "@/components/app-shell";
+import { ComingSoon } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/calm")({
-  head: () => ({ meta: [{ title: "Calm Mode — Family COO" }] }),
-  component: Page,
+  head: () => ({
+    meta: [
+      { title: "Calm — Coming soon | Family COO" },
+      { name: "description", content: "Calm is coming soon to Family COO." },
+      { property: "og:title", content: "Calm — Family COO" },
+      { property: "og:description", content: "Calm is coming soon to Family COO." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: CalmPage,
 });
 
-function Page() {
+function CalmPage() {
   return (
     <AppShell>
-      <PageHeader
-        back
-        eyebrow="Calm mode"
-        title="Right now."
-        subtitle="Only what needs to happen. Everything else is safely held for tomorrow."
+      <PageHeader back eyebrow="Coming soon" title="Calm" />
+      <ComingSoon
+        title="We're still building this."
+        description="Calm will work from your own family's data once it's ready. Nothing here yet."
       />
-
-      <section className="px-6 mb-6">
-        <Card>
-          <ul className="space-y-4">
-            {calm.now.map((n) => (
-              <li key={n.id} className="flex items-start gap-4">
-                <span className="mt-2 size-2 shrink-0 rounded-full bg-zinc-900" />
-                <div className="flex-1">
-                  <p className="font-serif text-[19px] italic leading-snug">{n.text}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-widest text-muted-foreground">{n.when}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Card>
-      </section>
-
-      <section className="px-6 mb-6">
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Later tonight</p>
-        <Card><ul className="space-y-1.5 text-[13px] text-muted-foreground">{calm.laterTonight.map((t, i) => <li key={i}>· {t}</li>)}</ul></Card>
-      </section>
-
-      <section className="px-6 mb-6">
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Tomorrow</p>
-        <Card><ul className="space-y-1.5 text-[13px] text-muted-foreground">{calm.tomorrow.map((t, i) => <li key={i}>· {t}</li>)}</ul></Card>
-      </section>
-
-      <section className="px-6">
-        <p className="text-center text-[13px] italic text-muted-foreground">{calm.everythingElseNote}</p>
-      </section>
     </AppShell>
   );
 }

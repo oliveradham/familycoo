@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppShell, Card, PageHeader, SectionLabel } from "@/components/app-shell";
-import { plans } from "@/lib/family-data";
+import { plans } from "@/lib/demo-family-data";
 import { Check, Sparkles, Loader2, RotateCcw } from "lucide-react";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
 import { useNativePurchase } from "@/hooks/useNativePurchase";
