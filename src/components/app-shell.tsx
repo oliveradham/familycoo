@@ -1,5 +1,10 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Bell, Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, type LucideIcon } from "lucide-react";
+import {
+  Bell, Inbox, Home as HomeIcon, MessageCircle, CalendarCheck, Calendar, Menu,
+  CheckSquare, Users, GraduationCap, Trophy, Stethoscope, Plane, ShoppingCart, Wrench,
+  FileLock2, DollarSign, UtensilsCrossed, BookOpen, Luggage, Cake, Star, Settings,
+  type LucideIcon,
+} from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth-context";
@@ -7,6 +12,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { unreadCount } from "@/lib/notifications.functions";
 import { SubscriptionBanners } from "@/components/SubscriptionBanners";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 
 const nav: { to: string; key: string; icon: LucideIcon }[] = [
   { to: "/", key: "nav.today", icon: HomeIcon },
@@ -15,6 +21,80 @@ const nav: { to: string; key: string; icon: LucideIcon }[] = [
   { to: "/calendar", key: "nav.week", icon: Calendar },
   { to: "/review", key: "nav.review", icon: CalendarCheck },
 ];
+
+const moduleGroups: { label: string; items: { to: string; label: string; icon: LucideIcon }[] }[] = [
+  {
+    label: "Family tools",
+    items: [
+      { to: "/meals", label: "Meal Planner", icon: UtensilsCrossed },
+      { to: "/homework", label: "Homework", icon: BookOpen },
+      { to: "/packing", label: "Packing Lists", icon: Luggage },
+      { to: "/birthdays", label: "Birthdays & Gifts", icon: Cake },
+      { to: "/chores", label: "Chore Chart", icon: Star },
+    ],
+  },
+  {
+    label: "Household",
+    items: [
+      { to: "/tasks", label: "Tasks", icon: CheckSquare },
+      { to: "/family", label: "Family", icon: Users },
+      { to: "/school", label: "School", icon: GraduationCap },
+      { to: "/sports", label: "Sports", icon: Trophy },
+      { to: "/medical", label: "Medical", icon: Stethoscope },
+      { to: "/travel", label: "Travel", icon: Plane },
+      { to: "/groceries", label: "Groceries", icon: ShoppingCart },
+      { to: "/maintenance", label: "Maintenance", icon: Wrench },
+      { to: "/vault", label: "Documents", icon: FileLock2 },
+      { to: "/expenses", label: "Expenses", icon: DollarSign },
+      { to: "/settings", label: "Settings", icon: Settings },
+    ],
+  },
+];
+
+function ModuleMenu() {
+  const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  return (
+    <>
+      <button
+        type="button"
+        aria-label="All sections"
+        onClick={() => setOpen(true)}
+        className="fixed right-16 top-4 z-50 grid size-10 place-items-center rounded-full border border-hairline bg-background/90 shadow-sm backdrop-blur-md hover:bg-background"
+      >
+        <Menu className="size-4" strokeWidth={1.75} />
+      </button>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent side="left" className="w-[290px] overflow-y-auto">
+          <SheetTitle className="font-serif text-2xl italic">Family COO</SheetTitle>
+          {moduleGroups.map((g) => (
+            <div key={g.label} className="mt-6">
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{g.label}</p>
+              <ul className="space-y-0.5">
+                {g.items.map((it) => {
+                  const Icon = it.icon;
+                  const active = pathname.startsWith(it.to);
+                  return (
+                    <li key={it.to}>
+                      <Link
+                        to={it.to}
+                        onClick={() => setOpen(false)}
+                        className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${active ? "bg-secondary font-medium" : "hover:bg-secondary/60"}`}
+                      >
+                        <Icon className="size-4 text-muted-foreground" strokeWidth={1.75} />
+                        {it.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
 
 function NotificationBell() {
   const fn = useServerFn(unreadCount);
